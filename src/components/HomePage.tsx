@@ -3,7 +3,9 @@ import { motion } from "framer-motion";
 import { Search, Filter, Grid, List, Gem } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
 import { LuxuryButton } from "./ui/luxury-button";
+import { SoundButton } from "./ui/SoundButton";
 import { Input } from "./ui/input";
+import { useSound } from "@/hooks/useSound";
 import heroDiamond from "@/assets/hero-diamond.jpg";
 
 interface HomePageProps {
@@ -85,6 +87,7 @@ export const HomePage = ({ onViewDiamond, onProfile }: HomePageProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filteredDiamonds, setFilteredDiamonds] = useState(sampleDiamonds);
+  const { playIconClick } = useSound();
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -110,10 +113,16 @@ export const HomePage = ({ onViewDiamond, onProfile }: HomePageProps) => {
               className="flex items-center gap-3"
               whileHover={{ scale: 1.05 }}
             >
-              <Gem className="w-8 h-8 text-accent" />
-              <h1 className="text-2xl font-playfair font-bold text-accent">
-                PR.COLLECTION
-              </h1>
+              <SoundButton 
+                className="flex items-center gap-3 bg-transparent border-none p-0"
+                soundType="sparkle"
+                onClick={() => {}}
+              >
+                <Gem className="w-8 h-8 text-accent" />
+                <h1 className="text-2xl font-playfair font-bold text-accent">
+                  PR.COLLECTION
+                </h1>
+              </SoundButton>
             </motion.div>
 
             <LuxuryButton variant="luxury-outline" onClick={onProfile}>
@@ -148,22 +157,27 @@ export const HomePage = ({ onViewDiamond, onProfile }: HomePageProps) => {
           </h2>
           
           <div className="flex items-center gap-2">
-            <LuxuryButton variant="ghost" size="icon">
+            <SoundButton 
+              className="p-2 bg-transparent border-none text-muted-foreground hover:text-foreground"
+              soundType="icon"
+            >
               <Filter className="w-4 h-4" />
-            </LuxuryButton>
+            </SoundButton>
             <div className="flex bg-card rounded-lg p-1">
-              <button
+              <SoundButton
                 onClick={() => setViewMode("grid")}
-                className={`p-2 rounded ${viewMode === "grid" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                className={`p-2 rounded border-none ${viewMode === "grid" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                soundType="icon"
               >
                 <Grid className="w-4 h-4" />
-              </button>
-              <button
+              </SoundButton>
+              <SoundButton
                 onClick={() => setViewMode("list")}
-                className={`p-2 rounded ${viewMode === "list" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                className={`p-2 rounded border-none ${viewMode === "list" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                soundType="icon"
               >
                 <List className="w-4 h-4" />
-              </button>
+              </SoundButton>
             </div>
           </div>
         </div>

@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Star, Eye } from "lucide-react";
 import { LuxuryButton } from "./ui/luxury-button";
+import { SoundButton } from "./ui/SoundButton";
+import { useSound } from "@/hooks/useSound";
 
 export interface Diamond {
   id: string;
@@ -20,6 +22,12 @@ interface DiamondCardProps {
 }
 
 export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
+  const { playDiamondSparkle } = useSound();
+
+  const handleImageClick = () => {
+    playDiamondSparkle();
+    onView(diamond);
+  };
   return (
     <motion.div
       whileHover={{ y: -8, scale: 1.02 }}
@@ -27,11 +35,17 @@ export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
       className="bg-card border border-border rounded-xl overflow-hidden shadow-luxury hover:shadow-glow transition-all duration-300 group"
     >
       <div className="relative overflow-hidden diamond-shine">
-        <img 
-          src={diamond.image} 
-          alt={diamond.name}
-          className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-        />
+        <SoundButton
+          onClick={handleImageClick}
+          className="w-full h-64 bg-transparent border-none p-0 cursor-pointer"
+          soundType="sparkle"
+        >
+          <img 
+            src={diamond.image} 
+            alt={diamond.name}
+            className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+          />
+        </SoundButton>
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
         
         {/* Rating */}

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, User, Mail, Phone, MapPin, Package, CreditCard, Info, MessageSquare, LogOut, Gem } from "lucide-react";
 import { LuxuryButton } from "./ui/luxury-button";
+import { SoundButton } from "./ui/SoundButton";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 
@@ -42,10 +43,14 @@ export const ProfilePage = ({ userData, onBack, onLogout }: ProfilePageProps) =>
               Back to Home
             </LuxuryButton>
             
-            <div className="flex items-center gap-2">
+            <SoundButton 
+              className="flex items-center gap-2 bg-transparent border-none text-foreground hover:text-accent"
+              soundType="sparkle"
+              onClick={() => {}}
+            >
               <Gem className="w-6 h-6 text-accent" />
               <h1 className="text-xl font-playfair font-bold text-accent">Profile</h1>
-            </div>
+            </SoundButton>
           </div>
         </div>
       </motion.header>
