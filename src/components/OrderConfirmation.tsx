@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Truck, Package, Clock, Home } from "lucide-react";
 import { LuxuryButton } from "./ui/luxury-button";
@@ -18,20 +19,10 @@ export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }:
   const { playSuccess } = useSound();
 
   // Play success sound when component mounts
-  React.useEffect(() => {
+  useEffect(() => {
     playSuccess();
   }, [playSuccess]);
 
-interface OrderConfirmationProps {
-  diamond: Diamond;
-  orderDetails: {
-    orderId: string;
-    estimatedDelivery: string;
-  };
-  onContinueShopping: () => void;
-}
-
-export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }: OrderConfirmationProps) => {
   return (
     <div className="min-h-screen bg-gradient-luxury flex items-center justify-center p-4">
       <motion.div
