@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Gem, Sparkles } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -9,10 +10,17 @@ interface SplashScreenProps {
 export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   const [showLogo, setShowLogo] = useState(false);
   const [showText, setShowText] = useState(false);
+  const { playShine, playNotification } = useSound();
 
   useEffect(() => {
-    const timer1 = setTimeout(() => setShowLogo(true), 500);
-    const timer2 = setTimeout(() => setShowText(true), 1200);
+    const timer1 = setTimeout(() => {
+      setShowLogo(true);
+      playShine();
+    }, 500);
+    const timer2 = setTimeout(() => {
+      setShowText(true);
+      playNotification();
+    }, 1200);
     const timer3 = setTimeout(() => onComplete(), 3500);
 
     return () => {
@@ -20,7 +28,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       clearTimeout(timer2);
       clearTimeout(timer3);
     };
-  }, [onComplete]);
+  }, [onComplete, playShine, playNotification]);
 
   return (
     <div className="fixed inset-0 bg-gradient-luxury flex items-center justify-center z-50 overflow-hidden">

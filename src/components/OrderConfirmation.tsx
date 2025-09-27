@@ -2,7 +2,25 @@ import { motion } from "framer-motion";
 import { CheckCircle, Truck, Package, Clock, Home } from "lucide-react";
 import { LuxuryButton } from "./ui/luxury-button";
 import { Card } from "./ui/card";
+import { useSound } from "@/hooks/useSound";
 import type { Diamond } from "./DiamondCard";
+
+interface OrderConfirmationProps {
+  diamond: Diamond;
+  orderDetails: {
+    orderId: string;
+    estimatedDelivery: string;
+  };
+  onContinueShopping: () => void;
+}
+
+export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }: OrderConfirmationProps) => {
+  const { playSuccess } = useSound();
+
+  // Play success sound when component mounts
+  React.useEffect(() => {
+    playSuccess();
+  }, [playSuccess]);
 
 interface OrderConfirmationProps {
   diamond: Diamond;
