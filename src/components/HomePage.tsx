@@ -6,6 +6,8 @@ import { LuxuryButton } from "./ui/luxury-button";
 import { SoundButton } from "./ui/SoundButton";
 import { Input } from "./ui/input";
 import { useSound } from "@/hooks/useSound";
+import { PremiumFeatures } from "./PremiumFeatures";
+import { ContactSupport } from "./ContactSupport";
 import heroDiamond from "@/assets/hero-diamond.jpg";
 
 interface HomePageProps {
@@ -101,11 +103,29 @@ export const HomePage = ({ onViewDiamond, onProfile }: HomePageProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-luxury">
-      {/* Header */}
+      {/* Premium Header with Live Price Ticker */}
+      <motion.div 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="bg-secondary text-diamond-white py-2 text-center text-sm font-medium"
+      >
+        <motion.div 
+          className="flex items-center justify-center gap-8"
+          animate={{ x: [-100, 100, -100] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        >
+          <span>🏆 Gold: ₹6,245/g</span>
+          <span>💎 Diamond Index: +2.5%</span>
+          <span>✨ 10,000+ Diamonds Sold</span>
+          <span>⭐ 2000+ Happy Clients</span>
+        </motion.div>
+      </motion.div>
+
+      {/* Luxury Header */}
       <motion.header 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="bg-card/95 backdrop-blur-sm border-b border-accent/20 shadow-luxury sticky top-0 z-40"
+        className="bg-card/95 backdrop-blur-sm border-b border-accent/20 shadow-luxury sticky top-8 z-40"
       >
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -118,19 +138,91 @@ export const HomePage = ({ onViewDiamond, onProfile }: HomePageProps) => {
                 soundType="sparkle"
                 onClick={() => {}}
               >
-                <Gem className="w-8 h-8 text-accent" />
+                <div className="relative">
+                  <Gem className="w-8 h-8 text-accent" />
+                  <div className="absolute inset-0 w-8 h-8 bg-accent/20 rounded-full blur-md" />
+                </div>
                 <h1 className="text-2xl font-playfair font-bold text-accent">
                   PR.COLLECTION
                 </h1>
               </SoundButton>
             </motion.div>
 
-            <LuxuryButton variant="luxury-outline" onClick={onProfile}>
-              Profile
-            </LuxuryButton>
+            <div className="flex items-center gap-4">
+              <SoundButton 
+                className="text-sm bg-transparent border-none text-muted-foreground hover:text-accent"
+                soundType="icon"
+              >
+                📞 +91 98765 43210
+              </SoundButton>
+              <LuxuryButton variant="luxury-outline" onClick={onProfile}>
+                Profile
+              </LuxuryButton>
+            </div>
           </div>
         </div>
       </motion.header>
+
+      {/* Hero Banner Section */}
+      <motion.section 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="relative py-20 px-4 text-center"
+        style={{
+          background: 'linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(13,71,161,0.3) 50%, rgba(0,0,0,0.9) 100%)'
+        }}
+      >
+        <div className="container mx-auto max-w-4xl">
+          <motion.h1 
+            className="text-5xl md:text-7xl font-playfair font-bold mb-6"
+            style={{
+              background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Pure. Precious. Perfect.
+          </motion.h1>
+          
+          <motion.p 
+            className="text-xl md:text-2xl text-diamond-white mb-8 font-light"
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            Discover the finest collection of certified diamonds
+          </motion.p>
+
+          {/* Quick Action Buttons */}
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12"
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            <LuxuryButton variant="luxury" className="h-16 text-sm">
+              💎 Shop Diamonds
+            </LuxuryButton>
+            <LuxuryButton variant="luxury-outline" className="h-16 text-sm">
+              ✨ Custom Design
+            </LuxuryButton>
+            <LuxuryButton variant="luxury-outline" className="h-16 text-sm">
+              🏆 Certified Stones
+            </LuxuryButton>
+            <LuxuryButton variant="luxury-outline" className="h-16 text-sm">
+              📞 Contact Us
+            </LuxuryButton>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Premium Features Section */}
+      <PremiumFeatures onViewDiamond={onViewDiamond} />
 
       {/* Search & Filter Section */}
       <motion.section 
@@ -229,6 +321,9 @@ export const HomePage = ({ onViewDiamond, onProfile }: HomePageProps) => {
           </motion.div>
         )}
       </section>
+
+      {/* Contact & Support Section */}
+      <ContactSupport />
     </div>
   );
 };

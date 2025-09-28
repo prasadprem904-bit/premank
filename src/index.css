@@ -8,48 +8,54 @@
 
 @layer base {
   :root {
-    /* Luxury Color Palette */
-    --background: 0 0% 2%;
-    --foreground: 0 0% 98%;
+    /* PR.COLLECTION Luxury Color Palette */
+    --background: 0 0% 0%;                    /* Pure Black */
+    --foreground: 0 0% 97%;                   /* Diamond White */
 
-    --card: 0 0% 4%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 3%;                         /* Subtle Black Card */
+    --card-foreground: 0 0% 97%;
 
-    --popover: 0 0% 3%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 2%;
+    --popover-foreground: 0 0% 97%;
 
-    --primary: 0 0% 0%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 0%;                       /* Pure Black */
+    --primary-foreground: 0 0% 97%;
 
-    --secondary: 0 0% 8%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 213 100% 26%;                /* Royal Blue */
+    --secondary-foreground: 0 0% 97%;
 
-    --muted: 0 0% 6%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 45 100% 50%;
+    --accent: 45 100% 50%;                    /* Golden */
     --accent-foreground: 0 0% 0%;
+
+    --royal-blue: 213 100% 26%;               /* Royal Blue #0D47A1 */
+    --diamond-white: 0 0% 97%;                /* Diamond White #F8F8F8 */
+    --luxury-gold: 45 100% 50%;               /* Golden #FFD700 */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 10%;
+    --border: 213 100% 26% / 0.2;
+    --input: 0 0% 5%;
     --ring: 45 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Luxury Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(0 0% 8%) 100%);
+    /* Premium Luxury Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(213 100% 26%) 100%);
     --gradient-gold: linear-gradient(135deg, hsl(45 100% 50%) 0%, hsl(43 100% 60%) 50%, hsl(45 100% 50%) 100%);
     --gradient-diamond: linear-gradient(135deg, hsl(0 0% 90%) 0%, hsl(0 0% 100%) 30%, hsl(220 20% 95%) 60%, hsl(0 0% 100%) 100%);
-    --gradient-luxury: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(45 20% 8%) 50%, hsl(0 0% 4%) 100%);
+    --gradient-luxury: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(213 100% 26%) 30%, hsl(0 0% 0%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(213 100% 26% / 0.8) 50%, hsl(0 0% 0%) 100%);
 
-    /* Shadows & Effects */
-    --shadow-luxury: 0 20px 40px -10px hsl(0 0% 0% / 0.8);
-    --shadow-gold: 0 0 30px hsl(45 100% 50% / 0.3);
-    --shadow-diamond: 0 0 25px hsl(0 0% 100% / 0.4);
-    --shadow-glow: 0 0 50px hsl(45 100% 50% / 0.2);
+    /* Premium Shadows & Effects */
+    --shadow-luxury: 0 25px 50px -12px hsl(0 0% 0% / 0.9);
+    --shadow-gold: 0 0 40px hsl(45 100% 50% / 0.4);
+    --shadow-diamond: 0 0 30px hsl(0 0% 100% / 0.5);
+    --shadow-glow: 0 0 60px hsl(45 100% 50% / 0.3);
+    --shadow-royal: 0 0 40px hsl(213 100% 26% / 0.4);
     
     /* Animations */
     --transition-luxury: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
