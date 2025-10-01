@@ -84,7 +84,7 @@ export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
               <Gem className="w-12 h-12 text-accent" />
             </motion.div>
             <h1 className="text-3xl font-playfair font-bold text-accent mb-2">
-              PR.COLLECTION
+              D&O Collections
             </h1>
             <p className="text-muted-foreground">
               {isLogin ? "Welcome back to luxury" : "Join the diamond experience"}
@@ -215,7 +215,7 @@ export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
           {/* Toggle Auth Mode */}
           <div className="mt-6 text-center">
             <p className="text-muted-foreground mb-2">
-              {isLogin ? "New to PR.COLLECTION?" : "Already have an account?"}
+              {isLogin ? "New to D&O Collections?" : "Already have an account?"}
             </p>
             <LuxuryButton
               variant="luxury-outline"

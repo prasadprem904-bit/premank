@@ -119,10 +119,10 @@ export const ProfilePage = ({ userData, onBack, onLogout }: ProfilePageProps) =>
             <Card className="p-8 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
               <div className="flex items-center gap-3 mb-4">
                 <Info className="w-6 h-6 text-accent" />
-                <h3 className="text-xl font-playfair font-semibold text-foreground">About PR.COLLECTION</h3>
+                <h3 className="text-xl font-playfair font-semibold text-foreground">About D&O Collections</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                PR.COLLECTION is a premium diamond store bringing brilliance, trust, and elegance together. 
+                D&O Collections is a premium diamond store bringing brilliance, trust, and elegance together.
                 Every piece is handpicked to add sparkle to your life. We pride ourselves on offering the finest 
                 quality diamonds with exceptional craftsmanship and unparalleled customer service.
               </p>
@@ -207,7 +207,7 @@ export const ProfilePage = ({ userData, onBack, onLogout }: ProfilePageProps) =>
                 <div className="text-center">
                   <Mail className="w-8 h-8 text-accent mx-auto mb-3" />
                   <p className="text-sm text-muted-foreground mb-1">Email Support</p>
-                  <p className="font-medium text-foreground">support@pr-collection.com</p>
+                  <p className="font-medium text-foreground">support@dno-collections.com</p>
                 </div>
                 <div className="text-center">
                   <Phone className="w-8 h-8 text-accent mx-auto mb-3" />

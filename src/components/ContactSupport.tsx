@@ -24,7 +24,7 @@ export const ContactSupport = () => {
       icon: Mail,
       title: "Email",
       subtitle: "Detailed Queries",
-      value: "support@pr.collection",
+      value: "support@dno-collections.com",
       action: "Send Email"
     }
   ];

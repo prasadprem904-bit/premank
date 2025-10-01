@@ -149,7 +149,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              Welcome to PR.COLLECTION
+              Welcome to D&O Collections
             </motion.h1>
             <motion.p 
               className="text-2xl md:text-3xl text-white font-light opacity-90"

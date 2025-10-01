@@ -143,7 +143,7 @@ export const HomePage = ({ onViewDiamond, onProfile }: HomePageProps) => {
                   <div className="absolute inset-0 w-8 h-8 bg-accent/20 rounded-full blur-md" />
                 </div>
                 <h1 className="text-2xl font-playfair font-bold text-accent">
-                  PR.COLLECTION
+                  D&O Collections
                 </h1>
               </SoundButton>
             </motion.div>

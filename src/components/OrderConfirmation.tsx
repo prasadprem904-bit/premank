@@ -71,7 +71,7 @@ export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }:
               Order Successfully Placed! 🎉
             </h1>
             <p className="text-xl text-muted-foreground mb-6">
-              Thank you for choosing PR.COLLECTION
+              Thank you for choosing D&O Collections
             </p>
             <p className="text-lg text-foreground">
               Your exquisite <span className="text-accent font-semibold">{diamond.name}</span> is being prepared for delivery
