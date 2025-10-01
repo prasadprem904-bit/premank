@@ -33,10 +33,31 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 overflow-hidden" style={{
-      background: 'linear-gradient(135deg, #000000 0%, #0D47A1 30%, #000000 70%, #0D47A1 100%)'
+      background: 'linear-gradient(135deg, #0B1736 0%, #1a237e 30%, #0B1736 70%, #1a237e 100%)'
     }}>
-      {/* Glowing Effect Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-50" />
+      {/* Luxury Glowing Effect Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/80 opacity-60" />
+      
+      {/* Animated Golden Lines - Luxury Reveal */}
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <motion.div
+          className="absolute h-px bg-gradient-to-r from-transparent via-yellow-400 to-transparent"
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute w-px bg-gradient-to-b from-transparent via-yellow-400 to-transparent"
+          initial={{ height: "0%" }}
+          animate={{ height: "100%" }}
+          transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
+        />
+      </motion.div>
       
       {/* Premium Animated Sparkles */}
       <div className="absolute inset-0">
@@ -64,36 +85,71 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       </div>
 
       <div className="relative text-center">
-        {/* Shining Diamond Animation */}
+        {/* Shining Diamond Animation with Shine Effect */}
         {showLogo && (
           <motion.div
             initial={{ scale: 0, rotate: -180, opacity: 0 }}
             animate={{ scale: 1, rotate: 0, opacity: 1 }}
             transition={{ 
-              duration: 1.2, 
+              duration: 1.5, 
               ease: "easeOut",
               type: "spring",
-              stiffness: 200,
-              damping: 15
+              stiffness: 150,
+              damping: 12
             }}
             className="mb-8 relative"
           >
             <motion.div
               className="relative"
               animate={{ 
-                rotate: [0, 10, -10, 0],
-                scale: [1, 1.05, 1]
+                rotate: [0, 5, -5, 0],
+                scale: [1, 1.03, 1]
               }}
               transition={{ 
-                duration: 4,
+                duration: 5,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
             >
+              {/* Enhanced Glow Effect */}
               <div className="absolute inset-0 w-48 h-48 mx-auto">
-                <div className="w-full h-full bg-gradient-to-br from-yellow-200 via-yellow-400 to-yellow-600 rounded-full blur-xl opacity-60" />
+                <motion.div 
+                  className="w-full h-full bg-gradient-to-br from-yellow-200 via-yellow-400 to-yellow-600 rounded-full blur-2xl"
+                  animate={{ 
+                    opacity: [0.4, 0.7, 0.4],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
               </div>
-              <img src={dnoLogo} alt="D&O Collections" className="w-48 h-48 mx-auto relative z-10 filter drop-shadow-2xl object-contain" />
+              
+              {/* Logo with Shine Effect */}
+              <div className="relative w-48 h-48 mx-auto overflow-hidden rounded-full">
+                <img src={dnoLogo} alt="D&O Collections" className="w-48 h-48 relative z-10 filter drop-shadow-2xl object-contain" />
+                
+                {/* Diamond Shine Animation - Light Reflection */}
+                <motion.div
+                  className="absolute inset-0 z-20"
+                  initial={{ x: "-100%", rotate: 20 }}
+                  animate={{ x: "200%" }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    repeatDelay: 3,
+                    ease: "easeInOut"
+                  }}
+                  style={{
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%)',
+                    width: '50%',
+                    height: '200%',
+                    top: '-50%',
+                  }}
+                />
+              </div>
             </motion.div>
             
             {/* Premium Rotating Sparkles */}
