@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, User, Mail, Phone, MapPin, Package, CreditCard, Info, MessageSquare, LogOut, Gem } from "lucide-react";
+import { ArrowLeft, User, Mail, Phone, MapPin, Package, CreditCard, Info, MessageSquare, LogOut } from "lucide-react";
 import { LuxuryButton } from "./ui/luxury-button";
 import { SoundButton } from "./ui/SoundButton";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
+import dnoLogo from "@/assets/dno-logo.png";
 
 interface ProfilePageProps {
   userData: {
@@ -48,7 +49,7 @@ export const ProfilePage = ({ userData, onBack, onLogout }: ProfilePageProps) =>
               soundType="sparkle"
               onClick={() => {}}
             >
-              <Gem className="w-6 h-6 text-accent" />
+              <img src={dnoLogo} alt="D&O Collections" className="w-8 h-8 object-contain" />
               <h1 className="text-xl font-playfair font-bold text-accent">Profile</h1>
             </SoundButton>
           </div>

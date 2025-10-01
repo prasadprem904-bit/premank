@@ -9,6 +9,7 @@ import { useSound } from "@/hooks/useSound";
 import { PremiumFeatures } from "./PremiumFeatures";
 import { ContactSupport } from "./ContactSupport";
 import heroDiamond from "@/assets/hero-diamond.jpg";
+import dnoLogo from "@/assets/dno-logo.png";
 
 interface HomePageProps {
   onViewDiamond: (diamond: Diamond) => void;
@@ -139,8 +140,7 @@ export const HomePage = ({ onViewDiamond, onProfile }: HomePageProps) => {
                 onClick={() => {}}
               >
                 <div className="relative">
-                  <Gem className="w-8 h-8 text-accent" />
-                  <div className="absolute inset-0 w-8 h-8 bg-accent/20 rounded-full blur-md" />
+                  <img src={dnoLogo} alt="D&O Collections" className="w-10 h-10 object-contain" />
                 </div>
                 <h1 className="text-2xl font-playfair font-bold text-accent">
                   D&O Collections

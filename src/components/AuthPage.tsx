@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Eye, EyeOff, Mail, Phone, User, MapPin, Lock, Gem } from "lucide-react";
+import { Eye, EyeOff, Mail, Phone, User, MapPin, Lock } from "lucide-react";
 import { LuxuryButton } from "./ui/luxury-button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Card } from "./ui/card";
+import dnoLogo from "@/assets/dno-logo.png";
 
 interface AuthPageProps {
   onAuthSuccess: (userData: any) => void;
@@ -77,11 +78,11 @@ export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
           {/* Header */}
           <div className="text-center mb-8">
             <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              animate={{ rotate: [0, 5, -5, 0] }}
+              transition={{ duration: 3, repeat: Infinity }}
               className="inline-block mb-4"
             >
-              <Gem className="w-12 h-12 text-accent" />
+              <img src={dnoLogo} alt="D&O Collections" className="w-24 h-24 mx-auto" />
             </motion.div>
             <h1 className="text-3xl font-playfair font-bold text-accent mb-2">
               D&O Collections

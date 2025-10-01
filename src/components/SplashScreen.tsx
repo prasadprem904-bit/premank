@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Gem, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useSound } from "@/hooks/useSound";
+import dnoLogo from "@/assets/dno-logo.png";
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -89,10 +90,10 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
                 ease: "easeInOut"
               }}
             >
-              <div className="absolute inset-0 w-32 h-32 mx-auto">
+              <div className="absolute inset-0 w-48 h-48 mx-auto">
                 <div className="w-full h-full bg-gradient-to-br from-yellow-200 via-yellow-400 to-yellow-600 rounded-full blur-xl opacity-60" />
               </div>
-              <Gem className="w-32 h-32 text-yellow-400 mx-auto relative z-10 filter drop-shadow-2xl" />
+              <img src={dnoLogo} alt="D&O Collections" className="w-48 h-48 mx-auto relative z-10 filter drop-shadow-2xl object-contain" />
             </motion.div>
             
             {/* Premium Rotating Sparkles */}
