@@ -7,25 +7,37 @@ export const ContactSupport = () => {
   const contactMethods = [
     {
       icon: MessageCircle,
-      title: "WhatsApp",
+      title: "WhatsApp Contact",
       subtitle: "Instant Support",
       value: "+91 98765 43210",
       action: "Chat Now",
+      link: "https://wa.me/919876543210",
       primary: true
+    },
+    {
+      icon: MessageCircle,
+      title: "WhatsApp Channel",
+      subtitle: "Join Our Channel",
+      value: "D&O Collections Updates",
+      action: "Join Channel",
+      link: "https://whatsapp.com/channel/0029VaoLotu42DchJMXK3i1L",
+      primary: false
+    },
+    {
+      icon: Mail,
+      title: "Email Contact",
+      subtitle: "Detailed Queries",
+      value: "support@dno-collections.com",
+      action: "Send Email",
+      link: "mailto:support@dno-collections.com"
     },
     {
       icon: Phone,
       title: "Call Us",
       subtitle: "Direct Support",
       value: "+91 98765 43210",
-      action: "Call Now"
-    },
-    {
-      icon: Mail,
-      title: "Email",
-      subtitle: "Detailed Queries",
-      value: "support@dno-collections.com",
-      action: "Send Email"
+      action: "Call Now",
+      link: "tel:+919876543210"
     }
   ];
 
@@ -77,49 +89,51 @@ export const ContactSupport = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 * index }}
             >
-              <SoundButton
-                className="w-full bg-transparent border-none p-0"
-                soundType="icon"
-              >
-                <div className={`p-6 rounded-xl border transition-all duration-300 hover:scale-105 ${
-                  method.primary 
-                    ? 'bg-gradient-gold border-accent shadow-gold' 
-                    : 'bg-card border-border hover:border-accent/50'
-                }`}>
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                      method.primary 
-                        ? 'bg-accent-foreground text-accent' 
-                        : 'bg-accent text-accent-foreground'
-                    }`}>
-                      <method.icon className="w-6 h-6" />
+              <a href={method.link} target="_blank" rel="noopener noreferrer" className="block">
+                <SoundButton
+                  className="w-full bg-transparent border-none p-0"
+                  soundType="icon"
+                >
+                  <div className={`p-6 rounded-xl border transition-all duration-300 hover:scale-105 ${
+                    method.primary 
+                      ? 'bg-gradient-gold border-accent shadow-gold' 
+                      : 'bg-card border-border hover:border-accent/50'
+                  }`}>
+                    <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                        method.primary 
+                          ? 'bg-accent-foreground text-accent' 
+                          : 'bg-accent text-accent-foreground'
+                      }`}>
+                        <method.icon className="w-6 h-6" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className={`font-semibold ${
+                          method.primary ? 'text-accent-foreground' : 'text-foreground'
+                        }`}>
+                          {method.title}
+                        </h4>
+                        <p className={`text-sm ${
+                          method.primary ? 'text-accent-foreground/80' : 'text-muted-foreground'
+                        }`}>
+                          {method.subtitle}
+                        </p>
+                        <p className={`text-sm font-medium ${
+                          method.primary ? 'text-accent-foreground' : 'text-foreground'
+                        }`}>
+                          {method.value}
+                        </p>
+                      </div>
+                      <LuxuryButton 
+                        variant={method.primary ? "secondary" : "luxury-outline"}
+                        size="sm"
+                      >
+                        {method.action}
+                      </LuxuryButton>
                     </div>
-                    <div className="flex-1">
-                      <h4 className={`font-semibold ${
-                        method.primary ? 'text-accent-foreground' : 'text-foreground'
-                      }`}>
-                        {method.title}
-                      </h4>
-                      <p className={`text-sm ${
-                        method.primary ? 'text-accent-foreground/80' : 'text-muted-foreground'
-                      }`}>
-                        {method.subtitle}
-                      </p>
-                      <p className={`text-sm font-medium ${
-                        method.primary ? 'text-accent-foreground' : 'text-foreground'
-                      }`}>
-                        {method.value}
-                      </p>
-                    </div>
-                    <LuxuryButton 
-                      variant={method.primary ? "secondary" : "luxury-outline"}
-                      size="sm"
-                    >
-                      {method.action}
-                    </LuxuryButton>
                   </div>
-                </div>
-              </SoundButton>
+                </SoundButton>
+              </a>
             </motion.div>
           ))}
         </div>

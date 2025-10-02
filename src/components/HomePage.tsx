@@ -14,6 +14,8 @@ import dnoLogo from "@/assets/dno-logo.png";
 interface HomePageProps {
   onViewDiamond: (diamond: Diamond) => void;
   onProfile: () => void;
+  onCustomDesign: () => void;
+  onCertificate: () => void;
 }
 
 // Sample diamond data
@@ -86,7 +88,7 @@ const sampleDiamonds: Diamond[] = [
   },
 ];
 
-export const HomePage = ({ onViewDiamond, onProfile }: HomePageProps) => {
+export const HomePage = ({ onViewDiamond, onProfile, onCustomDesign, onCertificate }: HomePageProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filteredDiamonds, setFilteredDiamonds] = useState(sampleDiamonds);
@@ -208,10 +210,10 @@ export const HomePage = ({ onViewDiamond, onProfile }: HomePageProps) => {
             <LuxuryButton variant="luxury" className="h-16 text-sm">
               💎 Shop Diamonds
             </LuxuryButton>
-            <LuxuryButton variant="luxury-outline" className="h-16 text-sm">
+            <LuxuryButton variant="luxury-outline" className="h-16 text-sm" onClick={onCustomDesign}>
               ✨ Custom Design
             </LuxuryButton>
-            <LuxuryButton variant="luxury-outline" className="h-16 text-sm">
+            <LuxuryButton variant="luxury-outline" className="h-16 text-sm" onClick={onCertificate}>
               🏆 Certified Stones
             </LuxuryButton>
             <LuxuryButton variant="luxury-outline" className="h-16 text-sm">

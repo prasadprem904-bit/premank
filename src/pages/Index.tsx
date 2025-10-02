@@ -5,9 +5,11 @@ import { HomePage } from "@/components/HomePage";
 import { DiamondDetails } from "@/components/DiamondDetails";
 import { OrderConfirmation } from "@/components/OrderConfirmation";
 import { ProfilePage } from "@/components/ProfilePage";
+import { CustomDesign } from "@/components/CustomDesign";
+import { CertificateGenerator } from "@/components/CertificateGenerator";
 import type { Diamond } from "@/components/DiamondCard";
 
-type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'order-confirmation' | 'profile';
+type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'order-confirmation' | 'profile' | 'custom-design' | 'certificate';
 
 const Index = () => {
   const [currentState, setCurrentState] = useState<AppState>('splash');
@@ -67,6 +69,14 @@ const Index = () => {
     setSelectedDiamond(null);
   };
 
+  const handleCustomDesign = () => {
+    setCurrentState('custom-design');
+  };
+
+  const handleCertificate = () => {
+    setCurrentState('certificate');
+  };
+
   return (
     <main className="min-h-screen">
       {currentState === 'splash' && (
@@ -81,7 +91,17 @@ const Index = () => {
         <HomePage 
           onViewDiamond={handleViewDiamond}
           onProfile={handleProfile}
+          onCustomDesign={handleCustomDesign}
+          onCertificate={handleCertificate}
         />
+      )}
+
+      {currentState === 'custom-design' && (
+        <CustomDesign onBack={handleBackToHome} />
+      )}
+
+      {currentState === 'certificate' && (
+        <CertificateGenerator onBack={handleBackToHome} />
       )}
 
       {currentState === 'diamond-details' && selectedDiamond && (
