@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, Truck, Package, Clock, Home } from "lucide-react";
-import { LuxuryButton } from "./ui/luxury-button";
+import { CheckCircle2, Package, Clock, Truck, Home } from "lucide-react";
 import { Card } from "./ui/card";
-import { useSound } from "@/hooks/useSound";
+import { Badge } from "./ui/badge";
+import { LuxuryButton } from "./ui/luxury-button";
 import type { Diamond } from "./DiamondCard";
+import dnoLogo from "@/assets/dno-logo.png";
 
 interface OrderConfirmationProps {
   diamond: Diamond;
@@ -16,13 +16,6 @@ interface OrderConfirmationProps {
 }
 
 export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }: OrderConfirmationProps) => {
-  const { playSuccess } = useSound();
-
-  // Play success sound when component mounts
-  useEffect(() => {
-    playSuccess();
-  }, [playSuccess]);
-
   return (
     <div className="min-h-screen bg-gradient-luxury flex items-center justify-center p-4">
       <motion.div
@@ -44,7 +37,7 @@ export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }:
             className="mb-8"
           >
             <div className="relative inline-block">
-              <CheckCircle className="w-24 h-24 text-green-500 mx-auto" />
+              <CheckCircle2 className="w-24 h-24 text-green-500 mx-auto" />
               <motion.div
                 animate={{ 
                   scale: [1, 1.2, 1],
@@ -122,7 +115,7 @@ export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }:
             <div className="flex items-center justify-between text-center">
               <div className="flex-1">
                 <div className="w-8 h-8 bg-accent rounded-full mx-auto mb-2 flex items-center justify-center">
-                  <CheckCircle className="w-4 h-4 text-accent-foreground" />
+                  <CheckCircle2 className="w-4 h-4 text-accent-foreground" />
                 </div>
                 <p className="text-xs text-accent font-semibold">Order Placed</p>
               </div>

@@ -3,9 +3,8 @@ import { motion } from "framer-motion";
 import { Search, Filter, Grid, List, Gem } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
 import { LuxuryButton } from "./ui/luxury-button";
-import { SoundButton } from "./ui/SoundButton";
+import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { useSound } from "@/hooks/useSound";
 import { PremiumFeatures } from "./PremiumFeatures";
 import { ContactSupport } from "./ContactSupport";
 import heroDiamond from "@/assets/hero-diamond.jpg";
@@ -92,7 +91,6 @@ export const HomePage = ({ onViewDiamond, onProfile, onCustomDesign, onCertifica
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filteredDiamonds, setFilteredDiamonds] = useState(sampleDiamonds);
-  const { playIconClick } = useSound();
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -136,27 +134,20 @@ export const HomePage = ({ onViewDiamond, onProfile, onCustomDesign, onCertifica
               className="flex items-center gap-3"
               whileHover={{ scale: 1.05 }}
             >
-              <SoundButton 
-                className="flex items-center gap-3 bg-transparent border-none p-0"
-                soundType="sparkle"
-                onClick={() => {}}
-              >
+              <div className="flex items-center gap-3">
                 <div className="relative">
                   <img src={dnoLogo} alt="D&O Collections" className="w-10 h-10 object-contain" />
                 </div>
                 <h1 className="text-2xl font-playfair font-bold text-accent">
                   D&O Collections
                 </h1>
-              </SoundButton>
+              </div>
             </motion.div>
 
             <div className="flex items-center gap-4">
-              <SoundButton 
-                className="text-sm bg-transparent border-none text-muted-foreground hover:text-accent"
-                soundType="icon"
-              >
+              <span className="text-sm text-muted-foreground hover:text-accent cursor-pointer">
                 📞 +91 98765 43210
-              </SoundButton>
+              </span>
               <LuxuryButton variant="luxury-outline" onClick={onProfile}>
                 Profile
               </LuxuryButton>
@@ -251,27 +242,30 @@ export const HomePage = ({ onViewDiamond, onProfile, onCustomDesign, onCertifica
           </h2>
           
           <div className="flex items-center gap-2">
-            <SoundButton 
-              className="p-2 bg-transparent border-none text-muted-foreground hover:text-foreground"
-              soundType="icon"
+            <Button 
+              variant="ghost"
+              size="icon"
+              className="text-muted-foreground hover:text-foreground"
             >
               <Filter className="w-4 h-4" />
-            </SoundButton>
+            </Button>
             <div className="flex bg-card rounded-lg p-1">
-              <SoundButton
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => setViewMode("grid")}
-                className={`p-2 rounded border-none ${viewMode === "grid" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"}`}
-                soundType="icon"
+                className={`p-2 rounded ${viewMode === "grid" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"}`}
               >
                 <Grid className="w-4 h-4" />
-              </SoundButton>
-              <SoundButton
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => setViewMode("list")}
-                className={`p-2 rounded border-none ${viewMode === "list" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"}`}
-                soundType="icon"
+                className={`p-2 rounded ${viewMode === "list" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"}`}
               >
                 <List className="w-4 h-4" />
-              </SoundButton>
+              </Button>
             </div>
           </div>
         </div>

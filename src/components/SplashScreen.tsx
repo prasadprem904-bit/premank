@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
-import { useSound } from "@/hooks/useSound";
 import dnoLogo from "@/assets/dno-logo.png";
 
 interface SplashScreenProps {
@@ -11,16 +9,13 @@ interface SplashScreenProps {
 export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   const [showLogo, setShowLogo] = useState(false);
   const [showText, setShowText] = useState(false);
-  const { playShine, playNotification } = useSound();
 
   useEffect(() => {
     const timer1 = setTimeout(() => {
       setShowLogo(true);
-      playShine();
     }, 500);
     const timer2 = setTimeout(() => {
       setShowText(true);
-      playNotification();
     }, 1200);
     const timer3 = setTimeout(() => onComplete(), 3500);
 
@@ -29,7 +24,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       clearTimeout(timer2);
       clearTimeout(timer3);
     };
-  }, [onComplete, playShine, playNotification]);
+  }, [onComplete]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 overflow-hidden" style={{
@@ -174,7 +169,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
                   delay: i * 0.2,
                 }}
               >
-                <Sparkles className="w-3 h-3 text-yellow-300" />
+                <div className="w-3 h-3 bg-yellow-300 rounded-full"></div>
               </motion.div>
             ))}
           </motion.div>

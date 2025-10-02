@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
-import { Shield, Award, Gem, Star, Heart, RotateCcw } from "lucide-react";
+import { Shield, Award, TrendingUp, Sparkles } from "lucide-react";
+import { Card } from "./ui/card";
 import { LuxuryButton } from "./ui/luxury-button";
-import { SoundButton } from "./ui/SoundButton";
+import type { Diamond } from "./DiamondCard";
+
+import { Gem, Star, Heart, RotateCcw } from "lucide-react";
 
 interface PremiumFeaturesProps {
   onViewDiamond: (diamond: any) => void;
@@ -84,33 +87,28 @@ export const PremiumFeatures = ({ onViewDiamond }: PremiumFeaturesProps) => {
               transition={{ delay: 0.1 * index }}
               className="group"
             >
-              <SoundButton
-                className="w-full bg-transparent border-none p-0"
-                soundType="sparkle"
-              >
-                <div className="bg-card border border-border rounded-xl overflow-hidden shadow-luxury hover:shadow-glow transition-all duration-300 group-hover:scale-105">
-                  <div className="h-48 bg-gradient-diamond relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                    <div className="absolute top-4 right-4 bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm font-semibold">
-                      {category.count}
-                    </div>
-                    <div className="absolute bottom-4 left-4">
-                      <category.icon className="w-8 h-8 text-accent mb-2" />
-                    </div>
+              <div className="bg-card border border-border rounded-xl overflow-hidden shadow-luxury hover:shadow-glow transition-all duration-300 group-hover:scale-105">
+                <div className="h-48 bg-gradient-diamond relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute top-4 right-4 bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm font-semibold">
+                    {category.count}
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-lg font-playfair font-semibold text-foreground mb-2">
-                      {category.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {category.description}
-                    </p>
-                    <LuxuryButton variant="luxury-outline" size="sm" className="w-full">
-                      Explore Collection
-                    </LuxuryButton>
+                  <div className="absolute bottom-4 left-4">
+                    <category.icon className="w-8 h-8 text-accent mb-2" />
                   </div>
                 </div>
-              </SoundButton>
+                <div className="p-6">
+                  <h3 className="text-lg font-playfair font-semibold text-foreground mb-2">
+                    {category.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {category.description}
+                  </p>
+                  <LuxuryButton variant="luxury-outline" size="sm" className="w-full">
+                    Explore Collection
+                  </LuxuryButton>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>

@@ -1,10 +1,8 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Star, Award, Shield, Truck } from "lucide-react";
-import { LuxuryButton } from "./ui/luxury-button";
-import { SoundButton } from "./ui/SoundButton";
+import { ArrowLeft, Shield, Truck, Award, Star } from "lucide-react";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { useSound } from "@/hooks/useSound";
+import { LuxuryButton } from "./ui/luxury-button";
 import type { Diamond } from "./DiamondCard";
 
 interface DiamondDetailsProps {
@@ -17,7 +15,6 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
   const paymentMethods = [
     "PhonePe", "Paytm", "UPI", "Cash on Delivery", "Credit Card", "Debit Card"
   ];
-  const { playDiamondSparkle } = useSound();
 
   return (
     <div className="min-h-screen bg-gradient-luxury">
@@ -49,19 +46,13 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
           >
             <Card className="p-8 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
               <div className="relative diamond-shine rounded-xl overflow-hidden">
-                <SoundButton
-                  onClick={() => playDiamondSparkle()}
-                  className="w-full bg-transparent border-none p-0"
-                  soundType="sparkle"
-                >
-                  <motion.img
-                    src={diamond.image}
-                    alt={diamond.name}
-                    className="w-full h-96 object-cover"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.5 }}
-                  />
-                </SoundButton>
+                <motion.img
+                  src={diamond.image}
+                  alt={diamond.name}
+                  className="w-full h-96 object-cover"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                />
                 <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/70 px-3 py-2 rounded-full">
                   <Star className="w-4 h-4 text-accent fill-current" />
                   <span className="text-white font-medium">{diamond.rating}</span>

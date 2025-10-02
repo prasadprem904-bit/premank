@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, User, Mail, Phone, MapPin, Package, CreditCard, Info, MessageSquare, LogOut } from "lucide-react";
-import { LuxuryButton } from "./ui/luxury-button";
-import { SoundButton } from "./ui/SoundButton";
+import { ArrowLeft, User, Mail, Phone, MapPin, Calendar, LogOut, Settings } from "lucide-react";
 import { Card } from "./ui/card";
+import { Button } from "./ui/button";
+import { LuxuryButton } from "./ui/luxury-button";
 import { Badge } from "./ui/badge";
 import dnoLogo from "@/assets/dno-logo.png";
+
+import { Package, CreditCard, Info, MessageSquare } from "lucide-react";
 
 interface ProfilePageProps {
   userData: {
@@ -44,14 +46,21 @@ export const ProfilePage = ({ userData, onBack, onLogout }: ProfilePageProps) =>
               Back to Home
             </LuxuryButton>
             
-            <SoundButton 
-              className="flex items-center gap-2 bg-transparent border-none text-foreground hover:text-accent"
-              soundType="sparkle"
-              onClick={() => {}}
-            >
-              <img src={dnoLogo} alt="D&O Collections" className="w-8 h-8 object-contain" />
-              <h1 className="text-xl font-playfair font-bold text-accent">Profile</h1>
-            </SoundButton>
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl font-playfair font-bold text-accent">D&O Collections</h1>
+            <div className="flex gap-2">
+              <Button 
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-accent"
+              >
+                <Settings className="w-5 h-5" />
+              </Button>
+              <LuxuryButton variant="ghost" onClick={onBack}>
+                <ArrowLeft className="w-5 h-5" />
+              </LuxuryButton>
+            </div>
+          </div>
           </div>
         </div>
       </motion.header>
