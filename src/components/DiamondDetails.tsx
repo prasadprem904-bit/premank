@@ -3,6 +3,7 @@ import { ArrowLeft, Shield, Truck, Award, Star } from "lucide-react";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { LuxuryButton } from "./ui/luxury-button";
+import { Diamond3DViewer } from "./Diamond3DViewer";
 import type { Diamond } from "./DiamondCard";
 
 interface DiamondDetailsProps {
@@ -38,25 +39,15 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Diamond Image */}
+          {/* 3D Diamond Viewer */}
           <motion.div
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <Card className="p-8 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
-              <div className="relative diamond-shine rounded-xl overflow-hidden">
-                <motion.img
-                  src={diamond.image}
-                  alt={diamond.name}
-                  className="w-full h-96 object-cover"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.5 }}
-                />
-                <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/70 px-3 py-2 rounded-full">
-                  <Star className="w-4 h-4 text-accent fill-current" />
-                  <span className="text-white font-medium">{diamond.rating}</span>
-                </div>
+            <Card className="p-6 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
+              <div className="relative rounded-xl overflow-hidden h-[500px]">
+                <Diamond3DViewer diamondName={diamond.name} />
               </div>
 
               {/* Quick Stats */}
