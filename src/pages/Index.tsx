@@ -16,13 +16,36 @@ const Index = () => {
   const [userData, setUserData] = useState<any>(null);
   const [selectedDiamond, setSelectedDiamond] = useState<Diamond | null>(null);
   const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  // Check for existing session on mount
+  useEffect(() => {
+    const storedUserData = localStorage.getItem('dno_user_data');
+    if (storedUserData) {
+      try {
+        const parsedData = JSON.parse(storedUserData);
+        setUserData(parsedData);
+        setCurrentState('home');
+      } catch (error) {
+        console.error('Failed to parse stored user data');
+        localStorage.removeItem('dno_user_data');
+      }
+    }
+    setIsCheckingAuth(false);
+  }, []);
 
   const handleSplashComplete = () => {
-    setCurrentState('auth');
+    // Only show auth if no user is logged in
+    if (!userData) {
+      setCurrentState('auth');
+    } else {
+      setCurrentState('home');
+    }
   };
 
   const handleAuthSuccess = (data: any) => {
     setUserData(data);
+    localStorage.setItem('dno_user_data', JSON.stringify(data));
     setCurrentState('home');
   };
 
@@ -60,6 +83,7 @@ const Index = () => {
 
   const handleLogout = () => {
     setUserData(null);
+    localStorage.removeItem('dno_user_data');
     setCurrentState('auth');
   };
 
@@ -77,9 +101,12 @@ const Index = () => {
     setCurrentState('certificate');
   };
 
+  // Show splash only if checking auth or no user logged in
+  const shouldShowSplash = isCheckingAuth || (!userData && currentState === 'splash');
+
   return (
     <main className="min-h-screen">
-      {currentState === 'splash' && (
+      {shouldShowSplash && !isCheckingAuth && (
         <SplashScreen onComplete={handleSplashComplete} />
       )}
 
