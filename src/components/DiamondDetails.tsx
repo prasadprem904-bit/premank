@@ -349,7 +349,7 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
                 className="w-full text-xl py-6"
                 onClick={() => onBuyNow(diamond)}
               >
-                Buy Now - Complete Purchase
+                Continue to Checkout
               </LuxuryButton>
             </motion.div>
           </motion.div>

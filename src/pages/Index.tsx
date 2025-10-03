@@ -3,13 +3,14 @@ import { SplashScreen } from "@/components/SplashScreen";
 import { AuthPage } from "@/components/AuthPage";
 import { HomePage } from "@/components/HomePage";
 import { DiamondDetails } from "@/components/DiamondDetails";
+import { CheckoutPage } from "@/components/CheckoutPage";
 import { OrderConfirmation } from "@/components/OrderConfirmation";
 import { ProfilePage } from "@/components/ProfilePage";
 import { CustomDesign } from "@/components/CustomDesign";
 import { CertificateGenerator } from "@/components/CertificateGenerator";
 import type { Diamond } from "@/components/DiamondCard";
 
-type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'order-confirmation' | 'profile' | 'custom-design' | 'certificate';
+type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'checkout' | 'order-confirmation' | 'profile' | 'custom-design' | 'certificate';
 
 const Index = () => {
   const [currentState, setCurrentState] = useState<AppState>('splash');
@@ -55,6 +56,10 @@ const Index = () => {
   };
 
   const handleBuyNow = (diamond: Diamond) => {
+    setCurrentState('checkout');
+  };
+
+  const handlePaymentComplete = () => {
     // Generate order details
     const orderId = `ORD${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
     const deliveryDate = new Date();
@@ -136,6 +141,14 @@ const Index = () => {
           diamond={selectedDiamond}
           onBack={handleBackToHome}
           onBuyNow={handleBuyNow}
+        />
+      )}
+
+      {currentState === 'checkout' && selectedDiamond && (
+        <CheckoutPage
+          diamond={selectedDiamond}
+          onBack={() => setCurrentState('diamond-details')}
+          onPaymentComplete={handlePaymentComplete}
         />
       )}
 
