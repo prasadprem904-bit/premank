@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
+import { Input } from "./ui/input";
 import type { Diamond } from "./DiamondCard";
 import { toast } from "sonner";
 
@@ -18,25 +19,32 @@ interface CheckoutPageProps {
 
 export const CheckoutPage = ({ diamond, onBack, onPaymentComplete }: CheckoutPageProps) => {
   const [selectedPayment, setSelectedPayment] = useState<string>("");
+  const [amount, setAmount] = useState<string>(diamond.price.toString());
 
   const paymentOptions = [
     {
-      id: "upi",
-      name: "UPI Payment",
+      id: "phonepe",
+      name: "PhonePe",
       icon: <Smartphone className="w-5 h-5" />,
-      description: "PhonePe, Google Pay, Paytm",
+      description: "Pay using PhonePe UPI",
     },
     {
-      id: "card",
-      name: "Credit/Debit Card",
-      icon: <CreditCard className="w-5 h-5" />,
-      description: "Visa, Mastercard, Rupay",
-    },
-    {
-      id: "wallet",
-      name: "Digital Wallet",
+      id: "paytm",
+      name: "Paytm",
       icon: <Wallet className="w-5 h-5" />,
-      description: "Paytm Wallet, Amazon Pay",
+      description: "Pay using Paytm wallet or UPI",
+    },
+    {
+      id: "upi",
+      name: "UPI",
+      icon: <CreditCard className="w-5 h-5" />,
+      description: "Pay using any UPI app",
+    },
+    {
+      id: "gpay",
+      name: "Google Pay",
+      icon: <Smartphone className="w-5 h-5" />,
+      description: "Pay using Google Pay",
     },
     {
       id: "cod",
@@ -51,8 +59,19 @@ export const CheckoutPage = ({ diamond, onBack, onPaymentComplete }: CheckoutPag
       toast.error("Please select a payment method");
       return;
     }
+
+    const paymentAmount = parseFloat(amount);
+    if (!amount || isNaN(paymentAmount) || paymentAmount <= 0) {
+      toast.error("Please enter a valid amount");
+      return;
+    }
+
+    if (paymentAmount < diamond.price) {
+      toast.error(`Amount must be at least ₹${diamond.price.toLocaleString('en-IN')}`);
+      return;
+    }
     
-    toast.success("Payment initiated successfully!");
+    toast.success(`Payment of ₹${paymentAmount.toLocaleString('en-IN')} initiated successfully via ${paymentOptions.find(p => p.id === selectedPayment)?.name}!`);
     setTimeout(() => {
       onPaymentComplete();
     }, 1500);
@@ -197,6 +216,35 @@ export const CheckoutPage = ({ diamond, onBack, onPaymentComplete }: CheckoutPag
             </RadioGroup>
           </Card>
 
+          {/* Amount Input */}
+          <Card className="p-6 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
+            <h3 className="text-2xl font-playfair font-bold text-foreground mb-6">
+              Enter Payment Amount
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="amount" className="text-sm font-medium text-foreground mb-2 block">
+                  Amount (₹)
+                </Label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">₹</span>
+                  <Input
+                    id="amount"
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="pl-8 text-lg font-semibold"
+                    placeholder="Enter amount"
+                    min={diamond.price}
+                  />
+                </div>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Minimum amount: ₹{diamond.price.toLocaleString('en-IN')}
+                </p>
+              </div>
+            </div>
+          </Card>
+
           {/* Delivery Information */}
           <Card className="p-6 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
             <h3 className="text-lg font-semibold text-foreground mb-4">Delivery Information</h3>
@@ -218,8 +266,9 @@ export const CheckoutPage = ({ diamond, onBack, onPaymentComplete }: CheckoutPag
               size="xl"
               className="w-full text-xl py-6"
               onClick={handlePayment}
+              disabled={!selectedPayment || !amount}
             >
-              Proceed to Payment - ₹{diamond.price.toLocaleString('en-IN')}
+              Proceed to Payment - ₹{amount ? parseFloat(amount).toLocaleString('en-IN') : '0'}
             </LuxuryButton>
           </motion.div>
         </motion.div>
