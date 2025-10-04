@@ -14,7 +14,7 @@ import { toast } from "sonner";
 interface CheckoutPageProps {
   diamond: Diamond;
   onBack: () => void;
-  onPaymentComplete: () => void;
+  onPaymentComplete: (paymentMethod: string, amount: number) => void;
 }
 
 export const CheckoutPage = ({ diamond, onBack, onPaymentComplete }: CheckoutPageProps) => {
@@ -70,10 +70,12 @@ export const CheckoutPage = ({ diamond, onBack, onPaymentComplete }: CheckoutPag
       toast.error(`Amount must be at least ₹${diamond.price.toLocaleString('en-IN')}`);
       return;
     }
+
+    const selectedMethod = paymentOptions.find(p => p.id === selectedPayment);
     
-    toast.success(`Payment of ₹${paymentAmount.toLocaleString('en-IN')} initiated successfully via ${paymentOptions.find(p => p.id === selectedPayment)?.name}!`);
+    toast.success(`Payment of ₹${paymentAmount.toLocaleString('en-IN')} initiated successfully via ${selectedMethod?.name}!`);
     setTimeout(() => {
-      onPaymentComplete();
+      onPaymentComplete(selectedPayment, paymentAmount);
     }, 1500);
   };
 

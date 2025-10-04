@@ -8,9 +8,10 @@ import { OrderConfirmation } from "@/components/OrderConfirmation";
 import { ProfilePage } from "@/components/ProfilePage";
 import { CustomDesign } from "@/components/CustomDesign";
 import { CertificateGenerator } from "@/components/CertificateGenerator";
+import { MyOrders } from "@/components/MyOrders";
 import type { Diamond } from "@/components/DiamondCard";
 
-type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'checkout' | 'order-confirmation' | 'profile' | 'custom-design' | 'certificate';
+type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'checkout' | 'order-confirmation' | 'profile' | 'custom-design' | 'certificate' | 'my-orders';
 
 const Index = () => {
   const [currentState, setCurrentState] = useState<AppState>('splash');
@@ -59,21 +60,61 @@ const Index = () => {
     setCurrentState('checkout');
   };
 
-  const handlePaymentComplete = () => {
+  const handlePaymentComplete = (paymentMethod: string, amount: number) => {
     // Generate order details
     const orderId = `ORD${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
     const deliveryDate = new Date();
     deliveryDate.setDate(deliveryDate.getDate() + Math.floor(Math.random() * 5) + 3);
     
-    setOrderDetails({
+    const deliveryTimeWindows = [
+      { from: "10:00 AM", to: "1:00 PM" },
+      { from: "1:00 PM", to: "4:00 PM" },
+      { from: "4:00 PM", to: "7:00 PM" },
+    ];
+    const randomWindow = deliveryTimeWindows[Math.floor(Math.random() * deliveryTimeWindows.length)];
+
+    const paymentMethodNames: { [key: string]: string } = {
+      phonepe: "PhonePe",
+      paytm: "Paytm",
+      upi: "UPI",
+      gpay: "Google Pay",
+      cod: "Cash on Delivery"
+    };
+
+    const orderData = {
       orderId,
       estimatedDelivery: deliveryDate.toLocaleDateString('en-IN', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
-      })
-    });
+      }),
+      deliveryTimeFrom: randomWindow.from,
+      deliveryTimeTo: randomWindow.to,
+      paymentMethod: paymentMethodNames[paymentMethod] || paymentMethod,
+      amount: amount
+    };
+    
+    // Save order to localStorage
+    if (selectedDiamond) {
+      const existingOrders = localStorage.getItem('dno_orders');
+      const orders = existingOrders ? JSON.parse(existingOrders) : [];
+      
+      orders.unshift({
+        ...orderData,
+        diamond: selectedDiamond,
+        orderDate: new Date().toLocaleDateString('en-IN', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }),
+        status: 'Processing'
+      });
+      
+      localStorage.setItem('dno_orders', JSON.stringify(orders));
+    }
+
+    setOrderDetails(orderData);
     setCurrentState('order-confirmation');
   };
 
@@ -106,6 +147,10 @@ const Index = () => {
     setCurrentState('certificate');
   };
 
+  const handleViewOrders = () => {
+    setCurrentState('my-orders');
+  };
+
   // Show splash only if checking auth or no user logged in
   const shouldShowSplash = isCheckingAuth || (!userData && currentState === 'splash');
 
@@ -125,6 +170,7 @@ const Index = () => {
           onProfile={handleProfile}
           onCustomDesign={handleCustomDesign}
           onCertificate={handleCertificate}
+          onViewOrders={handleViewOrders}
         />
       )}
 
@@ -157,7 +203,12 @@ const Index = () => {
           diamond={selectedDiamond}
           orderDetails={orderDetails}
           onContinueShopping={handleContinueShopping}
+          onViewOrders={handleViewOrders}
         />
+      )}
+
+      {currentState === 'my-orders' && (
+        <MyOrders onBack={handleBackToHome} />
       )}
 
       {currentState === 'profile' && userData && (

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Filter, Grid, List, Gem } from "lucide-react";
+import { Search, Filter, Grid, List, Gem, Package } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
 import { LuxuryButton } from "./ui/luxury-button";
 import { Button } from "./ui/button";
@@ -15,6 +15,7 @@ interface HomePageProps {
   onProfile: () => void;
   onCustomDesign: () => void;
   onCertificate: () => void;
+  onViewOrders: () => void;
 }
 
 // Sample diamond data
@@ -87,7 +88,7 @@ const sampleDiamonds: Diamond[] = [
   },
 ];
 
-export const HomePage = ({ onViewDiamond, onProfile, onCustomDesign, onCertificate }: HomePageProps) => {
+export const HomePage = ({ onViewDiamond, onProfile, onCustomDesign, onCertificate, onViewOrders }: HomePageProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filteredDiamonds, setFilteredDiamonds] = useState(sampleDiamonds);
@@ -148,6 +149,10 @@ export const HomePage = ({ onViewDiamond, onProfile, onCustomDesign, onCertifica
               <span className="text-sm text-muted-foreground hover:text-accent cursor-pointer">
                 📞 +91 98765 43210
               </span>
+              <LuxuryButton variant="luxury-outline" onClick={onViewOrders} className="gap-2">
+                <Package className="w-4 h-4" />
+                My Orders
+              </LuxuryButton>
               <LuxuryButton variant="luxury-outline" onClick={onProfile}>
                 Profile
               </LuxuryButton>

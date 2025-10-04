@@ -11,11 +11,16 @@ interface OrderConfirmationProps {
   orderDetails: {
     orderId: string;
     estimatedDelivery: string;
+    deliveryTimeFrom: string;
+    deliveryTimeTo: string;
+    paymentMethod: string;
+    amount: number;
   };
   onContinueShopping: () => void;
+  onViewOrders: () => void;
 }
 
-export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }: OrderConfirmationProps) => {
+export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping, onViewOrders }: OrderConfirmationProps) => {
   return (
     <div className="min-h-screen bg-gradient-luxury flex items-center justify-center p-4">
       <motion.div
@@ -86,9 +91,11 @@ export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }:
                 </div>
                 <p className="text-sm text-muted-foreground mb-1">Order ID</p>
                 <p className="font-mono text-accent font-semibold mb-3">{orderDetails.orderId}</p>
+                <p className="text-sm text-muted-foreground mb-1">Payment Method</p>
+                <p className="text-sm font-semibold text-foreground mb-3">{orderDetails.paymentMethod}</p>
                 <p className="text-sm text-muted-foreground mb-1">Total Amount</p>
                 <p className="text-xl font-playfair font-bold text-accent">
-                  ₹{diamond.price.toLocaleString('en-IN')}
+                  ₹{orderDetails.amount.toLocaleString('en-IN')}
                 </p>
               </div>
 
@@ -100,7 +107,7 @@ export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }:
                 <p className="text-sm text-muted-foreground mb-1">Estimated Delivery</p>
                 <p className="font-semibold text-foreground mb-3">{orderDetails.estimatedDelivery}</p>
                 <p className="text-sm text-muted-foreground mb-1">Delivery Window</p>
-                <p className="text-sm text-foreground">10:00 AM - 6:00 PM</p>
+                <p className="text-sm text-foreground">{orderDetails.deliveryTimeFrom} - {orderDetails.deliveryTimeTo}</p>
               </div>
             </div>
           </motion.div>
@@ -158,6 +165,15 @@ export const OrderConfirmation = ({ diamond, orderDetails, onContinueShopping }:
           >
             <LuxuryButton
               variant="luxury"
+              size="lg"
+              onClick={onViewOrders}
+              className="w-full"
+            >
+              View My Orders
+            </LuxuryButton>
+
+            <LuxuryButton
+              variant="luxury-outline"
               size="lg"
               onClick={onContinueShopping}
               className="w-full"
