@@ -216,6 +216,7 @@ const Index = () => {
           userData={userData}
           onBack={handleBackToHome}
           onLogout={handleLogout}
+          onViewOrders={handleViewOrders}
         />
       )}
     </main>

@@ -17,15 +17,28 @@ interface ProfilePageProps {
   };
   onBack: () => void;
   onLogout: () => void;
+  onViewOrders: () => void;
 }
 
-export const ProfilePage = ({ userData, onBack, onLogout }: ProfilePageProps) => {
+export const ProfilePage = ({ userData, onBack, onLogout, onViewOrders }: ProfilePageProps) => {
   const paymentMethods = ["PhonePe", "Paytm", "UPI", "COD", "Cards", "Net Banking"];
   
-  const mockOrders = [
-    { id: "ORD001", item: "Royal Brilliance", status: "Delivered", date: "Dec 20, 2024" },
-    { id: "ORD002", item: "Elegant Emerald", status: "In Transit", date: "Dec 25, 2024" },
-  ];
+  // Get real orders from localStorage
+  const getRecentOrders = () => {
+    const ordersData = localStorage.getItem('dno_orders');
+    if (ordersData) {
+      try {
+        const orders = JSON.parse(ordersData);
+        return orders.slice(0, 3); // Show only last 3 orders
+      } catch (error) {
+        console.error('Failed to parse orders data');
+        return [];
+      }
+    }
+    return [];
+  };
+
+  const recentOrders = getRecentOrders();
 
   return (
     <div className="min-h-screen bg-gradient-luxury">
@@ -164,40 +177,79 @@ export const ProfilePage = ({ userData, onBack, onLogout }: ProfilePageProps) =>
             </Card>
           </motion.div>
 
-          {/* My Orders */}
+          {/* Order Details Section */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <Card className="p-8 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
-              <div className="flex items-center gap-3 mb-6">
-                <Package className="w-6 h-6 text-accent" />
-                <h3 className="text-xl font-playfair font-semibold text-foreground">My Orders</h3>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <Package className="w-6 h-6 text-accent" />
+                  <h3 className="text-xl font-playfair font-semibold text-foreground">Order Details</h3>
+                </div>
+                <LuxuryButton 
+                  variant="luxury-outline" 
+                  size="sm"
+                  onClick={onViewOrders}
+                  className="gap-2"
+                >
+                  View All Orders
+                </LuxuryButton>
               </div>
               
-              <div className="space-y-4">
-                {mockOrders.map((order) => (
-                  <div
-                    key={order.id}
-                    className="flex items-center justify-between p-4 bg-background/50 rounded-lg border border-border"
-                  >
-                    <div>
-                      <p className="font-medium text-foreground">{order.item}</p>
-                      <p className="text-sm text-muted-foreground">Order ID: {order.id}</p>
+              {recentOrders.length === 0 ? (
+                <div className="text-center py-8">
+                  <Package className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
+                  <p className="text-muted-foreground">No orders yet</p>
+                  <p className="text-sm text-muted-foreground mt-1">Start shopping to see your orders here</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {recentOrders.map((order: any) => (
+                    <div
+                      key={order.orderId}
+                      className="flex items-center justify-between p-4 bg-background/50 rounded-lg border border-border hover:border-accent/50 transition-colors"
+                    >
+                      <div className="flex items-center gap-4">
+                        <img 
+                          src={order.diamond.image} 
+                          alt={order.diamond.name}
+                          className="w-16 h-16 object-cover rounded-lg"
+                        />
+                        <div>
+                          <p className="font-medium text-foreground">{order.diamond.name}</p>
+                          <p className="text-sm text-muted-foreground">Order ID: {order.orderId}</p>
+                          <p className="text-xs text-muted-foreground mt-1">{order.orderDate}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <Badge 
+                          variant={order.status === "Delivered" ? "default" : "secondary"}
+                          className="mb-2"
+                        >
+                          {order.status}
+                        </Badge>
+                        <p className="text-sm font-semibold text-accent">
+                          ₹{order.amount.toLocaleString('en-IN')}
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <Badge 
-                        variant={order.status === "Delivered" ? "default" : "secondary"}
-                        className="mb-1"
+                  ))}
+                  
+                  {recentOrders.length > 0 && (
+                    <div className="text-center pt-2">
+                      <button 
+                        onClick={onViewOrders}
+                        className="text-sm text-accent hover:underline"
                       >
-                        {order.status}
-                      </Badge>
-                      <p className="text-sm text-muted-foreground">{order.date}</p>
+                        View all {localStorage.getItem('dno_orders') ? JSON.parse(localStorage.getItem('dno_orders') || '[]').length : 0} orders →
+                      </button>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  )}
+                </div>
+              )}
             </Card>
           </motion.div>
 
