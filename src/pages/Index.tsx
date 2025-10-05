@@ -100,13 +100,19 @@ const Index = () => {
       const existingOrders = localStorage.getItem('dno_orders');
       const orders = existingOrders ? JSON.parse(existingOrders) : [];
       
+      const now = new Date();
       orders.unshift({
         ...orderData,
         diamond: selectedDiamond,
-        orderDate: new Date().toLocaleDateString('en-IN', {
+        orderDate: now.toLocaleDateString('en-IN', {
           year: 'numeric',
           month: 'long',
           day: 'numeric'
+        }),
+        orderTime: now.toLocaleTimeString('en-IN', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
         }),
         status: 'Processing'
       });
