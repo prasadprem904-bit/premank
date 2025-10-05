@@ -1,42 +1,26 @@
 import { motion } from "framer-motion";
-import { Phone, MessageCircle, Mail, MapPin, Clock, Shield } from "lucide-react";
+import { MessageCircle, Mail, MapPin, Clock, Shield } from "lucide-react";
 import { LuxuryButton } from "./ui/luxury-button";
 
 export const ContactSupport = () => {
   const contactMethods = [
     {
-      icon: MessageCircle,
-      title: "WhatsApp Contact",
-      subtitle: "Instant Support",
-      value: "+91 98765 43210",
-      action: "Chat Now",
-      link: "https://wa.me/919876543210",
+      icon: Mail,
+      title: "Email Contact",
+      subtitle: "Get in Touch",
+      value: "dnocollections@gmail.com",
+      action: "Send Email",
+      link: "mailto:dnocollections@gmail.com",
       primary: true
     },
     {
       icon: MessageCircle,
       title: "WhatsApp Channel",
-      subtitle: "Join Our Channel",
+      subtitle: "Instant Reply",
       value: "D&O Collections Updates",
       action: "Join Channel",
       link: "https://whatsapp.com/channel/0029VaoLotu42DchJMXK3i1L",
       primary: false
-    },
-    {
-      icon: Mail,
-      title: "Email Contact",
-      subtitle: "Detailed Queries",
-      value: "support@dno-collections.com",
-      action: "Send Email",
-      link: "mailto:support@dno-collections.com"
-    },
-    {
-      icon: Phone,
-      title: "Call Us",
-      subtitle: "Direct Support",
-      value: "+91 98765 43210",
-      action: "Call Now",
-      link: "tel:+919876543210"
     }
   ];
 
