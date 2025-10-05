@@ -9,9 +9,10 @@ import { ProfilePage } from "@/components/ProfilePage";
 import { CustomDesign } from "@/components/CustomDesign";
 import { CertificateGenerator } from "@/components/CertificateGenerator";
 import { MyOrders } from "@/components/MyOrders";
+import { AppSettings } from "@/components/AppSettings";
 import type { Diamond } from "@/components/DiamondCard";
 
-type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'checkout' | 'order-confirmation' | 'profile' | 'custom-design' | 'certificate' | 'my-orders';
+type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'checkout' | 'order-confirmation' | 'profile' | 'custom-design' | 'certificate' | 'my-orders' | 'settings';
 
 const Index = () => {
   const [currentState, setCurrentState] = useState<AppState>('splash');
@@ -157,6 +158,10 @@ const Index = () => {
     setCurrentState('my-orders');
   };
 
+  const handleSettings = () => {
+    setCurrentState('settings');
+  };
+
   // Show splash only if checking auth or no user logged in
   const shouldShowSplash = isCheckingAuth || (!userData && currentState === 'splash');
 
@@ -223,7 +228,12 @@ const Index = () => {
           onBack={handleBackToHome}
           onLogout={handleLogout}
           onViewOrders={handleViewOrders}
+          onSettings={handleSettings}
         />
+      )}
+
+      {currentState === 'settings' && (
+        <AppSettings onBack={() => setCurrentState('profile')} />
       )}
     </main>
   );

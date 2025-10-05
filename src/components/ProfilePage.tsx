@@ -18,9 +18,10 @@ interface ProfilePageProps {
   onBack: () => void;
   onLogout: () => void;
   onViewOrders: () => void;
+  onSettings: () => void;
 }
 
-export const ProfilePage = ({ userData, onBack, onLogout, onViewOrders }: ProfilePageProps) => {
+export const ProfilePage = ({ userData, onBack, onLogout, onViewOrders, onSettings }: ProfilePageProps) => {
   const paymentMethods = ["PhonePe", "Paytm", "UPI", "COD", "Cards", "Net Banking"];
   
   // Get real orders from localStorage
@@ -59,21 +60,16 @@ export const ProfilePage = ({ userData, onBack, onLogout, onViewOrders }: Profil
               Back to Home
             </LuxuryButton>
             
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-playfair font-bold text-accent">D&O Collections</h1>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               <Button 
                 variant="ghost"
                 size="icon"
+                onClick={onSettings}
                 className="text-muted-foreground hover:text-accent"
               >
                 <Settings className="w-5 h-5" />
               </Button>
-              <LuxuryButton variant="ghost" onClick={onBack}>
-                <ArrowLeft className="w-5 h-5" />
-              </LuxuryButton>
             </div>
-          </div>
           </div>
         </div>
       </motion.header>
