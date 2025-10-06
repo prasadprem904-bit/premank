@@ -28,7 +28,8 @@ const Index = () => {
       try {
         const parsedData = JSON.parse(storedUserData);
         setUserData(parsedData);
-        setCurrentState('home');
+        // Always show splash screen on app open
+        setCurrentState('splash');
       } catch (error) {
         console.error('Failed to parse stored user data');
         localStorage.removeItem('dno_user_data');
@@ -156,12 +157,12 @@ const Index = () => {
     setCurrentState('settings');
   };
 
-  // Show splash only if checking auth or no user logged in
-  const shouldShowSplash = isCheckingAuth || (!userData && currentState === 'splash');
+  // Show splash screen whenever state is 'splash'
+  const shouldShowSplash = currentState === 'splash';
 
   return (
     <main className="min-h-screen">
-      {shouldShowSplash && !isCheckingAuth && (
+      {!isCheckingAuth && shouldShowSplash && (
         <SplashScreen onComplete={handleSplashComplete} />
       )}
 

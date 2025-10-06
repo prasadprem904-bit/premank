@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Filter, Grid, List, Gem, Package } from "lucide-react";
+import { Search, Filter, Grid, List, Gem, Package, Eye, Award, ScanEye } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
 import { LuxuryButton } from "./ui/luxury-button";
 import { Button } from "./ui/button";
@@ -221,6 +221,76 @@ export const HomePage = ({ onViewDiamond, onProfile, onCustomDesign, onCertifica
 
       {/* Premium Features Section */}
       <PremiumFeatures onViewDiamond={onViewDiamond} />
+
+      {/* Three Key Features Section */}
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.9 }}
+        className="container mx-auto px-4 py-16"
+      >
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-playfair font-bold text-foreground mb-4">
+            Experience Excellence
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            Advanced features to help you find the perfect diamond
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* 3D Diamond Viewer */}
+          <motion.div
+            whileHover={{ scale: 1.05, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="bg-card/80 backdrop-blur-sm border-2 border-accent/20 rounded-2xl p-8 text-center shadow-luxury hover:shadow-elegant hover:border-accent/40 transition-all"
+          >
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-accent/20 to-accent/10 rounded-full mb-6">
+              <Eye className="w-10 h-10 text-accent" />
+            </div>
+            <h3 className="text-2xl font-playfair font-bold text-foreground mb-4">
+              3D Diamond Viewer
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Explore every angle of your diamond in stunning 3D. Rotate, zoom, and examine the brilliance in detail.
+            </p>
+          </motion.div>
+
+          {/* IGI/GIA Certified */}
+          <motion.div
+            whileHover={{ scale: 1.05, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="bg-card/80 backdrop-blur-sm border-2 border-accent/20 rounded-2xl p-8 text-center shadow-luxury hover:shadow-elegant hover:border-accent/40 transition-all"
+          >
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-accent/20 to-accent/10 rounded-full mb-6">
+              <Award className="w-10 h-10 text-accent" />
+            </div>
+            <h3 className="text-2xl font-playfair font-bold text-foreground mb-4">
+              IGI / GIA Certified
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Every diamond is certified by internationally recognized gemological institutes for authenticity and quality.
+            </p>
+          </motion.div>
+
+          {/* Virtual Try-On */}
+          <motion.div
+            whileHover={{ scale: 1.05, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="bg-card/80 backdrop-blur-sm border-2 border-accent/20 rounded-2xl p-8 text-center shadow-luxury hover:shadow-elegant hover:border-accent/40 transition-all"
+          >
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-accent/20 to-accent/10 rounded-full mb-6">
+              <ScanEye className="w-10 h-10 text-accent" />
+            </div>
+            <h3 className="text-2xl font-playfair font-bold text-foreground mb-4">
+              Virtual Try-On
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              See how the diamond looks on you with our advanced AR technology before making your purchase.
+            </p>
+          </motion.div>
+        </div>
+      </motion.section>
 
       {/* Search & Filter Section */}
       <motion.section 
