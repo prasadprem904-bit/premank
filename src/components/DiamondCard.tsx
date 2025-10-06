@@ -15,6 +15,7 @@ export interface Diamond {
   clarity: string;
   image: string;
   rating: number;
+  certification?: "IGI" | "GIA";
 }
 
 interface DiamondCardProps {

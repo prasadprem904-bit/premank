@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, Shield, Truck, Award, Star, Gem, FileText, Ruler, Sparkles, Eye, Zap, Package, MapPin } from "lucide-react";
+import { ArrowLeft, Shield, Truck, Award, Star, Gem, FileText, Ruler, Sparkles, Eye, Zap, Package, MapPin, ScanEye } from "lucide-react";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { LuxuryButton } from "./ui/luxury-button";
 import { Diamond3DViewer } from "./Diamond3DViewer";
+import { VirtualTryOn } from "./VirtualTryOn";
 import { Separator } from "./ui/separator";
 import type { Diamond } from "./DiamondCard";
 
@@ -14,9 +16,14 @@ interface DiamondDetailsProps {
 }
 
 export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProps) => {
+  const [showVirtualTryOn, setShowVirtualTryOn] = useState(false);
+  
   const paymentMethods = [
     "PhonePe", "Paytm", "UPI", "Cash on Delivery", "Credit Card", "Debit Card"
   ];
+
+  // Get certification (IGI or GIA)
+  const certification = diamond.certification || "GIA";
 
   // Generate detailed specifications
   const detailedSpecs = {
@@ -29,15 +36,24 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
     depthPercent: "61.5%",
     girdle: "Medium to Slightly Thick",
     culet: "None",
-    certificateNumber: `GIA-${Math.floor(Math.random() * 9000000) + 1000000}`,
+    certificateNumber: `${certification}-${Math.floor(Math.random() * 9000000) + 1000000}`,
     origin: "Natural",
     treatment: "None",
   };
 
   return (
-    <div className="min-h-screen bg-gradient-luxury">
-      {/* Header */}
-      <motion.header 
+    <>
+      {showVirtualTryOn && (
+        <VirtualTryOn
+          diamondName={diamond.name}
+          diamondImage={diamond.image}
+          onClose={() => setShowVirtualTryOn(false)}
+        />
+      )}
+      
+      <div className="min-h-screen bg-gradient-luxury">
+        {/* Header */}
+        <motion.header
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className="bg-card/95 backdrop-blur-sm border-b border-accent/20 shadow-luxury sticky top-0 z-40"
@@ -67,18 +83,31 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
                 <Diamond3DViewer diamondName={diamond.name} />
               </div>
 
-              {/* Quick Stats */}
-              <div className="grid grid-cols-2 gap-4 mt-6">
-                <div className="text-center p-4 bg-background/50 rounded-lg">
-                  <Award className="w-6 h-6 text-accent mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Certified</p>
-                  <p className="font-semibold text-foreground">GIA</p>
+              {/* Quick Stats & Actions */}
+              <div className="space-y-4 mt-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-4 bg-background/50 rounded-lg border border-accent/20">
+                    <Award className="w-6 h-6 text-accent mx-auto mb-2" />
+                    <p className="text-sm text-muted-foreground">Certified</p>
+                    <p className="font-semibold text-accent">{certification}</p>
+                  </div>
+                  <div className="text-center p-4 bg-background/50 rounded-lg border border-accent/20">
+                    <Shield className="w-6 h-6 text-accent mx-auto mb-2" />
+                    <p className="text-sm text-muted-foreground">Warranty</p>
+                    <p className="font-semibold text-accent">Lifetime</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 bg-background/50 rounded-lg">
-                  <Shield className="w-6 h-6 text-accent mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Warranty</p>
-                  <p className="font-semibold text-foreground">Lifetime</p>
-                </div>
+
+                {/* Virtual Try-On Button */}
+                <LuxuryButton
+                  variant="luxury"
+                  size="lg"
+                  className="w-full gap-2"
+                  onClick={() => setShowVirtualTryOn(true)}
+                >
+                  <ScanEye className="w-5 h-5" />
+                  Virtual Try-On
+                </LuxuryButton>
               </div>
             </Card>
           </motion.div>
@@ -259,8 +288,12 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
                 <div className="flex items-start gap-3 p-4 bg-background/50 rounded-lg border border-accent/20">
                   <Award className="w-6 h-6 text-accent mt-1" />
                   <div>
-                    <p className="font-semibold text-foreground mb-1">GIA Certified</p>
-                    <p className="text-sm text-muted-foreground">Gemological Institute of America</p>
+                    <p className="font-semibold text-foreground mb-1">{certification} Certified</p>
+                    <p className="text-sm text-muted-foreground">
+                      {certification === "IGI" 
+                        ? "International Gemological Institute" 
+                        : "Gemological Institute of America"}
+                    </p>
                     <p className="text-xs text-accent mt-2">Certificate #: {detailedSpecs.certificateNumber}</p>
                   </div>
                 </div>
@@ -289,7 +322,7 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
               </div>
               <div className="space-y-3">
                 {[
-                  "Original GIA Certificate",
+                  `Original ${certification} Certificate`,
                   "Premium Jewelry Box",
                   "Lifetime Warranty Card",
                   "Care & Maintenance Guide",
@@ -356,5 +389,6 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
         </div>
       </div>
     </div>
+    </>
   );
 };
