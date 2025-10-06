@@ -62,58 +62,6 @@ export const PremiumFeatures = ({ onViewDiamond }: PremiumFeaturesProps) => {
 
   return (
     <div className="space-y-16">
-      {/* Categories Grid */}
-      <motion.section 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        className="container mx-auto px-4"
-      >
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-playfair font-bold text-foreground mb-4">
-            Premium Collections
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            Curated excellence for every occasion
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {categories.map((category, index) => (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * index }}
-              className="group"
-            >
-              <div className="bg-card border border-border rounded-xl overflow-hidden shadow-luxury hover:shadow-glow transition-all duration-300 group-hover:scale-105">
-                <div className="h-48 bg-gradient-diamond relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute top-4 right-4 bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm font-semibold">
-                    {category.count}
-                  </div>
-                  <div className="absolute bottom-4 left-4">
-                    <category.icon className="w-8 h-8 text-accent mb-2" />
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-playfair font-semibold text-foreground mb-2">
-                    {category.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {category.description}
-                  </p>
-                  <LuxuryButton variant="luxury-outline" size="sm" className="w-full">
-                    Explore Collection
-                  </LuxuryButton>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section>
-
       {/* Premium Features */}
       <motion.section 
         initial={{ opacity: 0 }}
