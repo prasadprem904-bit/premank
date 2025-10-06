@@ -64,15 +64,14 @@ const Index = () => {
   const handlePaymentComplete = (paymentMethod: string, amount: number) => {
     // Generate order details
     const orderId = `ORD${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-    const deliveryDate = new Date();
-    deliveryDate.setDate(deliveryDate.getDate() + Math.floor(Math.random() * 5) + 3);
+    const now = new Date();
     
-    const deliveryTimeWindows = [
-      { from: "10:00 AM", to: "1:00 PM" },
-      { from: "1:00 PM", to: "4:00 PM" },
-      { from: "4:00 PM", to: "7:00 PM" },
-    ];
-    const randomWindow = deliveryTimeWindows[Math.floor(Math.random() * deliveryTimeWindows.length)];
+    // Use current order time for delivery time window
+    const currentTime = now.toLocaleTimeString('en-IN', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
 
     const paymentMethodNames: { [key: string]: string } = {
       phonepe: "PhonePe",
@@ -84,14 +83,14 @@ const Index = () => {
 
     const orderData = {
       orderId,
-      estimatedDelivery: deliveryDate.toLocaleDateString('en-IN', {
+      estimatedDelivery: now.toLocaleDateString('en-IN', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
       }),
-      deliveryTimeFrom: randomWindow.from,
-      deliveryTimeTo: randomWindow.to,
+      deliveryTimeFrom: currentTime,
+      deliveryTimeTo: currentTime,
       paymentMethod: paymentMethodNames[paymentMethod] || paymentMethod,
       amount: amount
     };
@@ -101,7 +100,6 @@ const Index = () => {
       const existingOrders = localStorage.getItem('dno_orders');
       const orders = existingOrders ? JSON.parse(existingOrders) : [];
       
-      const now = new Date();
       orders.unshift({
         ...orderData,
         diamond: selectedDiamond,
@@ -110,11 +108,7 @@ const Index = () => {
           month: 'long',
           day: 'numeric'
         }),
-        orderTime: now.toLocaleTimeString('en-IN', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true
-        }),
+        orderTime: currentTime,
         status: 'Processing'
       });
       
