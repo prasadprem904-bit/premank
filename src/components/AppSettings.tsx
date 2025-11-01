@@ -13,12 +13,17 @@ interface AppSettingsProps {
 }
 
 export const AppSettings = ({ onBack }: AppSettingsProps) => {
-  const [notifications, setNotifications] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
-  const [autoUpdate, setAutoUpdate] = useState(true);
-  const [analytics, setAnalytics] = useState(true);
-  const [orderNotifications, setOrderNotifications] = useState(true);
+  // Notification Settings
+  const [pushAppointmentUpdates, setPushAppointmentUpdates] = useState(true);
   const [emailNotifications, setEmailNotifications] = useState(true);
+  
+  // Appearance
+  const [darkMode, setDarkMode] = useState(true);
+  
+  // App Preferences
+  const [autoSync, setAutoSync] = useState(true);
+  const [vibration, setVibration] = useState(true);
+  const [animationEffects, setAnimationEffects] = useState(true);
 
   const handleClearCache = () => {
     // Clear cache logic
@@ -26,11 +31,16 @@ export const AppSettings = ({ onBack }: AppSettingsProps) => {
   };
 
   const handleClearData = () => {
-    // Clear app data logic
-    const confirmation = confirm("Are you sure you want to clear all app data? This action cannot be undone.");
+    const confirmation = confirm(
+      "⚠️ This will delete all your appointments, preferences, and user data. This action cannot be undone. Are you sure?"
+    );
+    
     if (confirmation) {
-      localStorage.clear();
-      console.log("App data cleared");
+      localStorage.removeItem('dno_appointments');
+      localStorage.removeItem('dno_user_data');
+      localStorage.removeItem('app_settings');
+      console.log("All data cleared");
+      setTimeout(() => window.location.reload(), 1000);
     }
   };
 
@@ -119,13 +129,13 @@ export const AppSettings = ({ onBack }: AppSettingsProps) => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label htmlFor="notifications" className="text-foreground">Push Notifications</Label>
-                    <p className="text-sm text-muted-foreground">Receive alerts about orders and offers</p>
+                    <Label htmlFor="push-updates" className="text-foreground">Push Notification: Appointment Updates</Label>
+                    <p className="text-sm text-muted-foreground">Get notified about your appointment status</p>
                   </div>
                   <Switch 
-                    id="notifications" 
-                    checked={notifications} 
-                    onCheckedChange={setNotifications}
+                    id="push-updates"
+                    checked={pushAppointmentUpdates}
+                    onCheckedChange={setPushAppointmentUpdates}
                   />
                 </div>
 
@@ -133,26 +143,12 @@ export const AppSettings = ({ onBack }: AppSettingsProps) => {
 
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label htmlFor="order-notifications" className="text-foreground">Order Updates</Label>
-                    <p className="text-sm text-muted-foreground">Get notified about order status changes</p>
+                    <Label htmlFor="email-notif" className="text-foreground">Email Notification</Label>
+                    <p className="text-sm text-muted-foreground">Receive appointment confirmations via email</p>
                   </div>
                   <Switch 
-                    id="order-notifications" 
-                    checked={orderNotifications} 
-                    onCheckedChange={setOrderNotifications}
-                  />
-                </div>
-
-                <Separator />
-
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label htmlFor="email-notifications" className="text-foreground">Email Notifications</Label>
-                    <p className="text-sm text-muted-foreground">Receive updates via email</p>
-                  </div>
-                  <Switch 
-                    id="email-notifications" 
-                    checked={emailNotifications} 
+                    id="email-notif"
+                    checked={emailNotifications}
                     onCheckedChange={setEmailNotifications}
                   />
                 </div>
@@ -206,13 +202,13 @@ export const AppSettings = ({ onBack }: AppSettingsProps) => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label htmlFor="auto-update" className="text-foreground">Auto Update</Label>
-                    <p className="text-sm text-muted-foreground">Automatically update app when available</p>
+                    <Label htmlFor="auto-sync" className="text-foreground">Auto Sync</Label>
+                    <p className="text-sm text-muted-foreground">Automatically sync appointment data</p>
                   </div>
                   <Switch 
-                    id="auto-update" 
-                    checked={autoUpdate} 
-                    onCheckedChange={setAutoUpdate}
+                    id="auto-sync"
+                    checked={autoSync}
+                    onCheckedChange={setAutoSync}
                   />
                 </div>
 
@@ -220,13 +216,27 @@ export const AppSettings = ({ onBack }: AppSettingsProps) => {
 
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label htmlFor="analytics" className="text-foreground">Usage Analytics</Label>
-                    <p className="text-sm text-muted-foreground">Help improve app by sharing usage data</p>
+                    <Label htmlFor="vibration" className="text-foreground">Vibration</Label>
+                    <p className="text-sm text-muted-foreground">Vibrate on notifications and interactions</p>
                   </div>
                   <Switch 
-                    id="analytics" 
-                    checked={analytics} 
-                    onCheckedChange={setAnalytics}
+                    id="vibration"
+                    checked={vibration}
+                    onCheckedChange={setVibration}
+                  />
+                </div>
+
+                <Separator />
+
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label htmlFor="animations" className="text-foreground">Animation Effects</Label>
+                    <p className="text-sm text-muted-foreground">Enable smooth transitions and animations</p>
+                  </div>
+                  <Switch 
+                    id="animations"
+                    checked={animationEffects}
+                    onCheckedChange={setAnimationEffects}
                   />
                 </div>
               </div>

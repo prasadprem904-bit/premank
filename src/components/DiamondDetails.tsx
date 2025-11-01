@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, Shield, Truck, Award, Star, Gem, FileText, Ruler, Sparkles, Eye, Zap, Package, MapPin, ScanEye } from "lucide-react";
+import { ArrowLeft, Shield, Truck, Award, Star, Gem, FileText, Ruler, Sparkles, Eye, Zap, Package, MapPin, ScanEye, Calendar } from "lucide-react";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { LuxuryButton } from "./ui/luxury-button";
@@ -12,10 +12,10 @@ import type { Diamond } from "./DiamondCard";
 interface DiamondDetailsProps {
   diamond: Diamond;
   onBack: () => void;
-  onBuyNow: (diamond: Diamond) => void;
+  onBookAppointment: (diamond: Diamond) => void;
 }
 
-export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProps) => {
+export const DiamondDetails = ({ diamond, onBack, onBookAppointment }: DiamondDetailsProps) => {
   const [showVirtualTryOn, setShowVirtualTryOn] = useState(false);
   
   const paymentMethods = [
@@ -371,7 +371,7 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
               </p>
             </Card>
 
-            {/* Buy Now Button */}
+            {/* Book Appointment Button */}
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -379,10 +379,11 @@ export const DiamondDetails = ({ diamond, onBack, onBuyNow }: DiamondDetailsProp
               <LuxuryButton
                 variant="luxury"
                 size="xl"
-                className="w-full text-xl py-6"
-                onClick={() => onBuyNow(diamond)}
+                className="w-full text-xl py-6 gap-3"
+                onClick={() => onBookAppointment(diamond)}
               >
-                Continue to Checkout
+                <Calendar className="w-6 h-6" />
+                Book Appointment to View
               </LuxuryButton>
             </motion.div>
           </motion.div>

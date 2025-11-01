@@ -3,22 +3,25 @@ import { SplashScreen } from "@/components/SplashScreen";
 import { AuthPage } from "@/components/AuthPage";
 import { HomePage } from "@/components/HomePage";
 import { DiamondDetails } from "@/components/DiamondDetails";
-import { CheckoutPage } from "@/components/CheckoutPage";
-import { OrderConfirmation } from "@/components/OrderConfirmation";
+import { BookAppointment } from "@/components/BookAppointment";
+import { AppointmentConfirmation } from "@/components/AppointmentConfirmation";
 import { ProfilePage } from "@/components/ProfilePage";
 import { CustomDesign } from "@/components/CustomDesign";
 import { CertificateGenerator } from "@/components/CertificateGenerator";
-import { MyOrders } from "@/components/MyOrders";
+import { MyAppointments } from "@/components/MyAppointments";
 import { AppSettings } from "@/components/AppSettings";
+import { useAppointmentNotifications } from "@/hooks/useAppointmentNotifications";
 import type { Diamond } from "@/components/DiamondCard";
 
-type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'checkout' | 'order-confirmation' | 'profile' | 'custom-design' | 'certificate' | 'my-orders' | 'settings';
+type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'book-appointment' | 'appointment-confirmation' | 'profile' | 'custom-design' | 'certificate' | 'my-appointments' | 'settings';
 
 const Index = () => {
+  useAppointmentNotifications(); // Enable appointment notifications
+  
   const [currentState, setCurrentState] = useState<AppState>('splash');
   const [userData, setUserData] = useState<any>(null);
   const [selectedDiamond, setSelectedDiamond] = useState<Diamond | null>(null);
-  const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [appointmentDetails, setAppointmentDetails] = useState<any>(null);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   // Check for existing session on mount
@@ -58,66 +61,13 @@ const Index = () => {
     setCurrentState('diamond-details');
   };
 
-  const handleBuyNow = (diamond: Diamond) => {
-    setCurrentState('checkout');
+  const handleBookAppointment = (diamond: Diamond) => {
+    setCurrentState('book-appointment');
   };
 
-  const handlePaymentComplete = (paymentMethod: string, amount: number) => {
-    // Generate order details
-    const orderId = `ORD${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-    const now = new Date();
-    
-    // Use current order time for delivery time window
-    const currentTime = now.toLocaleTimeString('en-IN', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    });
-
-    const paymentMethodNames: { [key: string]: string } = {
-      phonepe: "PhonePe",
-      paytm: "Paytm",
-      upi: "UPI",
-      gpay: "Google Pay",
-      cod: "Cash on Delivery"
-    };
-
-    const orderData = {
-      orderId,
-      estimatedDelivery: now.toLocaleDateString('en-IN', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      }),
-      deliveryTimeFrom: currentTime,
-      deliveryTimeTo: currentTime,
-      paymentMethod: paymentMethodNames[paymentMethod] || paymentMethod,
-      amount: amount
-    };
-    
-    // Save order to localStorage
-    if (selectedDiamond) {
-      const existingOrders = localStorage.getItem('dno_orders');
-      const orders = existingOrders ? JSON.parse(existingOrders) : [];
-      
-      orders.unshift({
-        ...orderData,
-        diamond: selectedDiamond,
-        orderDate: now.toLocaleDateString('en-IN', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        }),
-        orderTime: currentTime,
-        status: 'Processing'
-      });
-      
-      localStorage.setItem('dno_orders', JSON.stringify(orders));
-    }
-
-    setOrderDetails(orderData);
-    setCurrentState('order-confirmation');
+  const handleAppointmentComplete = (appointmentData: any) => {
+    setAppointmentDetails(appointmentData);
+    setCurrentState('appointment-confirmation');
   };
 
   const handleBackToHome = () => {
@@ -137,7 +87,7 @@ const Index = () => {
 
   const handleContinueShopping = () => {
     setCurrentState('home');
-    setOrderDetails(null);
+    setAppointmentDetails(null);
     setSelectedDiamond(null);
   };
 
@@ -149,8 +99,8 @@ const Index = () => {
     setCurrentState('certificate');
   };
 
-  const handleViewOrders = () => {
-    setCurrentState('my-orders');
+  const handleViewAppointments = () => {
+    setCurrentState('my-appointments');
   };
 
   const handleSettings = () => {
@@ -176,7 +126,7 @@ const Index = () => {
           onProfile={handleProfile}
           onCustomDesign={handleCustomDesign}
           onCertificate={handleCertificate}
-          onViewOrders={handleViewOrders}
+          onViewAppointments={handleViewAppointments}
         />
       )}
 
@@ -192,29 +142,29 @@ const Index = () => {
         <DiamondDetails
           diamond={selectedDiamond}
           onBack={handleBackToHome}
-          onBuyNow={handleBuyNow}
+          onBookAppointment={handleBookAppointment}
         />
       )}
 
-      {currentState === 'checkout' && selectedDiamond && (
-        <CheckoutPage
+      {currentState === 'book-appointment' && selectedDiamond && (
+        <BookAppointment
           diamond={selectedDiamond}
           onBack={() => setCurrentState('diamond-details')}
-          onPaymentComplete={handlePaymentComplete}
+          onAppointmentComplete={handleAppointmentComplete}
         />
       )}
 
-      {currentState === 'order-confirmation' && selectedDiamond && orderDetails && (
-        <OrderConfirmation
+      {currentState === 'appointment-confirmation' && selectedDiamond && appointmentDetails && (
+        <AppointmentConfirmation
           diamond={selectedDiamond}
-          orderDetails={orderDetails}
+          appointmentDetails={appointmentDetails}
           onContinueShopping={handleContinueShopping}
-          onViewOrders={handleViewOrders}
+          onViewAppointments={handleViewAppointments}
         />
       )}
 
-      {currentState === 'my-orders' && (
-        <MyOrders onBack={handleBackToHome} />
+      {currentState === 'my-appointments' && (
+        <MyAppointments onBack={handleBackToHome} />
       )}
 
       {currentState === 'profile' && userData && (
@@ -222,7 +172,7 @@ const Index = () => {
           userData={userData}
           onBack={handleBackToHome}
           onLogout={handleLogout}
-          onViewOrders={handleViewOrders}
+          onViewAppointments={handleViewAppointments}
           onSettings={handleSettings}
         />
       )}

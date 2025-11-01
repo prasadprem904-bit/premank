@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Filter, Grid, List, Gem, Package, Eye, Award, ScanEye } from "lucide-react";
+import { Search, Filter, Grid, List, Gem, Calendar, Eye, Award, ScanEye } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
 import { LuxuryButton } from "./ui/luxury-button";
 import { Button } from "./ui/button";
@@ -14,7 +14,7 @@ interface HomePageProps {
   onProfile: () => void;
   onCustomDesign: () => void;
   onCertificate: () => void;
-  onViewOrders: () => void;
+  onViewAppointments: () => void;
 }
 
 // Sample diamond data
@@ -84,7 +84,7 @@ export const HomePage = ({
   onProfile,
   onCustomDesign,
   onCertificate,
-  onViewOrders
+  onViewAppointments
 }: HomePageProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -142,9 +142,9 @@ export const HomePage = ({
 
             <div className="flex items-center gap-4">
               
-              <LuxuryButton variant="luxury-outline" onClick={onViewOrders} className="gap-2">
-                <Package className="w-4 h-4" />
-                My Orders
+              <LuxuryButton variant="luxury-outline" onClick={onViewAppointments} className="gap-2">
+                <Calendar className="w-4 h-4" />
+                My Appointments
               </LuxuryButton>
               <LuxuryButton variant="luxury-outline" onClick={onProfile}>
                 Profile

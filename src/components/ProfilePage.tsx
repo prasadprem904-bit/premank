@@ -17,29 +17,29 @@ interface ProfilePageProps {
   };
   onBack: () => void;
   onLogout: () => void;
-  onViewOrders: () => void;
+  onViewAppointments: () => void;
   onSettings: () => void;
 }
 
-export const ProfilePage = ({ userData, onBack, onLogout, onViewOrders, onSettings }: ProfilePageProps) => {
+export const ProfilePage = ({ userData, onBack, onLogout, onViewAppointments, onSettings }: ProfilePageProps) => {
   const paymentMethods = ["PhonePe", "Paytm", "UPI", "COD", "Cards", "Net Banking"];
   
-  // Get real orders from localStorage
-  const getRecentOrders = () => {
-    const ordersData = localStorage.getItem('dno_orders');
-    if (ordersData) {
+  // Get real appointments from localStorage
+  const getRecentAppointments = () => {
+    const appointmentsData = localStorage.getItem('dno_appointments');
+    if (appointmentsData) {
       try {
-        const orders = JSON.parse(ordersData);
-        return orders.slice(0, 3); // Show only last 3 orders
+        const appointments = JSON.parse(appointmentsData);
+        return appointments.slice(0, 3); // Show only last 3 appointments
       } catch (error) {
-        console.error('Failed to parse orders data');
+        console.error('Failed to parse appointments data');
         return [];
       }
     }
     return [];
   };
 
-  const recentOrders = getRecentOrders();
+  const recentAppointments = getRecentAppointments();
 
   return (
     <div className="min-h-screen bg-gradient-luxury">
@@ -173,7 +173,7 @@ export const ProfilePage = ({ userData, onBack, onLogout, onViewOrders, onSettin
             </Card>
           </motion.div>
 
-          {/* Order Details Section */}
+          {/* Appointment Details Section */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -182,65 +182,65 @@ export const ProfilePage = ({ userData, onBack, onLogout, onViewOrders, onSettin
             <Card className="p-8 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <Package className="w-6 h-6 text-accent" />
-                  <h3 className="text-xl font-playfair font-semibold text-foreground">Order Details</h3>
+                  <Calendar className="w-6 h-6 text-accent" />
+                  <h3 className="text-xl font-playfair font-semibold text-foreground">Recent Appointments</h3>
                 </div>
                 <LuxuryButton 
                   variant="luxury-outline" 
                   size="sm"
-                  onClick={onViewOrders}
+                  onClick={onViewAppointments}
                   className="gap-2"
                 >
-                  View All Orders
+                  View All Appointments
                 </LuxuryButton>
               </div>
               
-              {recentOrders.length === 0 ? (
+              {recentAppointments.length === 0 ? (
                 <div className="text-center py-8">
-                  <Package className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
-                  <p className="text-muted-foreground">No orders yet</p>
-                  <p className="text-sm text-muted-foreground mt-1">Start shopping to see your orders here</p>
+                  <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
+                  <p className="text-muted-foreground">No appointments yet</p>
+                  <p className="text-sm text-muted-foreground mt-1">Book your first viewing appointment</p>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {recentOrders.map((order: any) => (
+                  {recentAppointments.map((appointment: any) => (
                     <div
-                      key={order.orderId}
+                      key={appointment.appointmentId}
                       className="flex items-center justify-between p-4 bg-background/50 rounded-lg border border-border hover:border-accent/50 transition-colors"
                     >
                       <div className="flex items-center gap-4">
                         <img 
-                          src={order.diamond.image} 
-                          alt={order.diamond.name}
+                          src={appointment.diamond.image} 
+                          alt={appointment.diamond.name}
                           className="w-16 h-16 object-cover rounded-lg"
                         />
                         <div>
-                          <p className="font-medium text-foreground">{order.diamond.name}</p>
-                          <p className="text-sm text-muted-foreground">Order ID: {order.orderId}</p>
-                          <p className="text-xs text-muted-foreground mt-1">{order.orderDate}</p>
+                          <p className="font-medium text-foreground">{appointment.diamond.name}</p>
+                          <p className="text-sm text-muted-foreground">ID: {appointment.appointmentId}</p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            📅 {new Date(appointment.appointmentDate).toLocaleDateString('en-IN')} • 
+                            🕐 {appointment.appointmentTime}
+                          </p>
                         </div>
                       </div>
                       <div className="text-right">
                         <Badge 
-                          variant={order.status === "Delivered" ? "default" : "secondary"}
+                          variant="secondary"
                           className="mb-2"
                         >
-                          {order.status}
+                          {appointment.status || 'Upcoming'}
                         </Badge>
-                        <p className="text-sm font-semibold text-accent">
-                          ₹{order.amount.toLocaleString('en-IN')}
-                        </p>
                       </div>
                     </div>
                   ))}
                   
-                  {recentOrders.length > 0 && (
+                  {recentAppointments.length > 0 && (
                     <div className="text-center pt-2">
                       <button 
-                        onClick={onViewOrders}
+                        onClick={onViewAppointments}
                         className="text-sm text-accent hover:underline"
                       >
-                        View all {localStorage.getItem('dno_orders') ? JSON.parse(localStorage.getItem('dno_orders') || '[]').length : 0} orders →
+                        View all {localStorage.getItem('dno_appointments') ? JSON.parse(localStorage.getItem('dno_appointments') || '[]').length : 0} appointments →
                       </button>
                     </div>
                   )}
