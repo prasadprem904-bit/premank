@@ -71,7 +71,7 @@ export const PremiumFeatures = ({ onViewDiamond }: PremiumFeaturesProps) => {
       >
         <div className="text-center mb-12">
           <h2 className="text-4xl font-playfair font-bold text-foreground mb-4">
-            Why Choose D&O Collections?
+            Why Choose Premank?
           </h2>
           <p className="text-muted-foreground text-lg">
             Experience luxury shopping with cutting-edge technology

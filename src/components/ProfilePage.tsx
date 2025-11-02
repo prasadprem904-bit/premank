@@ -4,7 +4,7 @@ import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { LuxuryButton } from "./ui/luxury-button";
 import { Badge } from "./ui/badge";
-import dnoLogo from "@/assets/dno-logo.png";
+import premankLogo from "@/assets/premank-logo.png";
 
 import { Package, CreditCard, Info, MessageSquare } from "lucide-react";
 
@@ -138,12 +138,13 @@ export const ProfilePage = ({ userData, onBack, onLogout, onViewAppointments, on
             <Card className="p-8 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
               <div className="flex items-center gap-3 mb-4">
                 <Info className="w-6 h-6 text-accent" />
-                <h3 className="text-xl font-playfair font-semibold text-foreground">About D&O Collections</h3>
+                <h3 className="text-xl font-playfair font-semibold text-foreground">About Premank</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                D&O Collections is a premium diamond store bringing brilliance, trust, and elegance together.
-                Every piece is handpicked to add sparkle to your life. We pride ourselves on offering the finest 
-                quality diamonds with exceptional craftsmanship and unparalleled customer service.
+                Premank is India's premier luxury diamond jeweller, bringing brilliance, 
+                trust, and elegance together. We believe in brightening your own jewellery 
+                with certified diamonds and expert craftsmanship. Every piece is handpicked 
+                to add sparkle to your life with unparalleled quality and service.
               </p>
             </Card>
           </motion.div>

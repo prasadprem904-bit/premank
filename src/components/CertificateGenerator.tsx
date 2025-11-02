@@ -6,7 +6,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Card } from "./ui/card";
 import { toast } from "sonner";
-import dnoLogo from "@/assets/dno-logo.png";
+import premankLogo from "@/assets/premank-logo.png";
 
 interface CertificateGeneratorProps {
   onBack: () => void;
@@ -66,8 +66,11 @@ export const CertificateGenerator = ({ onBack }: CertificateGeneratorProps) => {
               Back to Home
             </LuxuryButton>
             <div className="flex items-center gap-3">
-              <img src={dnoLogo} alt="D&O Collections" className="w-10 h-10 object-contain" />
-              <h1 className="text-2xl font-playfair font-bold text-accent">D&O Collections</h1>
+              <img src={premankLogo} alt="Premank" className="w-10 h-10 object-contain diamond-shine" />
+              <div>
+                <h1 className="text-2xl font-playfair font-bold text-accent">Premank</h1>
+                <p className="text-xs text-muted-foreground italic">Bright your own jewellery ✨</p>
+              </div>
             </div>
           </div>
         </div>
@@ -179,11 +182,12 @@ export const CertificateGenerator = ({ onBack }: CertificateGeneratorProps) => {
                 >
                   <Card className="p-8 bg-gradient-to-br from-card to-secondary/20 border-2 border-accent/50 shadow-gold">
                     <div className="text-center mb-6">
-                      <img src={dnoLogo} alt="D&O Collections" className="w-16 h-16 mx-auto mb-3" />
+                      <img src={premankLogo} alt="Premank" className="w-16 h-16 mx-auto mb-3 diamond-shine" />
                       <h2 className="text-2xl font-playfair font-bold text-accent mb-1">
-                        D&O Collections
+                        Premank
                       </h2>
-                      <p className="text-sm text-muted-foreground">Certificate of Authenticity</p>
+                      <p className="text-sm text-muted-foreground italic">Bright your own jewellery ✨</p>
+                      <p className="text-xs text-muted-foreground mt-1">Certificate of Authenticity</p>
                     </div>
 
                     <div className="border-t border-b border-accent/30 py-6 my-6 space-y-4">

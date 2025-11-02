@@ -8,7 +8,7 @@ import { Card } from "./ui/card";
 import { Slider } from "./ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { toast } from "sonner";
-import dnoLogo from "@/assets/dno-logo.png";
+import premankLogo from "@/assets/premank-logo.png";
 
 interface CustomDesignProps {
   onBack: () => void;
@@ -62,8 +62,11 @@ export const CustomDesign = ({ onBack }: CustomDesignProps) => {
               Back to Home
             </LuxuryButton>
             <div className="flex items-center gap-3">
-              <img src={dnoLogo} alt="D&O Collections" className="w-10 h-10 object-contain" />
-              <h1 className="text-2xl font-playfair font-bold text-accent">D&O Collections</h1>
+              <img src={premankLogo} alt="Premank" className="w-10 h-10 object-contain diamond-shine" />
+              <div>
+                <h1 className="text-2xl font-playfair font-bold text-accent">Premank</h1>
+                <p className="text-xs text-muted-foreground italic">Bright your own jewellery ✨</p>
+              </div>
             </div>
           </div>
         </div>
@@ -85,10 +88,10 @@ export const CustomDesign = ({ onBack }: CustomDesignProps) => {
               <Sparkles className="w-16 h-16 text-accent mx-auto mb-4" />
             </motion.div>
             <h1 className="text-4xl md:text-5xl font-playfair font-bold text-accent mb-4">
-              Design Your Dream Diamond
+              Design Your Own Jewellery
             </h1>
             <p className="text-muted-foreground text-lg">
-              Create a custom diamond that matches your vision perfectly
+              Premank: Bright your own jewellery with expert craftsmanship ✨
             </p>
           </div>
 

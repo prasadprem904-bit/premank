@@ -45,10 +45,10 @@ export const useAppointmentNotifications = () => {
 
         // Notify 30 minutes before
         if (diffMinutes <= 30 && diffMinutes > 29) {
-          new Notification('D&O COLLECTION - Reminder', {
-            body: `Your appointment for ${appointment.diamond.name} starts in 30 minutes!`,
-            icon: '/dno-logo.png',
-            badge: '/dno-logo.png',
+          new Notification('Premank - Appointment Reminder', {
+            body: `Your diamond appointment at Premank starts in 30 minutes! ✨`,
+            icon: '/premank-logo.png',
+            badge: '/premank-logo.png',
             tag: `reminder-${appointment.appointmentId}`,
             requireInteraction: true
           });
@@ -58,10 +58,10 @@ export const useAppointmentNotifications = () => {
 
         // Notify 1 hour before
         if (diffMinutes <= 60 && diffMinutes > 59) {
-          new Notification('D&O COLLECTION - Reminder', {
-            body: `Your appointment for ${appointment.diamond.name} starts in 1 hour!`,
-            icon: '/dno-logo.png',
-            badge: '/dno-logo.png',
+          new Notification('Premank - Upcoming Appointment', {
+            body: `Your exclusive diamond viewing at Premank begins in 1 hour! 💎`,
+            icon: '/premank-logo.png',
+            badge: '/premank-logo.png',
             tag: `reminder-60-${appointment.appointmentId}`
           });
           
@@ -70,10 +70,10 @@ export const useAppointmentNotifications = () => {
 
         // Notify when appointment time arrives
         if (diffMinutes <= 0 && diffMinutes > -1) {
-          new Notification('D&O COLLECTION - Appointment Time!', {
-            body: `Hey ${appointment.customerName}, your appointment starts now!`,
-            icon: '/dno-logo.png',
-            badge: '/dno-logo.png',
+          new Notification('Premank - Your Appointment Starts Now!', {
+            body: `Hey ${appointment.customerName}, your diamond appointment at Premank begins now! See you at our luxury showroom. ✨`,
+            icon: '/premank-logo.png',
+            badge: '/premank-logo.png',
             tag: `start-${appointment.appointmentId}`,
             requireInteraction: true
           });

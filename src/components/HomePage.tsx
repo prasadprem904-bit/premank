@@ -8,7 +8,7 @@ import { Input } from "./ui/input";
 import { PremiumFeatures } from "./PremiumFeatures";
 import { ContactSupport } from "./ContactSupport";
 import heroDiamond from "@/assets/hero-diamond.jpg";
-import dnoLogo from "@/assets/dno-logo.png";
+import premankLogo from "@/assets/premank-logo.png";
 interface HomePageProps {
   onViewDiamond: (diamond: Diamond) => void;
   onProfile: () => void;
@@ -132,11 +132,16 @@ export const HomePage = ({
           }}>
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <img src={dnoLogo} alt="D&O Collections" className="w-10 h-10 object-contain" />
+                  <img src={premankLogo} alt="Premank" className="w-10 h-10 object-contain diamond-shine" />
                 </div>
-                <h1 className="text-2xl font-playfair font-bold text-accent">
-                  D&O Collections
-                </h1>
+                <div>
+                  <h1 className="text-2xl font-playfair font-bold text-accent">
+                    Premank
+                  </h1>
+                  <p className="text-xs text-muted-foreground italic">
+                    Bright your own jewellery ✨
+                  </p>
+                </div>
               </div>
             </motion.div>
 
@@ -179,7 +184,7 @@ export const HomePage = ({
         }} transition={{
           delay: 0.3
         }}>
-            Pure. Precious. Perfect.
+            Bright Your Own Jewellery
           </motion.h1>
           
           <motion.p className="text-xl md:text-2xl text-diamond-white mb-8 font-light" initial={{
@@ -191,7 +196,7 @@ export const HomePage = ({
         }} transition={{
           delay: 0.5
         }}>
-            Discover the finest collection of certified diamonds
+            India's Premier Luxury Diamond Jeweller
           </motion.p>
 
           {/* Quick Action Buttons */}

@@ -17,7 +17,7 @@ export const ContactSupport = () => {
       icon: MessageCircle,
       title: "WhatsApp Channel",
       subtitle: "Instant Reply",
-      value: "D&O Collections Updates",
+      value: "Premank Updates",
       action: "Join Channel",
       link: "https://whatsapp.com/channel/0029VaoLotu42DchJMXK3i1L",
       primary: false

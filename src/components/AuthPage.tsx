@@ -6,7 +6,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Card } from "./ui/card";
-import dnoLogo from "@/assets/dno-logo.png";
+import premankLogo from "@/assets/premank-logo.png";
 
 interface AuthPageProps {
   onAuthSuccess: (userData: any) => void;
@@ -82,13 +82,16 @@ export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
               transition={{ duration: 3, repeat: Infinity }}
               className="inline-block mb-4"
             >
-              <img src={dnoLogo} alt="D&O Collections" className="w-24 h-24 mx-auto" />
+              <img src={premankLogo} alt="Premank" className="w-24 h-24 mx-auto diamond-shine" />
             </motion.div>
             <h1 className="text-3xl font-playfair font-bold text-accent mb-2">
-              D&O Collections
+              Premank
             </h1>
-            <p className="text-muted-foreground">
-              {isLogin ? "Welcome back to luxury" : "Join the diamond experience"}
+            <p className="text-muted-foreground italic mb-2">
+              Bright your own jewellery ✨
+            </p>
+            <p className="text-muted-foreground text-sm">
+              {isLogin ? "Welcome back to brilliance" : "Join the diamond experience"}
             </p>
           </div>
 
@@ -216,7 +219,7 @@ export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
           {/* Toggle Auth Mode */}
           <div className="mt-6 text-center">
             <p className="text-muted-foreground mb-2">
-              {isLogin ? "New to D&O Collections?" : "Already have an account?"}
+              {isLogin ? "New to Premank?" : "Already have an account?"}
             </p>
             <LuxuryButton
               variant="luxury-outline"

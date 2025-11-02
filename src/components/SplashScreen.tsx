@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import dnoLogo from "@/assets/dno-logo.png";
+import premankLogo from "@/assets/premank-logo.png";
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -124,7 +124,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               
               {/* Logo with Shine Effect */}
               <div className="relative w-48 h-48 mx-auto overflow-hidden rounded-full">
-                <img src={dnoLogo} alt="D&O Collections" className="w-48 h-48 relative z-10 filter drop-shadow-2xl object-contain" />
+                <img src={premankLogo} alt="Premank" className="w-48 h-48 relative z-10 filter drop-shadow-2xl object-contain" />
                 
                 {/* Diamond Shine Animation - Light Reflection */}
                 <motion.div
@@ -201,7 +201,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              Welcome to D&O Collections
+              Welcome to Premank
             </motion.h1>
             <motion.p 
               className="text-2xl md:text-3xl text-white font-light opacity-90"
@@ -209,7 +209,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               animate={{ opacity: 0.9 }}
               transition={{ delay: 1 }}
             >
-              Pure. Precious. Perfect.
+              Bright your own jewellery ✨
             </motion.p>
           </motion.div>
         )}

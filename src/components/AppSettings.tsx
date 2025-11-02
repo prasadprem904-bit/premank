@@ -6,7 +6,7 @@ import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
 import { useState } from "react";
-import dnoLogo from "@/assets/dno-logo.png";
+import premankLogo from "@/assets/premank-logo.png";
 
 interface AppSettingsProps {
   onBack: () => void;
@@ -64,8 +64,8 @@ export const AppSettings = ({ onBack }: AppSettingsProps) => {
             </LuxuryButton>
             
             <div className="flex items-center gap-3">
-              <img src={dnoLogo} alt="D&O Collections" className="h-8" />
-              <h1 className="text-lg font-playfair font-bold text-accent">D&O Collections</h1>
+              <img src={premankLogo} alt="Premank" className="h-8" />
+              <h1 className="text-lg font-playfair font-bold text-accent">Premank</h1>
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@ export const AppSettings = ({ onBack }: AppSettingsProps) => {
               App Settings
             </h1>
             <p className="text-muted-foreground">
-              Customize your D&O Collections experience
+              Customize your Premank experience
             </p>
           </motion.div>
 
@@ -98,18 +98,19 @@ export const AppSettings = ({ onBack }: AppSettingsProps) => {
             <Card className="p-6 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-16 h-16 bg-gradient-gold rounded-lg flex items-center justify-center p-2">
-                  <img src={dnoLogo} alt="D&O Collections" className="w-full h-full object-contain" />
+                  <img src={premankLogo} alt="Premank" className="w-full h-full object-contain diamond-shine" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-playfair font-bold text-foreground">D&O Collections</h3>
-                  <p className="text-sm text-muted-foreground">Version 1.0.0</p>
-                  <p className="text-xs text-muted-foreground">Premium Diamond Shopping App</p>
+                  <h3 className="text-xl font-playfair font-bold text-foreground">Premank</h3>
+                  <p className="text-sm text-muted-foreground italic">Bright your own jewellery ✨</p>
+                  <p className="text-sm text-muted-foreground">Version 3.0</p>
                 </div>
               </div>
               <Separator className="my-4" />
               <p className="text-sm text-muted-foreground leading-relaxed">
-                The ultimate destination for exquisite diamonds and luxury jewelry. Experience the finest collection 
-                of handpicked diamonds with secure payment options and premium delivery service.
+                Premank is India's premier luxury diamond jeweller, bringing brilliance, 
+                trust, and elegance together. We believe in brightening your own jewellery 
+                with certified diamonds and expert craftsmanship.
               </p>
             </Card>
           </motion.div>
@@ -335,10 +336,10 @@ export const AppSettings = ({ onBack }: AppSettingsProps) => {
           >
             <Card className="p-6 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
               <p className="text-sm text-muted-foreground mb-2">
-                © 2025 D&O Collections. All rights reserved.
+                © 2025 Premank. All rights reserved.
               </p>
-              <p className="text-xs text-muted-foreground">
-                Crafted with excellence for diamond enthusiasts
+              <p className="text-xs text-muted-foreground italic">
+                Bright your own jewellery ✨
               </p>
             </Card>
           </motion.div>
