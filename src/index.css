@@ -8,54 +8,54 @@
 
 @layer base {
   :root {
-    /* Premank Ultra Bright Royal Green & Gold Palette */
-    --background: 60 40% 98%;                 /* Ultra Bright Ivory */
-    --foreground: 106 30% 25%;                /* Rich Dark Green for Text */
+    /* PR.COLLECTION Luxury Color Palette */
+    --background: 0 0% 0%;                    /* Pure Black */
+    --foreground: 0 0% 97%;                   /* Diamond White */
 
-    --card: 0 0% 100%;                        /* Pure White Card */
-    --card-foreground: 106 30% 25%;
+    --card: 0 0% 3%;                         /* Subtle Black Card */
+    --card-foreground: 0 0% 97%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 106 30% 25%;
+    --popover: 0 0% 2%;
+    --popover-foreground: 0 0% 97%;
 
-    --primary: 106 35% 52%;                   /* Vibrant Royal Green */
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 0%;                       /* Pure Black */
+    --primary-foreground: 0 0% 97%;
 
-    --secondary: 71 30% 92%;                  /* Bright Soft Neutral */
-    --secondary-foreground: 106 30% 25%;
+    --secondary: 213 100% 26%;                /* Royal Blue */
+    --secondary-foreground: 0 0% 97%;
 
-    --muted: 71 30% 92%;
-    --muted-foreground: 106 35% 45%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 49 65% 72%;                     /* Bright Shiny Gold */
-    --accent-foreground: 106 30% 25%;
+    --accent: 45 100% 50%;                    /* Golden */
+    --accent-foreground: 0 0% 0%;
 
-    --luxury-green: 106 35% 52%;              /* Vibrant Royal Green */
-    --champagne-gold: 49 65% 72%;             /* Bright Shiny Gold */
-    --ivory-white: 60 40% 98%;                /* Ultra Bright Ivory */
+    --royal-blue: 213 100% 26%;               /* Royal Blue #0D47A1 */
+    --diamond-white: 0 0% 97%;                /* Diamond White #F8F8F8 */
+    --luxury-gold: 45 100% 50%;               /* Golden #FFD700 */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 106 35% 52% / 0.25;
-    --input: 71 30% 96%;
-    --ring: 49 65% 72%;
+    --border: 213 100% 26% / 0.2;
+    --input: 0 0% 5%;
+    --ring: 45 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Ultra Bright Premium Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(106 35% 52%) 0%, hsl(49 65% 72%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(49 65% 72%) 0%, hsl(49 70% 78%) 50%, hsl(49 65% 72%) 100%);
-    --gradient-diamond: linear-gradient(135deg, hsl(60 40% 98%) 0%, hsl(0 0% 100%) 30%, hsl(71 30% 92%) 60%, hsl(0 0% 100%) 100%);
-    --gradient-luxury: linear-gradient(135deg, hsl(60 40% 98%) 0%, hsl(106 35% 95%) 50%, hsl(60 40% 98%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(106 35% 52% / 0.95) 0%, hsl(49 65% 72% / 0.85) 50%, hsl(106 35% 52% / 0.95) 100%);
+    /* Premium Luxury Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(213 100% 26%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(45 100% 50%) 0%, hsl(43 100% 60%) 50%, hsl(45 100% 50%) 100%);
+    --gradient-diamond: linear-gradient(135deg, hsl(0 0% 90%) 0%, hsl(0 0% 100%) 30%, hsl(220 20% 95%) 60%, hsl(0 0% 100%) 100%);
+    --gradient-luxury: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(213 100% 26%) 30%, hsl(0 0% 0%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(213 100% 26% / 0.8) 50%, hsl(0 0% 0%) 100%);
 
-    /* Bright Diamond Glow Effects */
-    --shadow-luxury: 0 20px 60px -10px hsl(106 35% 52% / 0.25);
-    --shadow-gold: 0 0 60px hsl(49 65% 72% / 0.4);
-    --shadow-diamond: 0 0 50px hsl(60 40% 98% / 0.5);
-    --shadow-glow: 0 0 80px hsl(49 65% 72% / 0.35);
-    --shadow-royal: 0 0 60px hsl(106 35% 52% / 0.3);
+    /* Premium Shadows & Effects */
+    --shadow-luxury: 0 25px 50px -12px hsl(0 0% 0% / 0.9);
+    --shadow-gold: 0 0 40px hsl(45 100% 50% / 0.4);
+    --shadow-diamond: 0 0 30px hsl(0 0% 100% / 0.5);
+    --shadow-glow: 0 0 60px hsl(45 100% 50% / 0.3);
+    --shadow-royal: 0 0 40px hsl(213 100% 26% / 0.4);
     
     /* Animations */
     --transition-luxury: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -85,33 +85,33 @@
   }
 
   .dark {
-    --background: 106 30% 18%;                /* Rich Dark Green */
-    --foreground: 60 40% 98%;                 /* Ultra Bright Ivory */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-    --card: 106 25% 25%;
-    --card-foreground: 60 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 106 25% 25%;
-    --popover-foreground: 60 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 49 65% 72%;                    /* Bright Shiny Gold */
-    --primary-foreground: 106 30% 18%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 106 35% 52%;                 /* Vibrant Royal Green */
-    --secondary-foreground: 60 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 106 25% 30%;
-    --muted-foreground: 49 65% 72%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 49 65% 72%;                     /* Bright Shiny Gold */
-    --accent-foreground: 106 30% 18%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 60 33% 97%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 106 24% 57%;
-    --input: 106 24% 57%;
-    --ring: 49 39% 67%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -259,36 +259,32 @@
 
   /* Countdown Timer Styles */
   .countdown-box {
-    background: linear-gradient(135deg, hsl(49 65% 72% / 0.2) 0%, hsl(49 65% 72% / 0.1) 100%);
-    border: 2px solid hsl(49 65% 72% / 0.5);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.3);
     border-radius: 12px;
     padding: 1.5rem;
     text-align: center;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 20px hsl(49 65% 72% / 0.15);
   }
 
   .countdown-box:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px hsl(49 65% 72% / 0.35);
-    border-color: hsl(49 65% 72% / 0.7);
+    box-shadow: 0 8px 24px rgba(255, 215, 0, 0.2);
   }
 
   .countdown-number {
     font-size: 3rem;
     font-weight: bold;
-    color: hsl(49 65% 50%);
+    color: #FFD700;
     font-family: 'Playfair Display', serif;
     line-height: 1;
-    text-shadow: 0 0 25px hsl(49 65% 72% / 0.5);
   }
 
   .countdown-label {
     font-size: 0.875rem;
-    color: hsl(106 30% 35%);
+    color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-top: 0.5rem;
-    font-weight: 500;
   }
 }
