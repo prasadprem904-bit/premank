@@ -8,54 +8,54 @@
 
 @layer base {
   :root {
-    /* Premank Brighter Royal Green & Soft Gold Palette */
-    --background: 60 33% 97%;                 /* Crystal White Base */
-    --foreground: 94 21% 32%;                 /* Royal Green Shadow */
+    /* Premank Bright Royal Green & Shiny Gold Palette */
+    --background: 60 33% 97%;                 /* Bright Ivory */
+    --foreground: 94 21% 39%;                 /* Deep Royal Contrast */
 
     --card: 0 0% 100%;                        /* Pure White Card */
-    --card-foreground: 94 21% 32%;
+    --card-foreground: 94 21% 39%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 94 21% 32%;
+    --popover-foreground: 94 21% 39%;
 
-    --primary: 106 24% 57%;                   /* Brighter Royal Green */
+    --primary: 106 24% 57%;                   /* Bright Royal Green */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 71 25% 88%;                  /* Bright Neutral Tone */
-    --secondary-foreground: 94 21% 32%;
+    --secondary: 71 25% 88%;                  /* Soft Neutral */
+    --secondary-foreground: 94 21% 39%;
 
     --muted: 71 25% 88%;
     --muted-foreground: 106 24% 57%;
 
-    --accent: 49 39% 67%;                     /* Soft Shining Gold */
-    --accent-foreground: 94 21% 32%;
+    --accent: 49 55% 77%;                     /* Shiny Champagne Gold */
+    --accent-foreground: 94 21% 39%;
 
-    --luxury-green: 106 24% 57%;              /* Brighter Royal Green #8BA97A */
-    --champagne-gold: 49 39% 67%;             /* Soft Shining Gold #CBBF8B */
-    --ivory-white: 60 33% 97%;                /* Crystal White Base #FAFAF5 */
+    --luxury-green: 106 24% 57%;              /* Bright Royal Green #8FA87C */
+    --champagne-gold: 49 55% 77%;             /* Shiny Champagne Gold #E9D8A6 */
+    --ivory-white: 60 33% 97%;                /* Bright Ivory #FAF9F6 */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 106 24% 57% / 0.2;
     --input: 71 25% 88%;
-    --ring: 49 39% 67%;
+    --ring: 49 55% 77%;
 
     --radius: 0.75rem;
 
-    /* Premium Soft Shine Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(106 24% 57%) 0%, hsl(49 39% 67%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(49 39% 67%) 0%, hsl(49 45% 72%) 50%, hsl(49 39% 67%) 100%);
+    /* Premium Bright Shine Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(106 24% 57%) 0%, hsl(49 55% 77%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(49 55% 77%) 0%, hsl(49 60% 82%) 50%, hsl(49 55% 77%) 100%);
     --gradient-diamond: linear-gradient(135deg, hsl(60 33% 97%) 0%, hsl(0 0% 100%) 30%, hsl(71 25% 88%) 60%, hsl(0 0% 100%) 100%);
-    --gradient-luxury: linear-gradient(135deg, hsl(106 24% 57%) 0%, hsl(49 39% 67%) 30%, hsl(106 24% 57%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(94 21% 32%) 0%, hsl(106 24% 57% / 0.8) 50%, hsl(94 21% 32%) 100%);
+    --gradient-luxury: linear-gradient(135deg, hsl(106 24% 57%) 0%, hsl(49 55% 77%) 30%, hsl(106 24% 57%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(94 21% 39%) 0%, hsl(106 24% 57% / 0.8) 50%, hsl(94 21% 39%) 100%);
 
-    /* Premium Shadows & Effects */
-    --shadow-luxury: 0 25px 50px -12px hsl(106 24% 57% / 0.3);
-    --shadow-gold: 0 0 40px hsl(49 39% 67% / 0.4);
-    --shadow-diamond: 0 0 30px hsl(60 33% 97% / 0.5);
-    --shadow-glow: 0 0 60px hsl(49 39% 67% / 0.3);
-    --shadow-royal: 0 0 40px hsl(106 24% 57% / 0.4);
+    /* Premium Diamond Glow Effects */
+    --shadow-luxury: 0 25px 50px -12px hsl(106 24% 57% / 0.35);
+    --shadow-gold: 0 0 50px hsl(49 55% 77% / 0.5);
+    --shadow-diamond: 0 0 40px hsl(60 33% 97% / 0.6);
+    --shadow-glow: 0 0 70px hsl(49 55% 77% / 0.4);
+    --shadow-royal: 0 0 50px hsl(106 24% 57% / 0.45);
     
     /* Animations */
     --transition-luxury: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -85,26 +85,26 @@
   }
 
   .dark {
-    --background: 94 21% 32%;                 /* Royal Green Shadow */
-    --foreground: 60 33% 97%;                 /* Crystal White Base */
+    --background: 94 21% 39%;                 /* Deep Royal Contrast */
+    --foreground: 60 33% 97%;                 /* Bright Ivory */
 
-    --card: 106 24% 40%;
+    --card: 106 24% 42%;
     --card-foreground: 60 33% 97%;
 
-    --popover: 106 24% 40%;
+    --popover: 106 24% 42%;
     --popover-foreground: 60 33% 97%;
 
-    --primary: 49 39% 67%;                    /* Soft Shining Gold */
-    --primary-foreground: 94 21% 32%;
+    --primary: 49 55% 77%;                    /* Shiny Champagne Gold */
+    --primary-foreground: 94 21% 39%;
 
-    --secondary: 106 24% 57%;                 /* Brighter Royal Green */
+    --secondary: 106 24% 57%;                 /* Bright Royal Green */
     --secondary-foreground: 60 33% 97%;
 
     --muted: 106 24% 57%;
-    --muted-foreground: 49 39% 67%;
+    --muted-foreground: 49 55% 77%;
 
-    --accent: 49 39% 67%;                     /* Soft Shining Gold */
-    --accent-foreground: 94 21% 32%;
+    --accent: 49 55% 77%;                     /* Shiny Champagne Gold */
+    --accent-foreground: 94 21% 39%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 60 33% 97%;
@@ -259,8 +259,8 @@
 
   /* Countdown Timer Styles */
   .countdown-box {
-    background: linear-gradient(135deg, hsl(49 39% 67% / 0.1) 0%, hsl(49 39% 67% / 0.05) 100%);
-    border: 2px solid hsl(49 39% 67% / 0.3);
+    background: linear-gradient(135deg, hsl(49 55% 77% / 0.15) 0%, hsl(49 55% 77% / 0.08) 100%);
+    border: 2px solid hsl(49 55% 77% / 0.4);
     border-radius: 12px;
     padding: 1.5rem;
     text-align: center;
@@ -269,20 +269,21 @@
 
   .countdown-box:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px hsl(49 39% 67% / 0.2);
+    box-shadow: 0 12px 32px hsl(49 55% 77% / 0.3);
   }
 
   .countdown-number {
     font-size: 3rem;
     font-weight: bold;
-    color: hsl(49 39% 67%);
+    color: hsl(49 55% 77%);
     font-family: 'Playfair Display', serif;
     line-height: 1;
+    text-shadow: 0 0 20px hsl(49 55% 77% / 0.4);
   }
 
   .countdown-label {
     font-size: 0.875rem;
-    color: hsl(94 21% 32% / 0.7);
+    color: hsl(94 21% 39% / 0.7);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-top: 0.5rem;
