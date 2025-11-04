@@ -119,9 +119,7 @@ export const HomePage = ({
                   <h1 className="text-2xl font-playfair font-bold text-accent">
                     Premank
                   </h1>
-                  <p className="text-xs text-muted-foreground italic">
-                    Bright your own jewellery ✨
-                  </p>
+                  
                 </div>
               </div>
             </motion.div>
