@@ -96,7 +96,26 @@ export const HomePage = ({
   };
   return <div className="min-h-screen bg-gradient-luxury">
       {/* Premium Header with Live Price Ticker */}
-      
+      <motion.div initial={{
+      y: -20,
+      opacity: 0
+    }} animate={{
+      y: 0,
+      opacity: 1
+    }} className="bg-secondary text-diamond-white py-2 text-center text-sm font-medium">
+        <motion.div className="flex items-center justify-center gap-8" animate={{
+        x: [-100, 100, -100]
+      }} transition={{
+        duration: 20,
+        repeat: Infinity,
+        ease: "linear"
+      }}>
+          <span>🏆 Gold: ₹6,245/g</span>
+          <span>💎 Diamond Index: +2.5%</span>
+          <span>✨ 10,000+ Diamonds Sold</span>
+          <span>⭐ 2000+ Happy Clients</span>
+        </motion.div>
+      </motion.div>
 
       {/* Luxury Header */}
       <motion.header initial={{
