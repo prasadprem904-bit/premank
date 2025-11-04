@@ -14,16 +14,165 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      appointments: {
+        Row: {
+          appointment_date: string
+          appointment_time: string
+          created_at: string | null
+          email: string | null
+          id: string
+          name: string
+          phone: string
+          remarks: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          appointment_date: string
+          appointment_time: string
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          phone: string
+          remarks?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          appointment_date?: string
+          appointment_time?: string
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string
+          remarks?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      certificates: {
+        Row: {
+          certificate_number: string | null
+          created_at: string | null
+          customer_name: string
+          diamond_id: string | null
+          email: string
+          id: string
+          pdf_url: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          certificate_number?: string | null
+          created_at?: string | null
+          customer_name: string
+          diamond_id?: string | null
+          email: string
+          id?: string
+          pdf_url?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          certificate_number?: string | null
+          created_at?: string | null
+          customer_name?: string
+          diamond_id?: string | null
+          email?: string
+          id?: string
+          pdf_url?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "certificates_diamond_id_fkey"
+            columns: ["diamond_id"]
+            isOneToOne: false
+            referencedRelation: "diamonds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      diamonds: {
+        Row: {
+          carat: number
+          certification_status: string | null
+          clarity: string
+          color: string
+          created_at: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          updated_at: string | null
+        }
+        Insert: {
+          carat: number
+          certification_status?: string | null
+          clarity: string
+          color: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price: number
+          updated_at?: string | null
+        }
+        Update: {
+          carat?: number
+          certification_status?: string | null
+          clarity?: string
+          color?: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_certificate_number: { Args: never; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +299,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
