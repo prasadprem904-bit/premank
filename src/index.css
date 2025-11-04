@@ -8,31 +8,31 @@
 
 @layer base {
   :root {
-    /* PR.COLLECTION Luxury Color Palette */
-    --background: 0 0% 0%;                    /* Pure Black */
-    --foreground: 0 0% 97%;                   /* Diamond White */
+    /* Premank Luxury Color Palette */
+    --background: 42 33% 95%;                 /* #F2F4EC - Bright Ivory Background */
+    --foreground: 0 0% 10%;                   /* #1A1A1A - Dark Text */
 
-    --card: 0 0% 3%;                         /* Subtle Black Card */
-    --card-foreground: 0 0% 97%;
+    --card: 0 0% 100%;                        /* Pure White Cards */
+    --card-foreground: 0 0% 10%;
 
-    --popover: 0 0% 2%;
-    --popover-foreground: 0 0% 97%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
 
-    --primary: 0 0% 0%;                       /* Pure Black */
-    --primary-foreground: 0 0% 97%;
+    --primary: 93 12% 44%;                    /* #6B7C61 - Royal Green */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 213 100% 26%;                /* Royal Blue */
-    --secondary-foreground: 0 0% 97%;
+    --secondary: 73 16% 63%;                  /* #A7B194 - Soft Accent */
+    --secondary-foreground: 0 0% 10%;
 
-    --muted: 0 0% 8%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 60 5% 90%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 45 100% 50%;                    /* Golden */
-    --accent-foreground: 0 0% 0%;
+    --accent: 73 16% 63%;                     /* #A7B194 - Accent */
+    --accent-foreground: 0 0% 10%;
 
-    --royal-blue: 213 100% 26%;               /* Royal Blue #0D47A1 */
-    --diamond-white: 0 0% 97%;                /* Diamond White #F8F8F8 */
-    --luxury-gold: 45 100% 50%;               /* Golden #FFD700 */
+    --premank-primary: 93 12% 44%;            /* #6B7C61 - Royal Green */
+    --premank-accent: 73 16% 63%;             /* #A7B194 - Soft Accent */
+    --premank-bg: 42 33% 95%;                 /* #F2F4EC - Background */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
