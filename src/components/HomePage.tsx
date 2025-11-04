@@ -119,60 +119,7 @@ export const HomePage = ({
     }} className="relative py-20 px-4 text-center" style={{
       background: 'linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(13,71,161,0.3) 50%, rgba(0,0,0,0.9) 100%)'
     }}>
-        <div className="container mx-auto max-w-4xl">
-          <motion.h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6" style={{
-          background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text'
-        }} initial={{
-          y: 50,
-          opacity: 0
-        }} animate={{
-          y: 0,
-          opacity: 1
-        }} transition={{
-          delay: 0.3
-        }}>
-            Bright Your Own Jewellery
-          </motion.h1>
-          
-          <motion.p className="text-xl md:text-2xl text-diamond-white mb-8 font-light" initial={{
-          y: 30,
-          opacity: 0
-        }} animate={{
-          y: 0,
-          opacity: 1
-        }} transition={{
-          delay: 0.5
-        }}>
-            India's Premier Luxury Diamond Jeweller
-          </motion.p>
-
-          {/* Quick Action Buttons */}
-          <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12" initial={{
-          y: 40,
-          opacity: 0
-        }} animate={{
-          y: 0,
-          opacity: 1
-        }} transition={{
-          delay: 0.7
-        }}>
-            <LuxuryButton variant="luxury" className="h-16 text-sm">
-              💎 Shop Diamonds
-            </LuxuryButton>
-            <LuxuryButton variant="luxury-outline" className="h-16 text-sm" onClick={onCustomDesign}>
-              ✨ Custom Design
-            </LuxuryButton>
-            <LuxuryButton variant="luxury-outline" className="h-16 text-sm" onClick={onCertificate}>
-              🏆 Certified Stones
-            </LuxuryButton>
-            <LuxuryButton variant="luxury-outline" className="h-16 text-sm">
-              📞 Contact Us
-            </LuxuryButton>
-          </motion.div>
-        </div>
+        
       </motion.section>
 
       {/* Premium Features Section */}
