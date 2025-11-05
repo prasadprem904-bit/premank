@@ -105,27 +105,27 @@ export const HomePage = ({
     }} animate={{
       y: 0,
       opacity: 1
-    }} className="bg-card/95 backdrop-blur-sm border-b border-accent/20 shadow-luxury sticky top-8 z-40">
-        <div className="container mx-auto px-4 py-4">
+    }} className="backdrop-blur-sm border-b border-accent/10 sticky top-0 z-40">
+        <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <motion.div className="flex items-center gap-3" whileHover={{
+            <motion.div className="flex flex-col items-center gap-2" whileHover={{
             scale: 1.05
           }}>
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <img src={premankLogo} alt="Premank" className="w-10 h-10 object-contain diamond-shine" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-playfair font-bold text-accent">
-                    Premank
-                  </h1>
-                  
-                </div>
+              <div className="relative">
+                <img src={premankLogo} alt="Premank" className="w-16 h-16 object-contain diamond-shine" />
               </div>
+              <h1 className="text-4xl font-playfair font-bold" style={{
+                background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                textShadow: '0 0 30px rgba(255, 215, 0, 0.3)'
+              }}>
+                Premank
+              </h1>
             </motion.div>
 
             <div className="flex items-center gap-4">
-              
               <LuxuryButton variant="luxury-outline" onClick={onViewAppointments} className="gap-2">
                 <Calendar className="w-4 h-4" />
                 My Appointments
