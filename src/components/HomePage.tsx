@@ -106,7 +106,36 @@ export const HomePage = ({
       y: 0,
       opacity: 1
     }} className="bg-card/95 backdrop-blur-sm border-b border-accent/20 shadow-luxury sticky top-8 z-40">
-        
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <motion.div className="flex items-center gap-3" whileHover={{
+            scale: 1.05
+          }}>
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <img src={premankLogo} alt="Premank" className="w-10 h-10 object-contain diamond-shine" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-playfair font-bold text-accent">
+                    Premank
+                  </h1>
+                  
+                </div>
+              </div>
+            </motion.div>
+
+            <div className="flex items-center gap-4">
+              
+              <LuxuryButton variant="luxury-outline" onClick={onViewAppointments} className="gap-2">
+                <Calendar className="w-4 h-4" />
+                My Appointments
+              </LuxuryButton>
+              <LuxuryButton variant="luxury-outline" onClick={onProfile}>
+                Profile
+              </LuxuryButton>
+            </div>
+          </div>
+        </div>
       </motion.header>
 
       {/* Hero Banner Section */}
