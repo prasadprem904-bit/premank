@@ -191,9 +191,7 @@ export const HomePage = ({
             <LuxuryButton variant="luxury" className="h-16 text-sm">
               💎 Shop Diamonds
             </LuxuryButton>
-            <LuxuryButton variant="luxury-outline" className="h-16 text-sm" onClick={onCustomDesign}>
-              ✨ Custom Design
-            </LuxuryButton>
+            
             <LuxuryButton variant="luxury-outline" className="h-16 text-sm" onClick={onCertificate}>
               🏆 Certified Stones
             </LuxuryButton>
