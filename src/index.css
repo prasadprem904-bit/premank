@@ -7,6 +7,10 @@
 /* PR.COLLECTION Luxury Design System */
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   :root {
     /* Premank Luxury Color Palette */
     --background: 42 33% 95%;                 /* #F2F4EC - Bright Ivory Background */

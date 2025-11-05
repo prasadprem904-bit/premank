@@ -8,6 +8,11 @@ import { Input } from "./ui/input";
 import { PremiumFeatures } from "./PremiumFeatures";
 import { ContactSupport } from "./ContactSupport";
 import heroDiamond from "@/assets/hero-diamond.jpg";
+import heroLadyRing from "@/assets/hero-lady-ring.jpg";
+import modelSmallDiamond from "@/assets/model-small-diamond.jpg";
+import modelLargeDiamond from "@/assets/model-large-diamond.jpg";
+import modelOpeningBox from "@/assets/model-opening-box.jpg";
+import modelMediumDiamond from "@/assets/model-medium-diamond.jpg";
 import premankLogo from "@/assets/premank-logo.png";
 interface HomePageProps {
   onViewDiamond: (diamond: Diamond) => void;
@@ -105,7 +110,7 @@ export const HomePage = ({
     }} animate={{
       y: 0,
       opacity: 1
-    }} className="backdrop-blur-sm border-b border-accent/10 sticky top-0 z-40">
+    }} className="bg-background/80 border-b border-accent/10 sticky top-0 z-40">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <motion.div className="flex flex-col items-center gap-2" whileHover={{
@@ -138,22 +143,26 @@ export const HomePage = ({
         </div>
       </motion.header>
 
-      {/* Hero Banner Section */}
+      {/* Hero Banner Section with Image */}
       <motion.section initial={{
       opacity: 0
     }} animate={{
       opacity: 1
     }} transition={{
       delay: 0.2
-    }} className="relative py-20 px-4 text-center" style={{
-      background: 'linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(13,71,161,0.3) 50%, rgba(0,0,0,0.9) 100%)'
-    }}>
-        <div className="container mx-auto max-w-4xl">
+    }} className="relative py-32 px-4 text-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img src={heroLadyRing} alt="Luxury Diamond Ring" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
+        </div>
+        
+        <div className="container mx-auto max-w-4xl relative z-10">
           <motion.h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6" style={{
           background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text'
+          backgroundClip: 'text',
+          textShadow: '0 0 40px rgba(255, 215, 0, 0.4)'
         }} initial={{
           y: 50,
           opacity: 0
@@ -276,6 +285,69 @@ export const HomePage = ({
           </motion.div>}
       </section>
 
+      {/* Luxury Diamond Showcase Carousel */}
+      <motion.section initial={{
+      opacity: 0,
+      y: 30
+    }} animate={{
+      opacity: 1,
+      y: 0
+    }} transition={{
+      delay: 0.3
+    }} className="container mx-auto px-4 py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4" style={{
+            background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
+          }}>
+            Natural Diamonds • 0.5 to 5 Carats
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            Experience the brilliance of certified natural diamonds
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <motion.div whileHover={{ scale: 1.05, y: -10 }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
+            <img src={modelSmallDiamond} alt="0.5 Carat Diamond" className="w-full h-80 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+              <h3 className="text-2xl font-playfair font-bold mb-2">0.5 Carat</h3>
+              <p className="text-sm opacity-90">Perfect for delicate designs</p>
+            </div>
+          </motion.div>
+
+          <motion.div whileHover={{ scale: 1.05, y: -10 }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
+            <img src={modelMediumDiamond} alt="1.5 Carat Diamond" className="w-full h-80 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+              <h3 className="text-2xl font-playfair font-bold mb-2">1.5 Carat</h3>
+              <p className="text-sm opacity-90">Balanced elegance</p>
+            </div>
+          </motion.div>
+
+          <motion.div whileHover={{ scale: 1.05, y: -10 }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
+            <img src={modelOpeningBox} alt="2 Carat Diamond" className="w-full h-80 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+              <h3 className="text-2xl font-playfair font-bold mb-2">2 Carat</h3>
+              <p className="text-sm opacity-90">Statement piece</p>
+            </div>
+          </motion.div>
+
+          <motion.div whileHover={{ scale: 1.05, y: -10 }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
+            <img src={modelLargeDiamond} alt="5 Carat Diamond" className="w-full h-80 object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+              <h3 className="text-2xl font-playfair font-bold mb-2">5 Carat</h3>
+              <p className="text-sm opacity-90">Ultimate luxury</p>
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
+
       {/* Why Choose Premank - Three Key Features Section */}
       <motion.section initial={{
       opacity: 0,
@@ -285,7 +357,7 @@ export const HomePage = ({
       y: 0
     }} transition={{
       delay: 0.4
-    }} className="container mx-auto px-4 py-16">
+    }} className="container mx-auto px-4 py-16 bg-card/30 rounded-3xl">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-playfair font-bold text-foreground mb-4">
             Why Choose Premank?
