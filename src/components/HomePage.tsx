@@ -110,7 +110,7 @@ export const HomePage = ({
     }} animate={{
       y: 0,
       opacity: 1
-    }} className="bg-background/80 border-b border-accent/10 sticky top-0 z-40">
+    }} className="bg-background border-b border-accent/10 sticky top-0 z-40">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <motion.div className="flex flex-col items-center gap-2" whileHover={{
@@ -204,6 +204,11 @@ export const HomePage = ({
             <LuxuryButton variant="luxury-outline" className="h-16 text-sm" onClick={onCertificate}>
               🏆 Certified Stones
             </LuxuryButton>
+            
+            <LuxuryButton variant="luxury-outline" className="h-16 text-sm">
+              👁️ Virtual Try-On
+            </LuxuryButton>
+            
             <LuxuryButton variant="luxury-outline" className="h-16 text-sm">
               📞 Contact Us
             </LuxuryButton>
