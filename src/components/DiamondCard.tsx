@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Star, Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 
@@ -42,6 +42,32 @@ export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
           />
         </button>
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        
+        {/* Animated Sparkles */}
+        <motion.div
+          className="absolute top-8 left-8 opacity-0 group-hover:opacity-100"
+          initial={{ scale: 0, rotate: 0 }}
+          whileHover={{ scale: 1, rotate: 180 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <Sparkles className="w-6 h-6 text-accent fill-accent" />
+        </motion.div>
+        <motion.div
+          className="absolute bottom-12 right-12 opacity-0 group-hover:opacity-100"
+          initial={{ scale: 0, rotate: 0 }}
+          whileHover={{ scale: 1, rotate: -180 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <Sparkles className="w-5 h-5 text-accent fill-accent" />
+        </motion.div>
+        <motion.div
+          className="absolute top-20 right-16 opacity-0 group-hover:opacity-100"
+          initial={{ scale: 0, rotate: 0 }}
+          whileHover={{ scale: 1, rotate: 360 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <Sparkles className="w-4 h-4 text-accent fill-accent" />
+        </motion.div>
         
         {/* Rating */}
         <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/70 px-2 py-1 rounded-full">
