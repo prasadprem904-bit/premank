@@ -7,6 +7,9 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { PremiumFeatures } from "./PremiumFeatures";
 import { ContactSupport } from "./ContactSupport";
+import { WhatsAppButton } from "./WhatsAppButton";
+import { CertificationBadges } from "./CertificationBadges";
+import { DiamondSizeComparison } from "./DiamondSizeComparison";
 import heroDiamond from "@/assets/hero-diamond.jpg";
 import heroLadyRing from "@/assets/hero-lady-ring.jpg";
 import modelSmallDiamond from "@/assets/model-small-diamond.jpg";
@@ -100,26 +103,21 @@ export const HomePage = ({
     setFilteredDiamonds(filtered);
   };
   return <div className="min-h-screen bg-gradient-luxury">
-      {/* Premium Header with Live Price Ticker */}
-      
-
-      {/* Luxury Header */}
+      {/* Luxury Header - Compact */}
       <motion.header initial={{
       y: -100,
       opacity: 0
     }} animate={{
       y: 0,
       opacity: 1
-    }} className="border-b border-accent/10 sticky top-0 z-40">
-        <div className="container mx-auto px-4 py-6">
+    }} className="absolute top-0 left-0 right-0 z-40">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <motion.div className="flex flex-col items-center gap-2" whileHover={{
+            <motion.div className="flex items-center gap-3" whileHover={{
             scale: 1.05
           }}>
-              <div className="relative">
-                <img src={premankLogo} alt="Premank" className="w-16 h-16 object-contain diamond-shine" />
-              </div>
-              <h1 className="text-4xl font-playfair font-bold" style={{
+              <img src={premankLogo} alt="Premank" className="w-12 h-12 object-contain diamond-shine" />
+              <h1 className="text-2xl font-playfair font-bold" style={{
                 background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -130,12 +128,12 @@ export const HomePage = ({
               </h1>
             </motion.div>
 
-            <div className="flex items-center gap-4">
-              <LuxuryButton variant="luxury-outline" onClick={onViewAppointments} className="gap-2">
-                <Calendar className="w-4 h-4" />
-                My Appointments
+            <div className="flex items-center gap-3">
+              <LuxuryButton variant="luxury-outline" onClick={onViewAppointments} className="gap-2 h-9 text-sm">
+                <Calendar className="w-3 h-3" />
+                Appointments
               </LuxuryButton>
-              <LuxuryButton variant="luxury-outline" onClick={onProfile}>
+              <LuxuryButton variant="luxury-outline" onClick={onProfile} className="h-9 text-sm">
                 Profile
               </LuxuryButton>
             </div>
@@ -143,17 +141,17 @@ export const HomePage = ({
         </div>
       </motion.header>
 
-      {/* Hero Banner Section with Image */}
+      {/* Hero Banner Section with Image - Full Face Visibility */}
       <motion.section initial={{
       opacity: 0
     }} animate={{
       opacity: 1
     }} transition={{
       delay: 0.2
-    }} className="relative py-32 px-4 text-center overflow-hidden">
+    }} className="relative min-h-screen px-4 text-center overflow-hidden flex items-center">
         <div className="absolute inset-0 z-0">
-          <img src={heroLadyRing} alt="Luxury Diamond Ring" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
+          <img src={heroLadyRing} alt="Luxury Diamond Ring" className="w-full h-full object-cover object-top" style={{ objectPosition: 'center 20%' }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/80"></div>
         </div>
         
         <div className="container mx-auto max-w-4xl relative z-10">
@@ -429,10 +427,19 @@ export const HomePage = ({
         </div>
       </motion.section>
 
+      {/* Certification Badges Section */}
+      <CertificationBadges />
+
+      {/* Diamond Size Comparison Tool */}
+      <DiamondSizeComparison />
+
       {/* Premium Features Section */}
       <PremiumFeatures onViewDiamond={onViewDiamond} />
 
       {/* Contact & Support Section */}
       <ContactSupport />
+
+      {/* WhatsApp Floating Button */}
+      <WhatsAppButton />
     </div>;
 };
