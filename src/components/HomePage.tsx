@@ -110,7 +110,7 @@ export const HomePage = ({
     }} animate={{
       y: 0,
       opacity: 1
-    }} className="border-b border-accent/10 sticky top-0 z-40 backdrop-blur-md bg-black/20">
+    }} className="border-b border-accent/10 sticky top-0 z-40">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <motion.div className="flex flex-col items-center gap-2" whileHover={{

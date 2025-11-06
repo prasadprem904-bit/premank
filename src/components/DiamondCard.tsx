@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Star, Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
-
+import { useSound } from "@/hooks/useSound";
 import { LuxuryButton } from "./ui/luxury-button";
 
 export interface Diamond {
@@ -24,15 +24,27 @@ interface DiamondCardProps {
 }
 
 export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
+  const { playDiamondSparkle, playButtonClick } = useSound();
+
+  const handleHover = () => {
+    playDiamondSparkle();
+  };
+
+  const handleClick = () => {
+    playButtonClick();
+    onView(diamond);
+  };
+
   return (
     <motion.div
       whileHover={{ y: -8, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
+      onHoverStart={handleHover}
       className="bg-card border border-border rounded-xl overflow-hidden shadow-luxury hover:shadow-glow transition-all duration-300 group"
     >
       <div className="relative overflow-hidden diamond-shine">
         <button
-          onClick={() => onView(diamond)}
+          onClick={handleClick}
           className="relative w-full h-64 bg-transparent border-none p-0 cursor-pointer"
         >
           <img 
@@ -83,7 +95,7 @@ export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
           <LuxuryButton 
             variant="luxury" 
             size="lg" 
-            onClick={() => onView(diamond)}
+            onClick={handleClick}
             className="gap-2"
           >
             Quick View
@@ -117,7 +129,7 @@ export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
         <LuxuryButton 
           variant="luxury-outline" 
           className="w-full"
-          onClick={() => onView(diamond)}
+          onClick={handleClick}
         >
           View Details
         </LuxuryButton>
