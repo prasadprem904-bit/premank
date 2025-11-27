@@ -118,12 +118,12 @@ export const HomePage = ({
           }}>
               <img src={premankLogo} alt="Premank" className="w-12 h-12 object-contain diamond-shine" />
               <h1 className="text-2xl font-playfair font-bold" style={{
-                background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                textShadow: '0 0 30px rgba(255, 215, 0, 0.3)'
-              }}>
+              background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              textShadow: '0 0 30px rgba(255, 215, 0, 0.3)'
+            }}>
                 Premank
               </h1>
             </motion.div>
@@ -150,7 +150,9 @@ export const HomePage = ({
       delay: 0.2
     }} className="relative min-h-screen px-4 text-center overflow-hidden flex items-center">
         <div className="absolute inset-0 z-0">
-          <img src={heroLadyRing} alt="Luxury Diamond Ring" className="w-full h-full object-cover object-top" style={{ objectPosition: 'center 20%' }} />
+          <img src={heroLadyRing} alt="Luxury Diamond Ring" className="w-full h-full object-cover object-top" style={{
+          objectPosition: 'center 20%'
+        }} />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/80"></div>
         </div>
         
@@ -297,14 +299,14 @@ export const HomePage = ({
       y: 0
     }} transition={{
       delay: 0.3
-    }} className="container mx-auto px-4 py-20">
+    }} className="container mx-auto px-4 py-20 text-[#2a2a2a] bg-[#faf9f6]">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4" style={{
-            background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
-          }}>
+          background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
+        }}>
             Natural Diamonds • 0.5 to 5 Carats
           </h2>
           <p className="text-muted-foreground text-lg">
@@ -313,7 +315,10 @@ export const HomePage = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          <motion.div whileHover={{ scale: 1.05, y: -10 }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
+          <motion.div whileHover={{
+          scale: 1.05,
+          y: -10
+        }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
             <img src={modelSmallDiamond} alt="0.5 Carat Diamond" className="w-full h-80 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
@@ -322,7 +327,10 @@ export const HomePage = ({
             </div>
           </motion.div>
 
-          <motion.div whileHover={{ scale: 1.05, y: -10 }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
+          <motion.div whileHover={{
+          scale: 1.05,
+          y: -10
+        }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
             <img src={modelMediumDiamond} alt="1.5 Carat Diamond" className="w-full h-80 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
@@ -331,7 +339,10 @@ export const HomePage = ({
             </div>
           </motion.div>
 
-          <motion.div whileHover={{ scale: 1.05, y: -10 }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
+          <motion.div whileHover={{
+          scale: 1.05,
+          y: -10
+        }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
             <img src={modelOpeningBox} alt="2 Carat Diamond" className="w-full h-80 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
@@ -340,7 +351,10 @@ export const HomePage = ({
             </div>
           </motion.div>
 
-          <motion.div whileHover={{ scale: 1.05, y: -10 }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
+          <motion.div whileHover={{
+          scale: 1.05,
+          y: -10
+        }} className="relative group overflow-hidden rounded-2xl shadow-luxury hover:shadow-elegant transition-all">
             <img src={modelLargeDiamond} alt="5 Carat Diamond" className="w-full h-80 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
