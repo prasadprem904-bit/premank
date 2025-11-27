@@ -223,7 +223,7 @@ export const HomePage = ({
       opacity: 1
     }} transition={{
       delay: 0.2
-    }} className="container mx-auto px-4 py-8">
+    }} className="container py-8 rounded-sm shadow-md opacity-100 border-solid border mx-[120px] my-[24px] px-[24px] bg-[#faf9f6] text-secondary">
         <div className="max-w-2xl mx-auto mb-8">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
