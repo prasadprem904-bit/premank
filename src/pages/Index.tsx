@@ -11,48 +11,38 @@ import { CertificateGenerator } from "@/components/CertificateGenerator";
 import { MyAppointments } from "@/components/MyAppointments";
 import { AppSettings } from "@/components/AppSettings";
 import { useAppointmentNotifications } from "@/hooks/useAppointmentNotifications";
+import { useAuth } from "@/hooks/useAuth";
 import type { Diamond } from "@/components/DiamondCard";
 
 type AppState = 'splash' | 'auth' | 'home' | 'diamond-details' | 'book-appointment' | 'appointment-confirmation' | 'profile' | 'custom-design' | 'certificate' | 'my-appointments' | 'settings';
 
 const Index = () => {
-  useAppointmentNotifications(); // Enable appointment notifications
+  useAppointmentNotifications();
   
   const [currentState, setCurrentState] = useState<AppState>('splash');
-  const [userData, setUserData] = useState<any>(null);
   const [selectedDiamond, setSelectedDiamond] = useState<Diamond | null>(null);
   const [appointmentDetails, setAppointmentDetails] = useState<any>(null);
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [hasShownSplash, setHasShownSplash] = useState(false);
+  
+  const { user, loading: authLoading, signOut } = useAuth();
 
-  // Check for existing session on mount
+  // Handle initial state based on auth
   useEffect(() => {
-    const storedUserData = localStorage.getItem('dno_user_data');
-    if (storedUserData) {
-      try {
-        const parsedData = JSON.parse(storedUserData);
-        setUserData(parsedData);
-        // Always show splash screen on app open
-        setCurrentState('splash');
-      } catch (error) {
-        console.error('Failed to parse stored user data');
-        localStorage.removeItem('dno_user_data');
-      }
+    if (!authLoading && !hasShownSplash) {
+      setCurrentState('splash');
     }
-    setIsCheckingAuth(false);
-  }, []);
+  }, [authLoading, hasShownSplash]);
 
   const handleSplashComplete = () => {
-    // Only show auth if no user is logged in
-    if (!userData) {
+    setHasShownSplash(true);
+    if (!user) {
       setCurrentState('auth');
     } else {
       setCurrentState('home');
     }
   };
 
-  const handleAuthSuccess = (data: any) => {
-    setUserData(data);
-    localStorage.setItem('dno_user_data', JSON.stringify(data));
+  const handleAuthSuccess = () => {
     setCurrentState('home');
   };
 
@@ -79,9 +69,8 @@ const Index = () => {
     setCurrentState('profile');
   };
 
-  const handleLogout = () => {
-    setUserData(null);
-    localStorage.removeItem('dno_user_data');
+  const handleLogout = async () => {
+    await signOut();
     setCurrentState('auth');
   };
 
@@ -107,12 +96,15 @@ const Index = () => {
     setCurrentState('settings');
   };
 
-  // Show splash screen whenever state is 'splash'
   const shouldShowSplash = currentState === 'splash';
+
+  if (authLoading) {
+    return null;
+  }
 
   return (
     <main className="min-h-screen">
-      {!isCheckingAuth && shouldShowSplash && (
+      {shouldShowSplash && (
         <SplashScreen onComplete={handleSplashComplete} />
       )}
 
@@ -167,9 +159,9 @@ const Index = () => {
         <MyAppointments onBack={handleBackToHome} />
       )}
 
-      {currentState === 'profile' && userData && (
+      {currentState === 'profile' && user && (
         <ProfilePage
-          userData={userData}
+          userData={{ email: user.email }}
           onBack={handleBackToHome}
           onLogout={handleLogout}
           onViewAppointments={handleViewAppointments}
