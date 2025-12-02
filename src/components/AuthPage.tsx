@@ -1,46 +1,99 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Eye, EyeOff, Mail, Phone, User, MapPin, Lock } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { LuxuryButton } from "./ui/luxury-button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Textarea } from "./ui/textarea";
 import { Card } from "./ui/card";
 import premankLogo from "@/assets/premank-logo.png";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
 
 interface AuthPageProps {
-  onAuthSuccess: (userData: any) => void;
+  onAuthSuccess: () => void;
 }
+
+const emailSchema = z.string().email("Invalid email address").max(255);
+const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
 
 export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    address: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const { signIn, signUp } = useAuth();
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (isLogin) {
-      // Basic validation for login
-      if (formData.email && formData.password) {
-        onAuthSuccess({ email: formData.email });
-      }
-    } else {
-      // Validation for signup - all fields required
-      if (formData.fullName && formData.email && formData.phone && formData.address && formData.password) {
-        onAuthSuccess(formData);
-      }
-    }
-  };
+    setIsLoading(true);
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    try {
+      // Validate inputs
+      emailSchema.parse(email);
+      passwordSchema.parse(password);
+
+      if (isLogin) {
+        const { error } = await signIn(email, password);
+        if (error) {
+          if (error.message.includes("Invalid login credentials")) {
+            toast({
+              title: "Login Failed",
+              description: "Invalid email or password. Please try again.",
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: "Error",
+              description: error.message,
+              variant: "destructive",
+            });
+          }
+        } else {
+          toast({
+            title: "Welcome back!",
+            description: "You've successfully signed in.",
+          });
+          onAuthSuccess();
+        }
+      } else {
+        const { error } = await signUp(email, password);
+        if (error) {
+          if (error.message.includes("User already registered")) {
+            toast({
+              title: "Account Exists",
+              description: "This email is already registered. Please sign in instead.",
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: "Error",
+              description: error.message,
+              variant: "destructive",
+            });
+          }
+        } else {
+          toast({
+            title: "Account Created!",
+            description: "Welcome to Premank! You can now access your wishlist.",
+          });
+          onAuthSuccess();
+        }
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -96,70 +149,6 @@ export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Sign Up Fields */}
-            {!isLogin && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="space-y-4"
-              >
-                <div className="space-y-2">
-                  <Label htmlFor="fullName" className="text-foreground font-medium">
-                    Full Name *
-                  </Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                      id="fullName"
-                      value={formData.fullName}
-                      onChange={(e) => handleInputChange("fullName", e.target.value)}
-                      className="pl-10 bg-input border-border focus:border-accent"
-                      placeholder="Enter your full name"
-                      required={!isLogin}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-foreground font-medium">
-                    Phone Number *
-                  </Label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => handleInputChange("phone", e.target.value)}
-                      className="pl-10 bg-input border-border focus:border-accent"
-                      placeholder="10-digit phone number"
-                      maxLength={10}
-                      required={!isLogin}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="address" className="text-foreground font-medium">
-                    Address *
-                  </Label>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
-                    <Textarea
-                      id="address"
-                      value={formData.address}
-                      onChange={(e) => handleInputChange("address", e.target.value)}
-                      className="pl-10 bg-input border-border focus:border-accent resize-none"
-                      placeholder="Enter your complete address"
-                      rows={3}
-                      required={!isLogin}
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
             {/* Email Field */}
             <div className="space-y-2">
               <Label htmlFor="email" className="text-foreground font-medium">
@@ -170,11 +159,12 @@ export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
                 <Input
                   id="email"
                   type="email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="pl-10 bg-input border-border focus:border-accent"
                   placeholder="Enter your email"
                   required
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -189,11 +179,12 @@ export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={(e) => handleInputChange("password", e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="pl-10 pr-10 bg-input border-border focus:border-accent"
-                  placeholder="Enter your password"
+                  placeholder={isLogin ? "Enter your password" : "Minimum 6 characters"}
                   required
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
@@ -211,8 +202,9 @@ export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
               variant="luxury"
               size="lg"
               className="w-full"
+              disabled={isLoading}
             >
-              {isLogin ? "Sign In" : "Create Account"}
+              {isLoading ? "Please wait..." : (isLogin ? "Sign In" : "Create Account")}
             </LuxuryButton>
           </form>
 
@@ -223,8 +215,13 @@ export const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
             </p>
             <LuxuryButton
               variant="luxury-outline"
-              onClick={() => setIsLogin(!isLogin)}
+              onClick={() => {
+                setIsLogin(!isLogin);
+                setEmail("");
+                setPassword("");
+              }}
               className="w-full"
+              disabled={isLoading}
             >
               {isLogin ? "Create Account" : "Sign In"}
             </LuxuryButton>
