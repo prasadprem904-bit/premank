@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Filter, Grid, List, Gem, Calendar, Eye, Award, ScanEye } from "lucide-react";
+import { Search, Filter, Grid, List, Gem, Calendar, Eye, Award, ScanEye, Heart } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
 import { LuxuryButton } from "./ui/luxury-button";
 import { Button } from "./ui/button";
@@ -10,6 +10,7 @@ import { ContactSupport } from "./ContactSupport";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { CertificationBadges } from "./CertificationBadges";
 import { DiamondSizeComparison } from "./DiamondSizeComparison";
+import { DiamondWishlist } from "./DiamondWishlist";
 import heroDiamond from "@/assets/hero-diamond.jpg";
 import heroLadyRing from "@/assets/hero-lady-ring.jpg";
 import modelSmallDiamond from "@/assets/model-small-diamond.jpg";
@@ -97,6 +98,7 @@ export const HomePage = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filteredDiamonds, setFilteredDiamonds] = useState(sampleDiamonds);
+  const [showWishlist, setShowWishlist] = useState(false);
   const handleSearch = (term: string) => {
     setSearchTerm(term);
     const filtered = sampleDiamonds.filter(diamond => diamond.name.toLowerCase().includes(term.toLowerCase()) || diamond.cut.toLowerCase().includes(term.toLowerCase()) || diamond.color.toLowerCase().includes(term.toLowerCase()));
@@ -129,6 +131,14 @@ export const HomePage = ({
             </motion.div>
 
             <div className="flex items-center gap-3">
+              <LuxuryButton 
+                variant="luxury-outline" 
+                onClick={() => setShowWishlist(true)} 
+                className="gap-2 h-9 text-sm"
+              >
+                <Heart className="w-3 h-3" />
+                Wishlist
+              </LuxuryButton>
               <LuxuryButton variant="luxury-outline" onClick={onViewAppointments} className="gap-2 h-9 text-sm">
                 <Calendar className="w-3 h-3" />
                 Appointments
@@ -455,5 +465,23 @@ export const HomePage = ({
 
       {/* WhatsApp Floating Button */}
       <WhatsAppButton />
+
+      {/* Wishlist Modal */}
+      {showWishlist && (
+        <div className="fixed inset-0 z-50 bg-black/80">
+          <button
+            onClick={() => setShowWishlist(false)}
+            className="absolute top-4 right-4 text-white hover:text-accent transition-colors z-50"
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <DiamondWishlist onViewDetails={(diamond) => {
+            setShowWishlist(false);
+            onViewDiamond(diamond);
+          }} />
+        </div>
+      )}
     </div>;
 };

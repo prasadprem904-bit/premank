@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { Star, Sparkles } from "lucide-react";
+import { Star, Sparkles, Heart } from "lucide-react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { useSound } from "@/hooks/useSound";
 import { LuxuryButton } from "./ui/luxury-button";
+import { useWishlist } from "@/hooks/useWishlist";
+import { cn } from "@/lib/utils";
 
 export interface Diamond {
   id: string;
@@ -25,6 +27,8 @@ interface DiamondCardProps {
 
 export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
   const { playDiamondSparkle, playButtonClick } = useSound();
+  const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const inWishlist = isInWishlist(diamond.id);
 
   const handleHover = () => {
     playDiamondSparkle();
@@ -33,6 +37,16 @@ export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
   const handleClick = () => {
     playButtonClick();
     onView(diamond);
+  };
+
+  const handleWishlistToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    playButtonClick();
+    if (inWishlist) {
+      removeFromWishlist(diamond.id);
+    } else {
+      addToWishlist(diamond.id);
+    }
   };
 
   return (
@@ -81,6 +95,21 @@ export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
           <Sparkles className="w-4 h-4 text-accent fill-accent" />
         </motion.div>
         
+        {/* Wishlist Heart Button */}
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={handleWishlistToggle}
+          className="absolute top-4 left-4 z-10 bg-black/70 p-2 rounded-full hover:bg-black/90 transition-colors"
+        >
+          <Heart
+            className={cn(
+              "w-5 h-5 transition-colors",
+              inWishlist ? "text-red-500 fill-red-500" : "text-white"
+            )}
+          />
+        </motion.button>
+
         {/* Rating */}
         <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/70 px-2 py-1 rounded-full">
           <Star className="w-3 h-3 text-accent fill-current" />
