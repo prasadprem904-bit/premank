@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 import { Star, Sparkles, Heart, Eye } from "lucide-react";
-import { Card } from "./ui/card";
-import { useSound } from "@/hooks/useSound";
 import { LuxuryButton } from "./ui/luxury-button";
 import { useWishlist } from "@/hooks/useWishlist";
 import { cn } from "@/lib/utils";
@@ -26,22 +24,15 @@ interface DiamondCardProps {
 }
 
 export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
-  const { playDiamondSparkle, playButtonClick } = useSound();
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const inWishlist = isInWishlist(diamond.id);
 
-  const handleHover = () => {
-    playDiamondSparkle();
-  };
-
   const handleClick = () => {
-    playButtonClick();
     onView(diamond);
   };
 
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    playButtonClick();
     if (inWishlist) {
       removeFromWishlist(diamond.id);
     } else {
@@ -53,7 +44,6 @@ export const DiamondCard = ({ diamond, onView }: DiamondCardProps) => {
     <motion.div
       whileHover={{ y: -12, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      onHoverStart={handleHover}
       className="card-luxury group"
     >
       {/* Image Section */}
