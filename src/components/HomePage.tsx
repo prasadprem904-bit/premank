@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Search, Filter, Grid, List, Gem, Calendar, Eye, Award, ScanEye, Heart, Crown, Diamond as DiamondIcon, Sparkles } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
 import { LuxuryButton } from "./ui/luxury-button";
@@ -103,6 +103,18 @@ export const HomePage = ({
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filteredDiamonds, setFilteredDiamonds] = useState(sampleDiamonds);
   const [showWishlist, setShowWishlist] = useState(false);
+  
+  // Parallax scroll effects
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+  
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -167,27 +179,34 @@ export const HomePage = ({
 
       {/* Hero Section */}
       <motion.section 
+        ref={heroRef}
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
         transition={{ delay: 0.2 }} 
         className="relative min-h-screen flex items-center overflow-hidden pt-20"
       >
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
+        {/* Background Image with Parallax */}
+        <motion.div 
+          className="absolute inset-0 z-0"
+          style={{ y: backgroundY, scale }}
+        >
           <img 
             src={heroLadyRing} 
             alt="Luxury Diamond Ring" 
-            className="w-full h-full object-cover object-top" 
+            className="w-full h-[120%] object-cover object-top" 
             style={{ objectPosition: 'center 20%' }} 
           />
           <div className="absolute inset-0 bg-gradient-hero"></div>
-        </div>
+        </motion.div>
         
         {/* Floating Particles */}
         <FloatingParticles count={30} />
         
-        {/* Hero Content */}
-        <div className="container mx-auto px-4 relative z-10">
+        {/* Hero Content with Parallax */}
+        <motion.div 
+          className="container mx-auto px-4 relative z-10"
+          style={{ y: contentY, opacity }}
+        >
           <div className="max-w-4xl">
             {/* Premium Badge */}
             <motion.div
@@ -260,7 +279,7 @@ export const HomePage = ({
               ))}
             </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Scroll Indicator */}
         <motion.div 
