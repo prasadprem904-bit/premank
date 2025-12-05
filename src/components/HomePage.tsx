@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Search, Filter, Grid, List, Gem, Calendar, Eye, Award, ScanEye, Heart, Crown, Diamond as DiamondIcon, Sparkles } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
 import { LuxuryButton } from "./ui/luxury-button";
@@ -496,30 +496,43 @@ export const HomePage = ({
       <WhatsAppButton />
 
       {/* Wishlist Modal */}
-      {showWishlist && (
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm"
-        >
-          <button
-            onClick={() => setShowWishlist(false)}
-            className="absolute top-6 right-6 text-white hover:text-primary transition-colors z-50 p-2 rounded-full bg-white/10 hover:bg-white/20"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <DiamondWishlist 
-            onViewDetails={(diamond) => {
-              setShowWishlist(false);
-              onViewDiamond(diamond);
-            }}
-            onBack={() => setShowWishlist(false)}
-          />
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {showWishlist && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm"
+              onClick={() => setShowWishlist(false)}
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 right-0 z-50 w-full md:w-[80%] lg:w-[70%] bg-background shadow-2xl overflow-auto"
+            >
+              <button
+                onClick={() => setShowWishlist(false)}
+                className="absolute top-6 right-6 text-foreground hover:text-primary transition-colors z-50 p-2 rounded-full bg-muted hover:bg-muted/80"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <DiamondWishlist 
+                onViewDetails={(diamond) => {
+                  setShowWishlist(false);
+                  onViewDiamond(diamond);
+                }}
+                onBack={() => setShowWishlist(false)}
+              />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
