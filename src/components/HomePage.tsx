@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Search, Filter, Grid, List, Gem, Calendar, Eye, Award, ScanEye, Heart, Crown, Diamond as DiamondIcon, Sparkles } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
@@ -13,6 +13,7 @@ import { DiamondSizeComparison } from "./DiamondSizeComparison";
 import { DiamondWishlist } from "./DiamondWishlist";
 import { FloatingParticles } from "./ui/FloatingParticles";
 import { LuxuryBadge } from "./ui/LuxuryBadge";
+import { supabase } from "@/integrations/supabase/client";
 import heroDiamond from "@/assets/hero-diamond.jpg";
 import heroLadyRing from "@/assets/hero-lady-ring.jpg";
 import modelSmallDiamond from "@/assets/model-small-diamond.jpg";
@@ -29,68 +30,15 @@ interface HomePageProps {
   onViewAppointments: () => void;
 }
 
-// Sample diamond data
-const sampleDiamonds: Diamond[] = [{
-  id: "1",
-  name: "Royal Brilliance",
-  price: 250000,
-  carat: 2.5,
-  cut: "Round Brilliant",
-  color: "D",
-  clarity: "VVS1",
-  image: heroDiamond,
-  rating: 4.9
-}, {
-  id: "2",
-  name: "Elegant Emerald",
-  price: 180000,
-  carat: 1.8,
-  cut: "Emerald",
-  color: "E",
-  clarity: "VS1",
-  image: heroDiamond,
-  rating: 4.8
-}, {
-  id: "3",
-  name: "Princess Paradise",
-  price: 320000,
-  carat: 3.2,
-  cut: "Princess",
-  color: "F",
-  clarity: "VVS2",
-  image: heroDiamond,
-  rating: 4.9
-}, {
-  id: "4",
-  name: "Cushion Crown",
-  price: 195000,
-  carat: 2.1,
-  cut: "Cushion",
-  color: "G",
-  clarity: "VS2",
-  image: heroDiamond,
-  rating: 4.7
-}, {
-  id: "5",
-  name: "Oval Opulence",
-  price: 275000,
-  carat: 2.8,
-  cut: "Oval",
-  color: "D",
-  clarity: "IF",
-  image: heroDiamond,
-  rating: 5.0
-}, {
-  id: "6",
-  name: "Radiant Royalty",
-  price: 210000,
-  carat: 2.3,
-  cut: "Radiant",
-  color: "E",
-  clarity: "VVS1",
-  image: heroDiamond,
-  rating: 4.8
-}];
+// Fallback sample data (used only if database is empty)
+const fallbackDiamonds: Diamond[] = [
+  { id: crypto.randomUUID(), name: "Royal Brilliance", price: 250000, carat: 2.5, cut: "Round Brilliant", color: "D", clarity: "VVS1", image: heroDiamond, rating: 4.9 },
+  { id: crypto.randomUUID(), name: "Elegant Emerald", price: 180000, carat: 1.8, cut: "Emerald", color: "E", clarity: "VS1", image: heroDiamond, rating: 4.8 },
+  { id: crypto.randomUUID(), name: "Princess Paradise", price: 320000, carat: 3.2, cut: "Princess", color: "F", clarity: "VVS2", image: heroDiamond, rating: 4.9 },
+  { id: crypto.randomUUID(), name: "Cushion Crown", price: 195000, carat: 2.1, cut: "Cushion", color: "G", clarity: "VS2", image: heroDiamond, rating: 4.7 },
+  { id: crypto.randomUUID(), name: "Oval Opulence", price: 275000, carat: 2.8, cut: "Oval", color: "D", clarity: "IF", image: heroDiamond, rating: 5.0 },
+  { id: crypto.randomUUID(), name: "Radiant Royalty", price: 210000, carat: 2.3, cut: "Radiant", color: "E", clarity: "VVS1", image: heroDiamond, rating: 4.8 },
+];
 
 export const HomePage = ({
   onViewDiamond,
@@ -101,8 +49,53 @@ export const HomePage = ({
 }: HomePageProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [filteredDiamonds, setFilteredDiamonds] = useState(sampleDiamonds);
+  const [diamonds, setDiamonds] = useState<Diamond[]>([]);
+  const [filteredDiamonds, setFilteredDiamonds] = useState<Diamond[]>([]);
   const [showWishlist, setShowWishlist] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch diamonds from database
+  useEffect(() => {
+    const fetchDiamonds = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('diamonds')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          const mappedDiamonds: Diamond[] = data.map(d => ({
+            id: d.id,
+            name: d.name,
+            price: Number(d.price),
+            carat: Number(d.carat),
+            cut: d.description || "Round Brilliant",
+            color: d.color,
+            clarity: d.clarity,
+            image: d.image_url || heroDiamond,
+            rating: 4.8,
+            certification: (d.certification_status === "GIA" || d.certification_status === "IGI") ? d.certification_status : undefined,
+          }));
+          setDiamonds(mappedDiamonds);
+          setFilteredDiamonds(mappedDiamonds);
+        } else {
+          // Use fallback if no diamonds in database
+          setDiamonds(fallbackDiamonds);
+          setFilteredDiamonds(fallbackDiamonds);
+        }
+      } catch (error) {
+        console.error('Error fetching diamonds:', error);
+        setDiamonds(fallbackDiamonds);
+        setFilteredDiamonds(fallbackDiamonds);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDiamonds();
+  }, []);
   
   // Parallax scroll effects
   const heroRef = useRef(null);
@@ -118,7 +111,7 @@ export const HomePage = ({
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    const filtered = sampleDiamonds.filter(diamond => 
+    const filtered = diamonds.filter(diamond => 
       diamond.name.toLowerCase().includes(term.toLowerCase()) || 
       diamond.cut.toLowerCase().includes(term.toLowerCase()) || 
       diamond.color.toLowerCase().includes(term.toLowerCase())
