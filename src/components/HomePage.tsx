@@ -511,10 +511,13 @@ export const HomePage = ({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <DiamondWishlist onViewDetails={(diamond) => {
-            setShowWishlist(false);
-            onViewDiamond(diamond);
-          }} />
+          <DiamondWishlist 
+            onViewDetails={(diamond) => {
+              setShowWishlist(false);
+              onViewDiamond(diamond);
+            }}
+            onBack={() => setShowWishlist(false)}
+          />
         </motion.div>
       )}
     </div>

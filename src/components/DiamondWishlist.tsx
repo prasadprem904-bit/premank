@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Scale } from 'lucide-react';
+import { Heart, Scale, ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { DiamondCard, Diamond } from './DiamondCard';
@@ -49,9 +49,10 @@ const sampleDiamonds: Diamond[] = [
 
 interface DiamondWishlistProps {
   onViewDetails: (diamond: Diamond) => void;
+  onBack: () => void;
 }
 
-export const DiamondWishlist = ({ onViewDetails }: DiamondWishlistProps) => {
+export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps) => {
   const { user } = useAuth();
   const [wishlistDiamonds, setWishlistDiamonds] = useState<Diamond[]>([]);
   const [compareMode, setCompareMode] = useState(false);
@@ -110,6 +111,13 @@ export const DiamondWishlist = ({ onViewDetails }: DiamondWishlistProps) => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back</span>
+          </button>
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-4xl font-playfair font-bold mb-2">My Wishlist</h1>
