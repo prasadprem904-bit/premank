@@ -6,46 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { DiamondCard, Diamond } from './DiamondCard';
 import { Button } from './ui/button';
 import { DiamondComparison } from './DiamondComparison';
-
-// Sample diamond data - same as HomePage
-const sampleDiamonds: Diamond[] = [
-  {
-    id: "1",
-    name: "Radiant Solitaire",
-    price: 125000,
-    carat: 1.5,
-    cut: "Excellent",
-    color: "D",
-    clarity: "VVS1",
-    image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80",
-    rating: 4.9,
-    certification: "GIA"
-  },
-  {
-    id: "2",
-    name: "Eternal Brilliance",
-    price: 185000,
-    carat: 2.0,
-    cut: "Ideal",
-    color: "E",
-    clarity: "IF",
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80",
-    rating: 5.0,
-    certification: "IGI"
-  },
-  {
-    id: "3",
-    name: "Celestial Star",
-    price: 95000,
-    carat: 1.2,
-    cut: "Very Good",
-    color: "F",
-    clarity: "VS1",
-    image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80",
-    rating: 4.8,
-    certification: "GIA"
-  },
-];
+import heroDiamond from '@/assets/hero-diamond.jpg';
 
 interface DiamondWishlistProps {
   onViewDetails: (diamond: Diamond) => void;
@@ -55,27 +16,65 @@ interface DiamondWishlistProps {
 export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps) => {
   const { user } = useAuth();
   const [wishlistDiamonds, setWishlistDiamonds] = useState<Diamond[]>([]);
+  const [loading, setLoading] = useState(true);
   const [compareMode, setCompareMode] = useState(false);
   const [selectedForCompare, setSelectedForCompare] = useState<Diamond[]>([]);
 
   useEffect(() => {
     if (user) {
       fetchWishlist();
+    } else {
+      setLoading(false);
     }
   }, [user]);
 
   const fetchWishlist = async () => {
     if (!user) return;
 
-    const { data, error } = await supabase
-      .from('wishlist')
-      .select('diamond_id')
-      .eq('user_id', user.id);
+    try {
+      setLoading(true);
+      // Fetch wishlist items with their diamond details
+      const { data: wishlistData, error: wishlistError } = await supabase
+        .from('wishlist')
+        .select('diamond_id')
+        .eq('user_id', user.id);
 
-    if (!error && data) {
-      const wishlistIds = data.map(item => item.diamond_id);
-      const diamonds = sampleDiamonds.filter(d => wishlistIds.includes(d.id));
-      setWishlistDiamonds(diamonds);
+      if (wishlistError) throw wishlistError;
+
+      if (wishlistData && wishlistData.length > 0) {
+        const diamondIds = wishlistData.map(item => item.diamond_id);
+        
+        // Fetch actual diamond details from database
+        const { data: diamondsData, error: diamondsError } = await supabase
+          .from('diamonds')
+          .select('*')
+          .in('id', diamondIds);
+
+        if (diamondsError) throw diamondsError;
+
+        if (diamondsData) {
+          const mappedDiamonds: Diamond[] = diamondsData.map(d => ({
+            id: d.id,
+            name: d.name,
+            price: Number(d.price),
+            carat: Number(d.carat),
+            cut: d.description || "Round Brilliant",
+            color: d.color,
+            clarity: d.clarity,
+            image: d.image_url || heroDiamond,
+            rating: 4.8,
+            certification: (d.certification_status === "GIA" || d.certification_status === "IGI") ? d.certification_status : undefined,
+          }));
+          setWishlistDiamonds(mappedDiamonds);
+        }
+      } else {
+        setWishlistDiamonds([]);
+      }
+    } catch (error) {
+      console.error('Error fetching wishlist:', error);
+      setWishlistDiamonds([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -98,6 +97,19 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
           <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
           <h2 className="text-3xl font-playfair font-bold mb-4">Your Wishlist</h2>
           <p className="text-muted-foreground">Please sign in to view your wishlist</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background pt-32 px-4">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="animate-pulse">
+            <Heart className="w-16 h-16 text-gold mx-auto mb-4" />
+            <h2 className="text-3xl font-playfair font-bold mb-4">Loading Wishlist...</h2>
+          </div>
         </div>
       </div>
     );
