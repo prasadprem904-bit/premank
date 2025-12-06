@@ -512,7 +512,15 @@ export const HomePage = ({
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed inset-y-0 right-0 z-50 w-full md:w-[80%] lg:w-[70%] bg-background shadow-2xl overflow-auto"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={{ left: 0, right: 0.5 }}
+              onDragEnd={(_, info) => {
+                if (info.offset.x > 100 || info.velocity.x > 500) {
+                  setShowWishlist(false);
+                }
+              }}
+              className="fixed inset-y-0 right-0 z-50 w-full md:w-[80%] lg:w-[70%] bg-background shadow-2xl overflow-auto touch-pan-y"
             >
               <button
                 onClick={() => setShowWishlist(false)}
