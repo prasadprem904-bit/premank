@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Heart, Scale, ArrowLeft } from 'lucide-react';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { Heart, Scale, ArrowLeft, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { DiamondCard, Diamond } from './DiamondCard';
@@ -17,8 +17,15 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
   const { user } = useAuth();
   const [wishlistDiamonds, setWishlistDiamonds] = useState<Diamond[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [compareMode, setCompareMode] = useState(false);
   const [selectedForCompare, setSelectedForCompare] = useState<Diamond[]>([]);
+
+  // Pull to refresh
+  const pullY = useMotionValue(0);
+  const pullProgress = useTransform(pullY, [0, 80], [0, 1]);
+  const pullRotation = useTransform(pullY, [0, 80], [0, 360]);
+  const pullOpacity = useTransform(pullY, [0, 40, 80], [0, 0.5, 1]);
 
   useEffect(() => {
     if (user) {
@@ -90,6 +97,22 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
     });
   };
 
+  const handlePullRefresh = async () => {
+    if (refreshing || !user) return;
+    setRefreshing(true);
+    await fetchWishlist();
+    setRefreshing(false);
+    animate(pullY, 0, { type: 'spring', stiffness: 400, damping: 30 });
+  };
+
+  const handleDragEnd = () => {
+    if (pullY.get() >= 80 && !refreshing) {
+      handlePullRefresh();
+    } else {
+      animate(pullY, 0, { type: 'spring', stiffness: 400, damping: 30 });
+    }
+  };
+
   if (!user) {
     return (
       <div className="min-h-screen bg-background pt-32 px-4">
@@ -116,7 +139,30 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
   }
 
   return (
-    <div className="min-h-screen bg-background pt-32 px-4 pb-12">
+    <motion.div 
+      className="min-h-screen bg-background pt-32 px-4 pb-12 touch-pan-y overflow-hidden"
+      drag="y"
+      dragConstraints={{ top: 0, bottom: 0 }}
+      dragElastic={{ top: 0.5, bottom: 0 }}
+      style={{ y: pullY }}
+      onDragEnd={handleDragEnd}
+    >
+      {/* Pull to refresh indicator */}
+      <motion.div 
+        className="fixed top-20 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2"
+        style={{ opacity: pullOpacity }}
+      >
+        <motion.div
+          style={{ rotate: pullRotation }}
+          className="p-3 rounded-full bg-gold/20 backdrop-blur-sm border border-gold/30"
+        >
+          <RefreshCw className={`w-5 h-5 text-gold ${refreshing ? 'animate-spin' : ''}`} />
+        </motion.div>
+        <span className="text-xs text-gold font-medium">
+          {refreshing ? 'Refreshing...' : 'Pull to refresh'}
+        </span>
+      </motion.div>
+
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -204,6 +250,6 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
