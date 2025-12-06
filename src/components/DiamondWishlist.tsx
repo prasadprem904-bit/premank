@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate, AnimatePresence } from 'framer-motion';
 import { Heart, Scale, ArrowLeft, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
@@ -20,6 +20,7 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
   const [refreshing, setRefreshing] = useState(false);
   const [compareMode, setCompareMode] = useState(false);
   const [selectedForCompare, setSelectedForCompare] = useState<Diamond[]>([]);
+  const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
 
   // Pull to refresh
   const pullY = useMotionValue(0);
@@ -111,6 +112,37 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
     } else {
       animate(pullY, 0, { type: 'spring', stiffness: 400, damping: 30 });
     }
+  };
+
+  const handleRemoveFromWishlist = async (diamondId: string) => {
+    if (!user) return;
+    
+    // Add to removing set for animation
+    setRemovingIds(prev => new Set(prev).add(diamondId));
+    
+    // Wait for animation to complete
+    setTimeout(async () => {
+      try {
+        const { error } = await supabase
+          .from('wishlist')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('diamond_id', diamondId);
+        
+        if (!error) {
+          setWishlistDiamonds(prev => prev.filter(d => d.id !== diamondId));
+          setSelectedForCompare(prev => prev.filter(d => d.id !== diamondId));
+        }
+      } catch (error) {
+        console.error('Error removing from wishlist:', error);
+      } finally {
+        setRemovingIds(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(diamondId);
+          return newSet;
+        });
+      }
+    }, 300);
   };
 
   if (!user) {
@@ -225,28 +257,57 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
           </motion.div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {wishlistDiamonds.map((diamond, index) => (
-              <motion.div
-                key={diamond.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="relative"
-              >
-                {compareMode && (
-                  <div className="absolute top-4 left-4 z-10">
-                    <input
-                      type="checkbox"
-                      checked={selectedForCompare.find(d => d.id === diamond.id) !== undefined}
-                      onChange={() => handleCompareToggle(diamond)}
-                      className="w-6 h-6 rounded border-2 border-accent accent-accent cursor-pointer"
-                      disabled={selectedForCompare.length >= 4 && !selectedForCompare.find(d => d.id === diamond.id)}
-                    />
-                  </div>
-                )}
-                <DiamondCard diamond={diamond} onView={onViewDetails} />
-              </motion.div>
-            ))}
+            <AnimatePresence mode="popLayout">
+              {wishlistDiamonds.map((diamond, index) => (
+                <motion.div
+                  key={diamond.id}
+                  layout
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  animate={{ 
+                    opacity: removingIds.has(diamond.id) ? 0 : 1, 
+                    y: removingIds.has(diamond.id) ? -20 : 0,
+                    x: removingIds.has(diamond.id) ? 100 : 0,
+                    scale: removingIds.has(diamond.id) ? 0.8 : 1
+                  }}
+                  exit={{ 
+                    opacity: 0, 
+                    x: 100, 
+                    scale: 0.8,
+                    transition: { duration: 0.3, ease: "easeOut" }
+                  }}
+                  transition={{ 
+                    delay: index * 0.1,
+                    layout: { type: "spring", stiffness: 300, damping: 30 }
+                  }}
+                  className="relative"
+                >
+                  {compareMode && (
+                    <div className="absolute top-4 left-4 z-10">
+                      <input
+                        type="checkbox"
+                        checked={selectedForCompare.find(d => d.id === diamond.id) !== undefined}
+                        onChange={() => handleCompareToggle(diamond)}
+                        className="w-6 h-6 rounded border-2 border-accent accent-accent cursor-pointer"
+                        disabled={selectedForCompare.length >= 4 && !selectedForCompare.find(d => d.id === diamond.id)}
+                      />
+                    </div>
+                  )}
+                  
+                  {/* Remove from wishlist button */}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => handleRemoveFromWishlist(diamond.id)}
+                    className="absolute top-4 right-4 z-20 p-2 rounded-full bg-red-500/90 hover:bg-red-600 shadow-lg backdrop-blur-sm transition-colors"
+                    title="Remove from wishlist"
+                  >
+                    <Heart className="w-4 h-4 text-white fill-white" />
+                  </motion.button>
+                  
+                  <DiamondCard diamond={diamond} onView={onViewDetails} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         )}
       </div>
