@@ -111,13 +111,15 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <button
+          <motion.button
             onClick={onBack}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4"
+            whileHover={{ x: -4 }}
+            whileTap={{ scale: 0.95 }}
+            className="group flex items-center gap-3 text-gold hover:text-gold-light transition-all duration-300 mb-4 py-2 px-4 rounded-xl bg-gold/10 hover:bg-gold/20 border border-gold/30 hover:border-gold/50 shadow-sm hover:shadow-gold"
           >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back</span>
-          </button>
+            <ArrowLeft className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1" />
+            <span className="font-medium tracking-wide">Back</span>
+          </motion.button>
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-4xl font-playfair font-bold mb-2">My Wishlist</h1>
