@@ -9,6 +9,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  * {
+    scroll-behavior: smooth;
   }
 
   :root {
@@ -141,16 +146,31 @@
 @layer base {
   * {
     @apply border-border;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
     background: hsl(var(--primary) / 0.3);
     color: hsl(var(--foreground));
+  }
+  
+  /* Smooth transitions for all interactive elements */
+  a, button, input, select, textarea, [role="button"] {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* GPU acceleration for smoother animations */
+  img, video {
+    will-change: transform;
+    transform: translateZ(0);
   }
 }
 
@@ -483,8 +503,39 @@
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, hsl(var(--primary)), hsl(var(--premank-gold-dark)));
   border-radius: 4px;
+  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--primary));
+}
+
+/* Smooth page transitions */
+@layer utilities {
+  .smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Hardware accelerated transforms */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  /* Instant click feedback */
+  .click-feedback:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+  
+  /* Smooth opacity transitions */
+  .fade-smooth {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
 }
