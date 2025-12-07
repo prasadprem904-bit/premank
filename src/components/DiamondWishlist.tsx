@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useTransform, animate, AnimatePresence } from 'framer-motion';
-import { Heart, Scale, ArrowLeft, RefreshCw } from 'lucide-react';
+import { Heart, Scale, ArrowLeft, RefreshCw, Undo2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { DiamondCard, Diamond } from './DiamondCard';
 import { Button } from './ui/button';
 import { DiamondComparison } from './DiamondComparison';
+import { toast } from '@/hooks/use-toast';
 import heroDiamond from '@/assets/hero-diamond.jpg';
 
 interface DiamondWishlistProps {
@@ -21,6 +22,8 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
   const [compareMode, setCompareMode] = useState(false);
   const [selectedForCompare, setSelectedForCompare] = useState<Diamond[]>([]);
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
+  const undoTimeouts = useRef<Map<string, NodeJS.Timeout>>(new Map());
+  const pendingRemovals = useRef<Map<string, Diamond>>(new Map());
 
   // Pull to refresh
   const pullY = useMotionValue(0);
@@ -117,32 +120,89 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
   const handleRemoveFromWishlist = async (diamondId: string) => {
     if (!user) return;
     
+    // Find the diamond being removed for undo
+    const diamondToRemove = wishlistDiamonds.find(d => d.id === diamondId);
+    if (!diamondToRemove) return;
+    
+    // Store for potential undo
+    pendingRemovals.current.set(diamondId, diamondToRemove);
+    
     // Add to removing set for animation
     setRemovingIds(prev => new Set(prev).add(diamondId));
     
-    // Wait for animation to complete
-    setTimeout(async () => {
+    // Remove from UI immediately
+    setTimeout(() => {
+      setWishlistDiamonds(prev => prev.filter(d => d.id !== diamondId));
+      setSelectedForCompare(prev => prev.filter(d => d.id !== diamondId));
+      setRemovingIds(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(diamondId);
+        return newSet;
+      });
+    }, 300);
+    
+    // Show undo toast
+    const { dismiss } = toast({
+      title: "Diamond removed",
+      description: (
+        <div className="flex items-center justify-between gap-4">
+          <span>"{diamondToRemove.name}" removed from wishlist</span>
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-1.5 border-gold/50 text-gold hover:bg-gold/10"
+            onClick={() => {
+              handleUndoRemove(diamondId);
+              dismiss();
+            }}
+          >
+            <Undo2 className="w-3.5 h-3.5" />
+            Undo
+          </Button>
+        </div>
+      ),
+      duration: 5000,
+    });
+    
+    // Set timeout to actually delete from database after 5 seconds
+    const timeout = setTimeout(async () => {
       try {
-        const { error } = await supabase
+        await supabase
           .from('wishlist')
           .delete()
           .eq('user_id', user.id)
           .eq('diamond_id', diamondId);
-        
-        if (!error) {
-          setWishlistDiamonds(prev => prev.filter(d => d.id !== diamondId));
-          setSelectedForCompare(prev => prev.filter(d => d.id !== diamondId));
-        }
       } catch (error) {
         console.error('Error removing from wishlist:', error);
       } finally {
-        setRemovingIds(prev => {
-          const newSet = new Set(prev);
-          newSet.delete(diamondId);
-          return newSet;
-        });
+        pendingRemovals.current.delete(diamondId);
+        undoTimeouts.current.delete(diamondId);
       }
-    }, 300);
+    }, 5000);
+    
+    undoTimeouts.current.set(diamondId, timeout);
+  };
+  
+  const handleUndoRemove = (diamondId: string) => {
+    // Clear the pending deletion timeout
+    const timeout = undoTimeouts.current.get(diamondId);
+    if (timeout) {
+      clearTimeout(timeout);
+      undoTimeouts.current.delete(diamondId);
+    }
+    
+    // Restore the diamond to the list
+    const diamond = pendingRemovals.current.get(diamondId);
+    if (diamond) {
+      setWishlistDiamonds(prev => [...prev, diamond]);
+      pendingRemovals.current.delete(diamondId);
+      
+      toast({
+        title: "Restored",
+        description: `"${diamond.name}" has been restored to your wishlist`,
+        duration: 2000,
+      });
+    }
   };
 
   if (!user) {
