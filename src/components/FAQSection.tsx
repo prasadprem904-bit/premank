@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { HelpCircle } from "lucide-react";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "./ui/ScrollReveal";
 
 const faqs = [
   {
@@ -46,13 +47,7 @@ export const FAQSection = () => {
   return (
     <section className="py-16 px-4 bg-gradient-to-b from-background to-muted/30">
       <div className="max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
+        <ScrollReveal direction="up" className="text-center mb-12">
           <div className="inline-flex items-center justify-center gap-2 mb-4">
             <HelpCircle className="w-6 h-6 text-primary" />
             <span className="text-sm uppercase tracking-[0.2em] text-muted-foreground font-medium">
@@ -65,14 +60,9 @@ export const FAQSection = () => {
           <p className="text-muted-foreground max-w-xl mx-auto">
             Find answers to common questions about our diamonds, services, and policies.
           </p>
-        </motion.div>
+        </ScrollReveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
+        <ScrollReveal direction="up" delay={0.2}>
           <Accordion type="single" collapsible className="space-y-3">
             {faqs.map((faq, index) => (
               <AccordionItem
@@ -89,20 +79,16 @@ export const FAQSection = () => {
               </AccordionItem>
             ))}
           </Accordion>
-        </motion.div>
+        </ScrollReveal>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-10 text-muted-foreground"
-        >
-          Still have questions?{" "}
-          <span className="text-primary font-medium cursor-pointer hover:underline">
-            Contact our support team
-          </span>
-        </motion.p>
+        <ScrollReveal direction="fade" delay={0.4} className="text-center mt-10">
+          <p className="text-muted-foreground">
+            Still have questions?{" "}
+            <span className="text-primary font-medium cursor-pointer hover:underline">
+              Contact our support team
+            </span>
+          </p>
+        </ScrollReveal>
       </div>
     </section>
   );
