@@ -11,6 +11,7 @@ import { WhatsAppButton } from "./WhatsAppButton";
 import { CertificationBadges } from "./CertificationBadges";
 import { DiamondSizeComparison } from "./DiamondSizeComparison";
 import { DiamondWishlist } from "./DiamondWishlist";
+import { FAQSection } from "./FAQSection";
 import { FloatingParticles } from "./ui/FloatingParticles";
 import { LuxuryBadge } from "./ui/LuxuryBadge";
 import { supabase } from "@/integrations/supabase/client";
@@ -488,6 +489,9 @@ export const HomePage = ({
 
       {/* Premium Features Section */}
       <PremiumFeatures onViewDiamond={onViewDiamond} />
+
+      {/* FAQ Section */}
+      <FAQSection />
 
       {/* Contact & Support Section */}
       <ContactSupport />
