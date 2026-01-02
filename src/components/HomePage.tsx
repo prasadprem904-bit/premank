@@ -124,15 +124,18 @@ export const HomePage = ({
   
   // Parallax scroll effects
   const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
+  const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
   
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  // Page scroll progress for indicator
+  const { scrollYProgress: pageScrollProgress } = useScroll();
+  
+  const backgroundY = useTransform(heroScrollProgress, [0, 1], ["0%", "30%"]);
+  const contentY = useTransform(heroScrollProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(heroScrollProgress, [0, 0.5, 1], [1, 0.8, 0]);
+  const scale = useTransform(heroScrollProgress, [0, 1], [1, 1.1]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -146,6 +149,15 @@ export const HomePage = ({
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Scroll Progress Indicator */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-primary/20 z-[60]"
+      >
+        <motion.div
+          className="h-full bg-gradient-to-r from-primary via-primary to-primary/80 origin-left"
+          style={{ scaleX: pageScrollProgress }}
+        />
+      </motion.div>
       {/* Floating Navigation Bar */}
       <motion.header 
         initial={{ y: -100, opacity: 0 }} 
