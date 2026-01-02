@@ -21,7 +21,7 @@ import modelSmallDiamond from "@/assets/model-small-diamond.jpg";
 import modelLargeDiamond from "@/assets/model-large-diamond.jpg";
 import modelOpeningBox from "@/assets/model-opening-box.jpg";
 import modelMediumDiamond from "@/assets/model-medium-diamond.jpg";
-import premankLogo from "@/assets/premank-logo.png";
+import premankGoldLogo from "@/assets/premank-gold-logo.jpg";
 
 interface HomePageProps {
   onViewDiamond: (diamond: Diamond) => void;
@@ -178,37 +178,16 @@ export const HomePage = ({
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <motion.div 
-              className="flex items-center gap-4" 
+              className="flex items-center" 
               whileHover={{ scale: 1.02 }}
             >
-              <div className="relative">
-                <motion.img 
-                  src={premankLogo} 
-                  alt="Premank" 
-                  className={`object-contain transition-all duration-300 ${
-                    isScrolled ? "w-12 h-12" : "w-14 h-14"
-                  }`}
-                />
-                <motion.div 
-                  className="absolute -top-1 -right-1"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                >
-                  <Sparkles className="w-4 h-4 text-primary" />
-                </motion.div>
-              </div>
-              <div>
-                <h1 className={`font-playfair font-bold text-gold-gradient transition-all duration-300 ${
-                  isScrolled ? "text-xl" : "text-2xl"
-                }`}>
-                  Premank
-                </h1>
-                <p className={`text-muted-foreground tracking-wider uppercase transition-all duration-300 ${
-                  isScrolled ? "text-[10px]" : "text-xs"
-                }`}>
-                  Luxury Diamonds
-                </p>
-              </div>
+              <motion.img 
+                src={premankGoldLogo} 
+                alt="Premank" 
+                className={`object-contain transition-all duration-300 rounded-lg ${
+                  isScrolled ? "h-10" : "h-14"
+                }`}
+              />
             </motion.div>
 
             <div className="flex items-center gap-3">
