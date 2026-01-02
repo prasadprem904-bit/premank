@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { PremiumFeatures } from "./PremiumFeatures";
 import { ContactSupport } from "./ContactSupport";
-import { WhatsAppButton } from "./WhatsAppButton";
+
 import { CertificationBadges } from "./CertificationBadges";
 import { DiamondSizeComparison } from "./DiamondSizeComparison";
 import { DiamondWishlist } from "./DiamondWishlist";
@@ -21,7 +21,7 @@ import modelSmallDiamond from "@/assets/model-small-diamond.jpg";
 import modelLargeDiamond from "@/assets/model-large-diamond.jpg";
 import modelOpeningBox from "@/assets/model-opening-box.jpg";
 import modelMediumDiamond from "@/assets/model-medium-diamond.jpg";
-import premankGoldLogo from "@/assets/premank-gold-logo.jpg";
+import premankPremiumLogo from "@/assets/premank-premium-logo.png";
 
 interface HomePageProps {
   onViewDiamond: (diamond: Diamond) => void;
@@ -182,10 +182,10 @@ export const HomePage = ({
               whileHover={{ scale: 1.02 }}
             >
               <motion.img 
-                src={premankGoldLogo} 
+                src={premankPremiumLogo} 
                 alt="Premank" 
-                className={`object-contain transition-all duration-300 rounded-lg ${
-                  isScrolled ? "h-10" : "h-14"
+                className={`object-contain transition-all duration-300 ${
+                  isScrolled ? "h-14" : "h-20"
                 }`}
               />
             </motion.div>
@@ -537,8 +537,6 @@ export const HomePage = ({
       {/* Contact & Support Section */}
       <ContactSupport />
 
-      {/* WhatsApp Floating Button */}
-      <WhatsAppButton />
 
       {/* Wishlist Modal */}
       <AnimatePresence>
