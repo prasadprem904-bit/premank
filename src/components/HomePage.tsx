@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from "framer-motion";
 import { Search, Filter, Grid, List, Gem, Calendar, Eye, Award, ScanEye, Heart, Crown, Diamond as DiamondIcon, Sparkles } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
 import { LuxuryButton } from "./ui/luxury-button";
@@ -54,6 +54,9 @@ export const HomePage = ({
   const [filteredDiamonds, setFilteredDiamonds] = useState<Diamond[]>([]);
   const [showWishlist, setShowWishlist] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isNavVisible, setIsNavVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const lastScrollY = useRef(0);
 
   // Fetch diamonds from database
   useEffect(() => {
@@ -97,6 +100,27 @@ export const HomePage = ({
 
     fetchDiamonds();
   }, []);
+
+  // Floating nav scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show nav when scrolling up or at top
+      if (currentScrollY < lastScrollY.current || currentScrollY < 100) {
+        setIsNavVisible(true);
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setIsNavVisible(false);
+      }
+      
+      // Add background when scrolled
+      setIsScrolled(currentScrollY > 50);
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   
   // Parallax scroll effects
   const heroRef = useRef(null);
@@ -122,17 +146,37 @@ export const HomePage = ({
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Luxury Header */}
+      {/* Floating Navigation Bar */}
       <motion.header 
         initial={{ y: -100, opacity: 0 }} 
-        animate={{ y: 0, opacity: 1 }} 
-        className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50"
+        animate={{ 
+          y: isNavVisible ? 0 : -100, 
+          opacity: isNavVisible ? 1 : 0 
+        }}
+        transition={{ 
+          duration: 0.3, 
+          ease: [0.25, 0.46, 0.45, 0.94] 
+        }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled 
+            ? "bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-lg" 
+            : "bg-transparent border-b border-transparent"
+        }`}
       >
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <motion.div className="flex items-center gap-4" whileHover={{ scale: 1.02 }}>
+            <motion.div 
+              className="flex items-center gap-4" 
+              whileHover={{ scale: 1.02 }}
+            >
               <div className="relative">
-                <img src={premankLogo} alt="Premank" className="w-14 h-14 object-contain" />
+                <motion.img 
+                  src={premankLogo} 
+                  alt="Premank" 
+                  className={`object-contain transition-all duration-300 ${
+                    isScrolled ? "w-12 h-12" : "w-14 h-14"
+                  }`}
+                />
                 <motion.div 
                   className="absolute -top-1 -right-1"
                   animate={{ rotate: 360 }}
@@ -142,10 +186,16 @@ export const HomePage = ({
                 </motion.div>
               </div>
               <div>
-                <h1 className="text-2xl font-playfair font-bold text-gold-gradient">
+                <h1 className={`font-playfair font-bold text-gold-gradient transition-all duration-300 ${
+                  isScrolled ? "text-xl" : "text-2xl"
+                }`}>
                   Premank
                 </h1>
-                <p className="text-xs text-muted-foreground tracking-wider uppercase">Luxury Diamonds</p>
+                <p className={`text-muted-foreground tracking-wider uppercase transition-all duration-300 ${
+                  isScrolled ? "text-[10px]" : "text-xs"
+                }`}>
+                  Luxury Diamonds
+                </p>
               </div>
             </motion.div>
 
