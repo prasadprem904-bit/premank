@@ -45,35 +45,35 @@ const faqs = [
 
 export const FAQSection = () => {
   return (
-    <section className="py-16 px-4 bg-gradient-to-b from-background to-muted/30">
+    <section className="py-10 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/30">
       <div className="max-w-3xl mx-auto">
-        <ScrollReveal direction="up" className="text-center mb-12">
-          <div className="inline-flex items-center justify-center gap-2 mb-4">
-            <HelpCircle className="w-6 h-6 text-primary" />
-            <span className="text-sm uppercase tracking-[0.2em] text-muted-foreground font-medium">
+        <ScrollReveal direction="up" className="text-center mb-8 sm:mb-10 lg:mb-12">
+          <div className="inline-flex items-center justify-center gap-2 mb-3 sm:mb-4">
+            <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+            <span className="text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] text-muted-foreground font-medium">
               Have Questions?
             </span>
           </div>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
             Find answers to common questions about our diamonds, services, and policies.
           </p>
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.2}>
-          <Accordion type="single" collapsible className="space-y-3">
+          <Accordion type="single" collapsible className="space-y-2 sm:space-y-3">
             {faqs.map((faq, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl px-6 overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+                className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg sm:rounded-xl px-4 sm:px-6 overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
               >
-                <AccordionTrigger className="text-left text-foreground font-medium py-5 hover:no-underline hover:text-primary transition-colors">
+                <AccordionTrigger className="text-left text-foreground font-medium py-4 sm:py-5 hover:no-underline hover:text-primary transition-colors text-sm sm:text-base">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                <AccordionContent className="text-sm sm:text-base text-muted-foreground pb-4 sm:pb-5 leading-relaxed">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -81,8 +81,8 @@ export const FAQSection = () => {
           </Accordion>
         </ScrollReveal>
 
-        <ScrollReveal direction="fade" delay={0.4} className="text-center mt-10">
-          <p className="text-muted-foreground">
+        <ScrollReveal direction="fade" delay={0.4} className="text-center mt-8 sm:mt-10">
+          <p className="text-sm sm:text-base text-muted-foreground">
             Still have questions?{" "}
             <span className="text-primary font-medium cursor-pointer hover:underline">
               Contact our support team

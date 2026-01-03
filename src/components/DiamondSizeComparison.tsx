@@ -16,13 +16,13 @@ export const DiamondSizeComparison = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6 }}
-      className="container mx-auto px-4 py-20 bg-card/30 rounded-3xl"
+      className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 bg-card/30 rounded-2xl sm:rounded-3xl"
     >
-      <div className="text-center mb-16">
-        <div className="inline-flex items-center gap-2 mb-6">
-          <Ruler className="w-10 h-10 text-accent" />
+      <div className="text-center mb-10 sm:mb-12 lg:mb-16">
+        <div className="inline-flex items-center gap-2 mb-4 sm:mb-6">
+          <Ruler className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />
         </div>
-        <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4" style={{
+        <h2 className="text-2xl sm:text-4xl md:text-5xl font-playfair font-bold mb-3 sm:mb-4" style={{
           background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
@@ -30,23 +30,46 @@ export const DiamondSizeComparison = () => {
         }}>
           Diamond Size Comparison
         </h2>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-sm sm:text-base lg:text-lg text-muted-foreground">
           Visual guide to help you choose the perfect carat size
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
         {sizes.map((item, index) => (
           <motion.div
             key={item.carat}
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1 * index, duration: 0.5 }}
-            whileHover={{ scale: 1.1, y: -10 }}
+            whileHover={{ scale: 1.05, y: -5 }}
             className="flex flex-col items-center"
           >
             {/* Diamond Visual */}
-            <div className="relative mb-4 flex items-center justify-center h-48">
+            <div className="relative mb-3 sm:mb-4 flex items-center justify-center h-24 sm:h-36 lg:h-48">
+              <motion.div
+                animate={{ 
+                  rotate: 360,
+                  scale: [1, 1.05, 1]
+                }}
+                transition={{ 
+                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                  scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                }}
+                style={{
+                  width: `${Math.max(item.size * 0.4, 30)}px`,
+                  height: `${Math.max(item.size * 0.4, 30)}px`,
+                }}
+                className="rounded-full diamond-shine shadow-glow sm:hidden"
+              >
+                <div 
+                  className="w-full h-full rounded-full"
+                  style={{
+                    background: 'radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.5))',
+                    boxShadow: '0 0 20px rgba(255, 215, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.5)'
+                  }}
+                />
+              </motion.div>
               <motion.div
                 animate={{ 
                   rotate: 360,
@@ -60,7 +83,7 @@ export const DiamondSizeComparison = () => {
                   width: `${item.size}px`,
                   height: `${item.size}px`,
                 }}
-                className="rounded-full diamond-shine shadow-glow"
+                className="rounded-full diamond-shine shadow-glow hidden sm:block"
               >
                 <div 
                   className="w-full h-full rounded-full"
@@ -73,14 +96,14 @@ export const DiamondSizeComparison = () => {
             </div>
 
             {/* Size Info */}
-            <div className="text-center space-y-2">
-              <h3 className="text-2xl font-playfair font-bold text-foreground">
+            <div className="text-center space-y-0.5 sm:space-y-2">
+              <h3 className="text-base sm:text-xl lg:text-2xl font-playfair font-bold text-foreground">
                 {item.carat} ct
               </h3>
-              <p className="text-sm text-muted-foreground font-medium">
+              <p className="text-[10px] sm:text-sm text-muted-foreground font-medium">
                 {item.diameter}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-[9px] sm:text-xs text-muted-foreground hidden sm:block">
                 {item.price}
               </p>
             </div>
@@ -93,11 +116,11 @@ export const DiamondSizeComparison = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
-        className="mt-12 text-center"
+        className="mt-8 sm:mt-10 lg:mt-12 text-center"
       >
-        <div className="inline-flex items-center gap-2 px-6 py-3 bg-accent/10 rounded-full border border-accent/20">
-          <Ruler className="w-5 h-5 text-accent" />
-          <span className="text-sm font-medium text-foreground">All measurements shown at actual size on standard displays</span>
+        <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-accent/10 rounded-full border border-accent/20">
+          <Ruler className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
+          <span className="text-[10px] sm:text-sm font-medium text-foreground">All measurements shown at actual size on standard displays</span>
         </div>
       </motion.div>
     </motion.section>

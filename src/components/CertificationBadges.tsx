@@ -19,16 +19,16 @@ export const CertificationBadges = () => {
   ];
 
   return (
-    <section className="container mx-auto px-4 py-20">
-      <ScrollReveal direction="up" className="text-center mb-16">
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+      <ScrollReveal direction="up" className="text-center mb-10 sm:mb-12 lg:mb-16">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="inline-block mb-6"
+          className="inline-block mb-4 sm:mb-6"
         >
-          <Sparkles className="w-12 h-12 text-accent" />
+          <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-accent" />
         </motion.div>
-        <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4" style={{
+        <h2 className="text-2xl sm:text-4xl md:text-5xl font-playfair font-bold mb-3 sm:mb-4" style={{
           background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
@@ -36,33 +36,33 @@ export const CertificationBadges = () => {
         }}>
           100% Certified Diamonds
         </h2>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-sm sm:text-base lg:text-lg text-muted-foreground">
           Every diamond comes with international certification for your peace of mind
         </p>
       </ScrollReveal>
 
-      <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto" staggerDelay={0.2}>
+      <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto" staggerDelay={0.2}>
         {certifications.map((cert, index) => {
           const Icon = cert.icon;
           return (
             <StaggerItem key={cert.name} direction={index === 0 ? "left" : "right"}>
               <motion.div
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="bg-card/80 backdrop-blur-sm border-2 border-accent/20 rounded-2xl p-8 shadow-luxury hover:shadow-elegant hover:border-accent/40 transition-all"
+                whileHover={{ y: -5, scale: 1.01 }}
+                className="bg-card/80 backdrop-blur-sm border-2 border-accent/20 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 shadow-luxury hover:shadow-elegant hover:border-accent/40 transition-all"
               >
-                <div className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br ${cert.color} rounded-full mb-6 shadow-glow`}>
-                  <Icon className="w-10 h-10 text-white" />
+                <div className={`inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br ${cert.color} rounded-full mb-4 sm:mb-6 shadow-glow`}>
+                  <Icon className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
                 </div>
                 
-                <h3 className="text-3xl font-playfair font-bold text-foreground mb-6">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-playfair font-bold text-foreground mb-4 sm:mb-6">
                   {cert.name}
                 </h3>
                 
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {cert.features.map((feature) => (
-                    <div key={feature} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                      <p className="text-muted-foreground">{feature}</p>
+                    <div key={feature} className="flex items-start gap-2 sm:gap-3">
+                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-accent mt-0.5 flex-shrink-0" />
+                      <p className="text-sm sm:text-base text-muted-foreground">{feature}</p>
                     </div>
                   ))}
                 </div>
@@ -73,10 +73,10 @@ export const CertificationBadges = () => {
       </StaggerContainer>
 
       {/* Trust Indicators */}
-      <ScrollReveal direction="fade" delay={0.4} className="mt-12 text-center">
-        <div className="inline-flex items-center gap-2 px-6 py-3 bg-accent/10 rounded-full border border-accent/20">
-          <ShieldCheck className="w-5 h-5 text-accent" />
-          <span className="text-sm font-medium text-foreground">Verified by Independent Gemological Labs</span>
+      <ScrollReveal direction="fade" delay={0.4} className="mt-8 sm:mt-10 lg:mt-12 text-center">
+        <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-accent/10 rounded-full border border-accent/20">
+          <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
+          <span className="text-xs sm:text-sm font-medium text-foreground">Verified by Independent Gemological Labs</span>
         </div>
       </ScrollReveal>
     </section>
