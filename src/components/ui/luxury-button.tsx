@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold transition-all duration-500 ease-luxury focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 uppercase tracking-wider relative overflow-hidden group",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold transition-all duration-500 ease-luxury focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 uppercase tracking-wider relative overflow-hidden group touch-manipulation",
   {
     variants: {
       variant: {
@@ -22,11 +22,11 @@ const buttonVariants = cva(
         diamond: "bg-gradient-diamond text-foreground border border-border shadow-diamond font-playfair font-medium tracking-wide hover:shadow-glow rounded-xl",
       },
       size: {
-        default: "h-12 px-6 py-3",
-        sm: "h-10 px-4 py-2 text-xs",
-        lg: "h-14 px-8 py-4 text-base",
-        xl: "h-16 px-10 py-5 text-lg",
-        icon: "h-12 w-12",
+        default: "h-12 px-5 sm:px-6 py-3 text-xs sm:text-sm",
+        sm: "h-10 px-3 sm:px-4 py-2 text-xs",
+        lg: "h-12 sm:h-14 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base",
+        xl: "h-14 sm:h-16 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg",
+        icon: "h-11 w-11 sm:h-12 sm:w-12",
       },
     },
     defaultVariants: {

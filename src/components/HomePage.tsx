@@ -175,37 +175,48 @@ export const HomePage = ({
             : "bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
+          <div className="flex items-center justify-between gap-2">
             <motion.div 
-              className="flex items-center" 
+              className="flex items-center flex-shrink-0" 
               whileHover={{ scale: 1.02 }}
             >
               <motion.img 
                 src={premankPremiumLogo} 
                 alt="Premank" 
                 className={`object-contain transition-all duration-300 ${
-                  isScrolled ? "h-14" : "h-20"
+                  isScrolled ? "h-10 sm:h-12 md:h-14" : "h-12 sm:h-16 md:h-20"
                 }`}
               />
             </motion.div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
               <LuxuryButton 
                 variant="luxury-ghost" 
                 size="sm"
                 onClick={() => setShowWishlist(true)} 
-                className="gap-2"
+                className="gap-1.5 sm:gap-2 min-h-[44px] px-2 sm:px-3 md:px-4"
               >
-                <Heart className="w-4 h-4" />
+                <Heart className="w-5 h-5 sm:w-4 sm:h-4" />
                 <span className="hidden md:inline">Wishlist</span>
               </LuxuryButton>
-              <LuxuryButton variant="luxury-ghost" size="sm" onClick={onViewAppointments} className="gap-2">
-                <Calendar className="w-4 h-4" />
+              <LuxuryButton 
+                variant="luxury-ghost" 
+                size="sm" 
+                onClick={onViewAppointments} 
+                className="gap-1.5 sm:gap-2 min-h-[44px] px-2 sm:px-3 md:px-4"
+              >
+                <Calendar className="w-5 h-5 sm:w-4 sm:h-4" />
                 <span className="hidden md:inline">Appointments</span>
               </LuxuryButton>
-              <LuxuryButton variant="luxury-outline" size="sm" onClick={onProfile}>
-                Profile
+              <LuxuryButton 
+                variant="luxury-outline" 
+                size="sm" 
+                onClick={onProfile}
+                className="min-h-[44px] px-3 sm:px-4"
+              >
+                <span className="hidden sm:inline">Profile</span>
+                <span className="sm:hidden">Me</span>
               </LuxuryButton>
             </div>
           </div>
@@ -218,7 +229,7 @@ export const HomePage = ({
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
         transition={{ delay: 0.2 }} 
-        className="relative min-h-screen flex items-center overflow-hidden pt-20"
+        className="relative min-h-screen flex items-center overflow-hidden pt-16 sm:pt-20"
       >
         {/* Background Image with Parallax */}
         <motion.div 
@@ -239,7 +250,7 @@ export const HomePage = ({
         
         {/* Hero Content with Parallax */}
         <motion.div 
-          className="container mx-auto px-4 relative z-10"
+          className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
           style={{ y: contentY, opacity }}
         >
           <div className="max-w-4xl">
@@ -248,16 +259,16 @@ export const HomePage = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="mb-6"
+              className="mb-4 sm:mb-6"
             >
-              <LuxuryBadge variant="gold" className="text-sm px-4 py-2">
-                <Crown className="w-4 h-4 mr-1" />
+              <LuxuryBadge variant="gold" className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2">
+                <Crown className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                 India's Premier Diamond Jeweller
               </LuxuryBadge>
             </motion.div>
 
             <motion.h1 
-              className="text-5xl md:text-7xl lg:text-8xl font-playfair font-bold mb-6 text-gold-gradient hero-text-shadow"
+              className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-playfair font-bold mb-4 sm:mb-6 text-gold-gradient hero-text-shadow leading-tight"
               initial={{ y: 50, opacity: 0 }} 
               animate={{ y: 0, opacity: 1 }} 
               transition={{ delay: 0.4 }}
@@ -268,7 +279,7 @@ export const HomePage = ({
             </motion.h1>
             
             <motion.p 
-              className="text-xl md:text-2xl text-white/90 mb-10 font-light max-w-2xl"
+              className="text-base sm:text-xl md:text-2xl text-white/90 mb-6 sm:mb-10 font-light max-w-2xl"
               initial={{ y: 30, opacity: 0 }} 
               animate={{ y: 0, opacity: 1 }} 
               transition={{ delay: 0.5 }}
@@ -279,17 +290,17 @@ export const HomePage = ({
 
             {/* CTA Buttons */}
             <motion.div 
-              className="flex flex-wrap gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
               initial={{ y: 40, opacity: 0 }} 
               animate={{ y: 0, opacity: 1 }} 
               transition={{ delay: 0.6 }}
             >
-              <LuxuryButton variant="luxury" size="xl" className="gap-3">
+              <LuxuryButton variant="luxury" size="lg" className="gap-2 sm:gap-3 w-full sm:w-auto min-h-[52px] text-sm sm:text-base">
                 <DiamondIcon className="w-5 h-5" />
                 Explore Collection
               </LuxuryButton>
               
-              <LuxuryButton variant="luxury-dark" size="xl" onClick={onCertificate} className="gap-3">
+              <LuxuryButton variant="luxury-dark" size="lg" onClick={onCertificate} className="gap-2 sm:gap-3 w-full sm:w-auto min-h-[52px] text-sm sm:text-base">
                 <Award className="w-5 h-5" />
                 View Certifications
               </LuxuryButton>
@@ -297,7 +308,7 @@ export const HomePage = ({
 
             {/* Stats */}
             <motion.div 
-              className="grid grid-cols-3 gap-8 mt-16 max-w-lg"
+              className="grid grid-cols-3 gap-4 sm:gap-8 mt-10 sm:mt-16 max-w-lg"
               initial={{ y: 40, opacity: 0 }} 
               animate={{ y: 0, opacity: 1 }} 
               transition={{ delay: 0.7 }}
@@ -308,17 +319,17 @@ export const HomePage = ({
                 { value: "100%", label: "Certified" },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
-                  <p className="text-3xl md:text-4xl font-playfair font-bold text-gold-gradient">{stat.value}</p>
-                  <p className="text-sm text-white/70 uppercase tracking-wider mt-1">{stat.label}</p>
+                  <p className="text-xl sm:text-3xl md:text-4xl font-playfair font-bold text-gold-gradient">{stat.value}</p>
+                  <p className="text-[10px] sm:text-sm text-white/70 uppercase tracking-wider mt-1">{stat.label}</p>
                 </div>
               ))}
             </motion.div>
           </div>
         </motion.div>
 
-        {/* Scroll Indicator */}
+        {/* Scroll Indicator - Hidden on mobile */}
         <motion.div 
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
@@ -337,31 +348,31 @@ export const HomePage = ({
         initial={{ opacity: 0, y: 30 }} 
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="container mx-auto px-4 py-16 -mt-20 relative z-20"
+        className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 -mt-12 sm:-mt-20 relative z-20"
       >
-        <div className="bg-card/95 backdrop-blur-xl rounded-3xl shadow-elegant border border-border p-8">
-          <div className="max-w-2xl mx-auto mb-8">
+        <div className="bg-card/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-elegant border border-border p-4 sm:p-6 lg:p-8">
+          <div className="max-w-2xl mx-auto mb-6 sm:mb-8">
             <div className="relative">
-              <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Search className="absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input 
-                placeholder="Search by diamond type, price, carat..." 
+                placeholder="Search diamonds..." 
                 value={searchTerm} 
                 onChange={e => handleSearch(e.target.value)} 
-                className="pl-14 pr-4 h-16 text-lg bg-secondary/50 border-border focus:border-primary rounded-2xl shadow-soft input-luxury" 
+                className="pl-12 sm:pl-14 pr-4 h-12 sm:h-14 lg:h-16 text-base sm:text-lg bg-secondary/50 border-border focus:border-primary rounded-xl sm:rounded-2xl shadow-soft input-luxury" 
               />
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h2 className="text-2xl font-playfair font-bold text-foreground">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-playfair font-bold text-foreground">
                 Discover Premium Diamonds
               </h2>
-              <p className="text-muted-foreground">{filteredDiamonds.length} exquisite pieces available</p>
+              <p className="text-sm sm:text-base text-muted-foreground">{filteredDiamonds.length} exquisite pieces available</p>
             </div>
             
-            <div className="flex items-center gap-3">
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-secondary">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-secondary min-w-[44px] min-h-[44px]">
                 <Filter className="w-5 h-5" />
               </Button>
               <div className="flex bg-secondary rounded-xl p-1">
@@ -369,17 +380,17 @@ export const HomePage = ({
                   variant="ghost" 
                   size="icon" 
                   onClick={() => setViewMode("grid")} 
-                  className={`rounded-lg ${viewMode === "grid" ? "bg-primary text-primary-foreground shadow-gold" : "text-muted-foreground hover:text-foreground"}`}
+                  className={`rounded-lg min-w-[44px] min-h-[44px] ${viewMode === "grid" ? "bg-primary text-primary-foreground shadow-gold" : "text-muted-foreground hover:text-foreground"}`}
                 >
-                  <Grid className="w-4 h-4" />
+                  <Grid className="w-5 h-5" />
                 </Button>
                 <Button 
                   variant="ghost" 
                   size="icon" 
                   onClick={() => setViewMode("list")} 
-                  className={`rounded-lg ${viewMode === "list" ? "bg-primary text-primary-foreground shadow-gold" : "text-muted-foreground hover:text-foreground"}`}
+                  className={`rounded-lg min-w-[44px] min-h-[44px] ${viewMode === "list" ? "bg-primary text-primary-foreground shadow-gold" : "text-muted-foreground hover:text-foreground"}`}
                 >
-                  <List className="w-4 h-4" />
+                  <List className="w-5 h-5" />
                 </Button>
               </div>
             </div>
@@ -388,9 +399,9 @@ export const HomePage = ({
       </motion.section>
 
       {/* Diamonds Grid */}
-      <section className="container mx-auto px-4 pb-20">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 lg:pb-20">
         <motion.div 
-          className={`grid gap-8 ${viewMode === "grid" ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 max-w-4xl mx-auto"}`} 
+          className={`grid gap-4 sm:gap-6 lg:gap-8 ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 max-w-4xl mx-auto"}`} 
           initial={{ opacity: 0 }} 
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -401,7 +412,7 @@ export const HomePage = ({
               initial={{ opacity: 0, y: 50 }} 
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1 * index, duration: 0.5 }}
+              transition={{ delay: 0.1 * Math.min(index, 5), duration: 0.5 }}
             >
               <DiamondCard diamond={diamond} onView={onViewDiamond} />
             </motion.div>
@@ -412,15 +423,15 @@ export const HomePage = ({
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
-            className="text-center py-20"
+            className="text-center py-12 sm:py-16 lg:py-20"
           >
-            <div className="w-24 h-24 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
-              <Gem className="w-12 h-12 text-muted-foreground" />
+            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+              <Gem className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground" />
             </div>
-            <h3 className="text-2xl font-playfair text-foreground mb-2">
+            <h3 className="text-xl sm:text-2xl font-playfair text-foreground mb-2">
               No diamonds found
             </h3>
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground">
               Try adjusting your search criteria
             </p>
           </motion.div>
@@ -432,26 +443,26 @@ export const HomePage = ({
         initial={{ opacity: 0, y: 30 }} 
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="bg-secondary/30 py-24"
+        className="bg-secondary/30 py-12 sm:py-16 lg:py-24"
       >
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <LuxuryBadge variant="gold" className="mb-4">Our Collection</LuxuryBadge>
+              <LuxuryBadge variant="gold" className="mb-3 sm:mb-4">Our Collection</LuxuryBadge>
             </motion.div>
-            <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4 text-gold-gradient">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-playfair font-bold mb-3 sm:mb-4 text-gold-gradient px-2">
               Natural Diamonds • 0.5 to 5 Carats
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
               Experience the brilliance of certified natural diamonds, each handpicked for exceptional quality
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 max-w-7xl mx-auto">
             {[
               { img: modelSmallDiamond, carat: "0.5 Carat", desc: "Perfect for delicate designs" },
               { img: modelMediumDiamond, carat: "1.5 Carat", desc: "Balanced elegance" },
@@ -460,18 +471,18 @@ export const HomePage = ({
             ].map((item, i) => (
               <motion.div 
                 key={i}
-                whileHover={{ scale: 1.05, y: -10 }} 
-                className="relative group overflow-hidden rounded-3xl shadow-elegant hover:shadow-premium transition-all duration-500"
+                whileHover={{ scale: 1.03, y: -5 }} 
+                className="relative group overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-elegant hover:shadow-premium transition-all duration-500"
               >
-                <img src={item.img} alt={item.carat} className="w-full h-96 object-cover" />
+                <img src={item.img} alt={item.carat} className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-primary/10"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                  <h3 className="text-3xl font-playfair font-bold mb-2 text-gold-gradient">{item.carat}</h3>
-                  <p className="text-sm opacity-90">{item.desc}</p>
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5 lg:p-8 text-white">
+                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-playfair font-bold mb-1 sm:mb-2 text-gold-gradient">{item.carat}</h3>
+                  <p className="text-xs sm:text-sm opacity-90 line-clamp-1">{item.desc}</p>
                 </div>
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <LuxuryBadge variant="gold">View</LuxuryBadge>
+                <div className="absolute top-2 right-2 sm:top-4 sm:right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <LuxuryBadge variant="gold" className="text-xs">View</LuxuryBadge>
                 </div>
               </motion.div>
             ))}
@@ -484,19 +495,19 @@ export const HomePage = ({
         initial={{ opacity: 0, y: 30 }} 
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="container mx-auto px-4 py-24"
+        className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24"
       >
-        <div className="text-center mb-16">
-          <LuxuryBadge variant="platinum" className="mb-4">Why Us</LuxuryBadge>
-          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <LuxuryBadge variant="platinum" className="mb-3 sm:mb-4">Why Us</LuxuryBadge>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-playfair font-bold text-foreground mb-3 sm:mb-4 px-2">
             Why Choose <span className="text-gold-gradient">Premank</span>?
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
             Advanced features to help you find the perfect diamond
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
           {[
             { icon: Eye, title: "3D Diamond Viewer", desc: "Explore every angle of your diamond in stunning 3D. Rotate, zoom, and examine the brilliance in detail." },
             { icon: Award, title: "IGI / GIA Certified", desc: "Every diamond is certified by internationally recognized gemological institutes for authenticity and quality." },
@@ -504,17 +515,17 @@ export const HomePage = ({
           ].map((item, i) => (
             <motion.div 
               key={i}
-              whileHover={{ scale: 1.05, y: -10 }} 
+              whileHover={{ scale: 1.03, y: -5 }} 
               transition={{ duration: 0.3 }} 
-              className="card-luxury p-10 text-center"
+              className="card-luxury p-5 sm:p-6 lg:p-10 text-center"
             >
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-gold-shine rounded-2xl mb-6 shadow-gold">
-                <item.icon className="w-10 h-10 text-onyx" />
+              <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-gold-shine rounded-xl sm:rounded-2xl mb-4 sm:mb-6 shadow-gold">
+                <item.icon className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-onyx" />
               </div>
-              <h3 className="text-2xl font-playfair font-bold text-foreground mb-4">
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-playfair font-bold text-foreground mb-2 sm:mb-4">
                 {item.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                 {item.desc}
               </p>
             </motion.div>
@@ -563,7 +574,7 @@ export const HomePage = ({
                   setShowWishlist(false);
                 }
               }}
-              className="fixed inset-y-0 right-0 z-50 w-full md:w-[80%] lg:w-[70%] bg-background shadow-2xl overflow-auto touch-pan-y"
+              className="fixed inset-y-0 right-0 z-50 w-full sm:w-[85%] md:w-[75%] lg:w-[60%] xl:w-[50%] bg-background shadow-2xl overflow-auto touch-pan-y"
             >
               <button
                 onClick={() => setShowWishlist(false)}
