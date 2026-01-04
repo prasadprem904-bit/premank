@@ -29,6 +29,8 @@ interface HomePageProps {
   onCustomDesign: () => void;
   onCertificate: () => void;
   onViewAppointments: () => void;
+  showWishlistOnMount?: boolean;
+  onWishlistClose?: () => void;
 }
 
 // Fallback sample data (used only if database is empty)
@@ -46,17 +48,32 @@ export const HomePage = ({
   onProfile,
   onCustomDesign,
   onCertificate,
-  onViewAppointments
+  onViewAppointments,
+  showWishlistOnMount = false,
+  onWishlistClose
 }: HomePageProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [diamonds, setDiamonds] = useState<Diamond[]>([]);
   const [filteredDiamonds, setFilteredDiamonds] = useState<Diamond[]>([]);
-  const [showWishlist, setShowWishlist] = useState(false);
+  const [showWishlist, setShowWishlist] = useState(showWishlistOnMount);
   const [loading, setLoading] = useState(true);
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const lastScrollY = useRef(0);
+
+  // Handle wishlist from mobile nav
+  useEffect(() => {
+    if (showWishlistOnMount) {
+      setShowWishlist(true);
+    }
+  }, [showWishlistOnMount]);
+
+  // Handle wishlist close callback
+  const handleWishlistClose = () => {
+    setShowWishlist(false);
+    onWishlistClose?.();
+  };
 
   // Fetch diamonds from database
   useEffect(() => {
@@ -571,13 +588,13 @@ export const HomePage = ({
               dragElastic={{ left: 0, right: 0.5 }}
               onDragEnd={(_, info) => {
                 if (info.offset.x > 100 || info.velocity.x > 500) {
-                  setShowWishlist(false);
+                  handleWishlistClose();
                 }
               }}
               className="fixed inset-y-0 right-0 z-50 w-full sm:w-[85%] md:w-[75%] lg:w-[60%] xl:w-[50%] bg-background shadow-2xl overflow-auto touch-pan-y"
             >
               <button
-                onClick={() => setShowWishlist(false)}
+                onClick={handleWishlistClose}
                 className="absolute top-6 right-6 text-foreground hover:text-primary transition-colors z-50 p-2 rounded-full bg-muted hover:bg-muted/80"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -586,10 +603,10 @@ export const HomePage = ({
               </button>
               <DiamondWishlist 
                 onViewDetails={(diamond) => {
-                  setShowWishlist(false);
+                  handleWishlistClose();
                   onViewDiamond(diamond);
                 }}
-                onBack={() => setShowWishlist(false)}
+                onBack={handleWishlistClose}
               />
             </motion.div>
           </>

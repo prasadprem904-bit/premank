@@ -11,6 +11,7 @@ import { CustomDesign } from "@/components/CustomDesign";
 import { CertificateGenerator } from "@/components/CertificateGenerator";
 import { MyAppointments } from "@/components/MyAppointments";
 import { AppSettings } from "@/components/AppSettings";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useAppointmentNotifications } from "@/hooks/useAppointmentNotifications";
 import { useAuth } from "@/hooks/useAuth";
 import type { Diamond } from "@/components/DiamondCard";
@@ -51,6 +52,7 @@ const Index = () => {
   const [selectedDiamond, setSelectedDiamond] = useState<Diamond | null>(null);
   const [appointmentDetails, setAppointmentDetails] = useState<any>(null);
   const [hasShownSplash, setHasShownSplash] = useState(false);
+  const [showWishlistFromNav, setShowWishlistFromNav] = useState(false);
   
   const { user, loading: authLoading, signOut } = useAuth();
 
@@ -124,14 +126,42 @@ const Index = () => {
     setCurrentState('settings');
   };
 
+  // Mobile bottom nav handler
+  const handleMobileNavigation = (item: "home" | "wishlist" | "appointments" | "profile") => {
+    switch (item) {
+      case "home":
+        handleBackToHome();
+        break;
+      case "wishlist":
+        setShowWishlistFromNav(true);
+        setCurrentState('home');
+        break;
+      case "appointments":
+        setCurrentState('my-appointments');
+        break;
+      case "profile":
+        setCurrentState('profile');
+        break;
+    }
+  };
+
+  // Get active nav item based on current state
+  const getActiveNavItem = (): "home" | "wishlist" | "appointments" | "profile" => {
+    if (currentState === 'my-appointments') return "appointments";
+    if (currentState === 'profile' || currentState === 'settings') return "profile";
+    if (showWishlistFromNav) return "wishlist";
+    return "home";
+  };
+
   const shouldShowSplash = currentState === 'splash';
+  const showMobileNav = !['splash', 'auth'].includes(currentState);
 
   if (authLoading) {
     return null;
   }
 
   return (
-    <main className="min-h-screen overflow-hidden">
+    <main className="min-h-screen overflow-hidden pb-20 md:pb-0">
       <AnimatePresence mode="wait">
         {shouldShowSplash && (
           <motion.div
@@ -171,6 +201,8 @@ const Index = () => {
               onCustomDesign={handleCustomDesign}
               onCertificate={handleCertificate}
               onViewAppointments={handleViewAppointments}
+              showWishlistOnMount={showWishlistFromNav}
+              onWishlistClose={() => setShowWishlistFromNav(false)}
             />
           </motion.div>
         )}
@@ -298,6 +330,14 @@ const Index = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      
+      {/* Mobile Bottom Navigation */}
+      {showMobileNav && (
+        <MobileBottomNav 
+          activeItem={getActiveNavItem()} 
+          onNavigate={handleMobileNavigation} 
+        />
+      )}
     </main>
   );
 };
