@@ -207,11 +207,11 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-background pt-32 px-4">
+      <div className="min-h-screen bg-background pt-20 sm:pt-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-          <h2 className="text-3xl font-playfair font-bold mb-4">Your Wishlist</h2>
-          <p className="text-muted-foreground">Please sign in to view your wishlist</p>
+          <Heart className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground mx-auto mb-4" />
+          <h2 className="text-2xl sm:text-3xl font-playfair font-bold mb-4">Your Wishlist</h2>
+          <p className="text-sm sm:text-base text-muted-foreground">Please sign in to view your wishlist</p>
         </div>
       </div>
     );
@@ -219,11 +219,11 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background pt-32 px-4">
+      <div className="min-h-screen bg-background pt-20 sm:pt-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <div className="animate-pulse">
-            <Heart className="w-16 h-16 text-gold mx-auto mb-4" />
-            <h2 className="text-3xl font-playfair font-bold mb-4">Loading Wishlist...</h2>
+            <Heart className="w-12 h-12 sm:w-16 sm:h-16 text-gold mx-auto mb-4" />
+            <h2 className="text-2xl sm:text-3xl font-playfair font-bold mb-4">Loading Wishlist...</h2>
           </div>
         </div>
       </div>
@@ -232,7 +232,7 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
 
   return (
     <motion.div 
-      className="min-h-screen bg-background pt-32 px-4 pb-12 touch-pan-y overflow-hidden"
+      className="min-h-screen bg-background pt-20 sm:pt-32 px-4 sm:px-6 lg:px-8 pb-24 md:pb-12 touch-pan-y overflow-hidden"
       drag="y"
       dragConstraints={{ top: 0, bottom: 0 }}
       dragElastic={{ top: 0.5, bottom: 0 }}
@@ -241,16 +241,16 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
     >
       {/* Pull to refresh indicator */}
       <motion.div 
-        className="fixed top-20 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2"
+        className="fixed top-16 sm:top-20 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2"
         style={{ opacity: pullOpacity }}
       >
         <motion.div
           style={{ rotate: pullRotation }}
-          className="p-3 rounded-full bg-gold/20 backdrop-blur-sm border border-gold/30"
+          className="p-2 sm:p-3 rounded-full bg-gold/20 backdrop-blur-sm border border-gold/30"
         >
-          <RefreshCw className={`w-5 h-5 text-gold ${refreshing ? 'animate-spin' : ''}`} />
+          <RefreshCw className={`w-4 h-4 sm:w-5 sm:h-5 text-gold ${refreshing ? 'animate-spin' : ''}`} />
         </motion.div>
-        <span className="text-xs text-gold font-medium">
+        <span className="text-[10px] sm:text-xs text-gold font-medium">
           {refreshing ? 'Refreshing...' : 'Pull to refresh'}
         </span>
       </motion.div>
@@ -259,37 +259,38 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
           <motion.button
             onClick={onBack}
             whileHover={{ x: -4 }}
             whileTap={{ scale: 0.95 }}
-            className="group flex items-center gap-3 text-gold hover:text-gold-light transition-all duration-300 mb-4 py-2 px-4 rounded-xl bg-gold/10 hover:bg-gold/20 border border-gold/30 hover:border-gold/50 shadow-sm hover:shadow-gold"
+            className="group flex items-center gap-2 sm:gap-3 text-gold hover:text-gold-light transition-all duration-300 mb-4 py-2 px-3 sm:px-4 rounded-xl bg-gold/10 hover:bg-gold/20 border border-gold/30 hover:border-gold/50 shadow-sm hover:shadow-gold min-h-[44px]"
           >
             <ArrowLeft className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1" />
-            <span className="font-medium tracking-wide">Back</span>
+            <span className="font-medium tracking-wide text-sm sm:text-base">Back</span>
           </motion.button>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
             <div>
-              <h1 className="text-4xl font-playfair font-bold mb-2">My Wishlist</h1>
-              <p className="text-muted-foreground">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-playfair font-bold mb-1 sm:mb-2">My Wishlist</h1>
+              <p className="text-sm sm:text-base text-muted-foreground">
                 {wishlistDiamonds.length} {wishlistDiamonds.length === 1 ? 'diamond' : 'diamonds'} saved
               </p>
             </div>
             
             {wishlistDiamonds.length > 1 && (
-              <div className="flex gap-2">
+              <div className="flex gap-2 w-full sm:w-auto">
                 <Button
                   variant={compareMode ? "default" : "outline"}
                   onClick={() => {
                     setCompareMode(!compareMode);
                     if (!compareMode) setSelectedForCompare([]);
                   }}
-                  className="gap-2"
+                  className="gap-2 flex-1 sm:flex-none min-h-[44px]"
                 >
                   <Scale className="w-4 h-4" />
-                  {compareMode ? 'Cancel Compare' : 'Compare'}
+                  <span className="hidden sm:inline">{compareMode ? 'Cancel Compare' : 'Compare'}</span>
+                  <span className="sm:hidden">{compareMode ? 'Cancel' : 'Compare'}</span>
                 </Button>
                 {compareMode && selectedForCompare.length >= 2 && (
                   <DiamondComparison
@@ -309,14 +310,14 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-16"
+            className="text-center py-12 sm:py-16"
           >
-            <Heart className="w-20 h-20 text-muted-foreground mx-auto mb-6" />
-            <h2 className="text-2xl font-playfair font-semibold mb-2">Your wishlist is empty</h2>
-            <p className="text-muted-foreground mb-6">Start adding diamonds you love!</p>
+            <Heart className="w-16 h-16 sm:w-20 sm:h-20 text-muted-foreground mx-auto mb-4 sm:mb-6" />
+            <h2 className="text-xl sm:text-2xl font-playfair font-semibold mb-2">Your wishlist is empty</h2>
+            <p className="text-sm sm:text-base text-muted-foreground mb-6">Start adding diamonds you love!</p>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             <AnimatePresence mode="popLayout">
               {wishlistDiamonds.map((diamond, index) => (
                 <motion.div
