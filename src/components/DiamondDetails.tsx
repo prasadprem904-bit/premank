@@ -51,50 +51,51 @@ export const DiamondDetails = ({ diamond, onBack, onBookAppointment }: DiamondDe
         />
       )}
       
-      <div className="min-h-screen bg-gradient-luxury">
+      <div className="min-h-screen bg-gradient-luxury pb-24 md:pb-8">
         {/* Header */}
         <motion.header
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className="bg-card/95 backdrop-blur-sm border-b border-accent/20 shadow-luxury sticky top-0 z-40"
       >
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 max-w-[1200px]">
           <LuxuryButton 
             variant="ghost" 
             onClick={onBack}
-            className="gap-2 text-foreground hover:text-accent"
+            className="gap-2 text-foreground hover:text-accent min-h-[48px] px-3 sm:px-4"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Collection
+            <ArrowLeft className="w-5 h-5 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">Back to Collection</span>
+            <span className="sm:hidden">Back</span>
           </LuxuryButton>
         </div>
       </motion.header>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-[1200px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start">
           {/* 3D Diamond Viewer */}
           <motion.div
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <Card className="p-6 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
-              <div className="relative rounded-xl overflow-hidden h-[500px]">
+            <Card className="p-4 sm:p-5 lg:p-6 bg-card/50 backdrop-blur-sm border-accent/20 shadow-luxury">
+              <div className="relative rounded-xl overflow-hidden h-[300px] sm:h-[400px] lg:h-[500px]">
                 <Diamond3DViewer diamondName={diamond.name} />
               </div>
 
               {/* Quick Stats & Actions */}
-              <div className="space-y-4 mt-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-background/50 rounded-lg border border-accent/20">
-                    <Award className="w-6 h-6 text-accent mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">Certified</p>
-                    <p className="font-semibold text-accent">{certification}</p>
+              <div className="space-y-4 mt-4 sm:mt-6">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  <div className="text-center p-3 sm:p-4 bg-background/50 rounded-lg border border-accent/20">
+                    <Award className="w-5 h-5 sm:w-6 sm:h-6 text-accent mx-auto mb-2" />
+                    <p className="text-xs sm:text-sm text-muted-foreground">Certified</p>
+                    <p className="font-semibold text-accent text-sm sm:text-base">{certification}</p>
                   </div>
-                  <div className="text-center p-4 bg-background/50 rounded-lg border border-accent/20">
-                    <Shield className="w-6 h-6 text-accent mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">Warranty</p>
-                    <p className="font-semibold text-accent">Lifetime</p>
+                  <div className="text-center p-3 sm:p-4 bg-background/50 rounded-lg border border-accent/20">
+                    <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-accent mx-auto mb-2" />
+                    <p className="text-xs sm:text-sm text-muted-foreground">Warranty</p>
+                    <p className="font-semibold text-accent text-sm sm:text-base">Lifetime</p>
                   </div>
                 </div>
 
@@ -102,7 +103,7 @@ export const DiamondDetails = ({ diamond, onBack, onBookAppointment }: DiamondDe
                 <LuxuryButton
                   variant="luxury"
                   size="lg"
-                  className="w-full gap-2"
+                  className="w-full gap-2 min-h-[48px]"
                   onClick={() => setShowVirtualTryOn(true)}
                 >
                   <ScanEye className="w-5 h-5" />
@@ -117,72 +118,72 @@ export const DiamondDetails = ({ diamond, onBack, onBookAppointment }: DiamondDe
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-4 sm:space-y-6 lg:space-y-8"
           >
             {/* Title & Price */}
             <div>
-              <h1 className="text-4xl font-playfair font-bold text-foreground mb-4">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-playfair font-bold text-foreground mb-3 sm:mb-4">
                 {diamond.name}
               </h1>
-              <div className="flex items-baseline gap-4 mb-6">
-                <span className="text-5xl font-playfair font-bold text-accent">
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 mb-4 sm:mb-6">
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-playfair font-bold text-accent">
                   ₹{diamond.price.toLocaleString('en-IN')}
                 </span>
-                <Badge variant="secondary" className="text-sm">
+                <Badge variant="secondary" className="text-xs sm:text-sm w-fit">
                   Premium Quality
                 </Badge>
               </div>
             </div>
 
             {/* Main Specifications - 4Cs */}
-            <Card className="p-6 bg-card/50 backdrop-blur-sm border-accent/20">
-              <div className="flex items-center gap-2 mb-4">
-                <Gem className="w-6 h-6 text-accent" />
-                <h3 className="text-xl font-playfair font-semibold text-foreground">
+            <Card className="p-4 sm:p-5 lg:p-6 bg-card/50 backdrop-blur-sm border-accent/20">
+              <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                <Gem className="w-5 h-5 sm:w-6 sm:h-6 text-accent flex-shrink-0" />
+                <h3 className="text-lg sm:text-xl font-playfair font-semibold text-foreground">
                   The 4Cs - Primary Grading
                 </h3>
               </div>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="p-4 bg-background/50 rounded-lg border border-border">
-                  <p className="text-xs text-muted-foreground mb-1">Carat Weight</p>
-                  <p className="text-2xl font-bold text-accent">{diamond.carat} CT</p>
-                  <p className="text-xs text-muted-foreground mt-1">Weight measurement</p>
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+                <div className="p-3 sm:p-4 bg-background/50 rounded-lg border border-border">
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mb-1">Carat Weight</p>
+                  <p className="text-xl sm:text-2xl font-bold text-accent">{diamond.carat} CT</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">Weight measurement</p>
                 </div>
-                <div className="p-4 bg-background/50 rounded-lg border border-border">
-                  <p className="text-xs text-muted-foreground mb-1">Cut Grade</p>
-                  <p className="text-2xl font-bold text-accent">{diamond.cut}</p>
-                  <p className="text-xs text-muted-foreground mt-1">Quality of cut</p>
+                <div className="p-3 sm:p-4 bg-background/50 rounded-lg border border-border">
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mb-1">Cut Grade</p>
+                  <p className="text-xl sm:text-2xl font-bold text-accent">{diamond.cut}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">Quality of cut</p>
                 </div>
-                <div className="p-4 bg-background/50 rounded-lg border border-border">
-                  <p className="text-xs text-muted-foreground mb-1">Color Grade</p>
-                  <p className="text-2xl font-bold text-accent">{diamond.color}</p>
-                  <p className="text-xs text-muted-foreground mt-1">Color scale D-Z</p>
+                <div className="p-3 sm:p-4 bg-background/50 rounded-lg border border-border">
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mb-1">Color Grade</p>
+                  <p className="text-xl sm:text-2xl font-bold text-accent">{diamond.color}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">Color scale D-Z</p>
                 </div>
-                <div className="p-4 bg-background/50 rounded-lg border border-border">
-                  <p className="text-xs text-muted-foreground mb-1">Clarity Grade</p>
-                  <p className="text-2xl font-bold text-accent">{diamond.clarity}</p>
-                  <p className="text-xs text-muted-foreground mt-1">Inclusion visibility</p>
+                <div className="p-3 sm:p-4 bg-background/50 rounded-lg border border-border">
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mb-1">Clarity Grade</p>
+                  <p className="text-xl sm:text-2xl font-bold text-accent">{diamond.clarity}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">Inclusion visibility</p>
                 </div>
               </div>
             </Card>
 
             {/* Detailed Specifications */}
-            <Card className="p-6 bg-card/50 backdrop-blur-sm border-accent/20">
-              <div className="flex items-center gap-2 mb-4">
-                <Ruler className="w-6 h-6 text-accent" />
-                <h3 className="text-xl font-playfair font-semibold text-foreground">
+            <Card className="p-4 sm:p-5 lg:p-6 bg-card/50 backdrop-blur-sm border-accent/20">
+              <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                <Ruler className="w-5 h-5 sm:w-6 sm:h-6 text-accent flex-shrink-0" />
+                <h3 className="text-lg sm:text-xl font-playfair font-semibold text-foreground">
                   Detailed Specifications
                 </h3>
               </div>
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-3 sm:space-y-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Shape</p>
-                    <p className="font-semibold text-foreground">{detailedSpecs.shape}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-1">Shape</p>
+                    <p className="font-semibold text-foreground text-sm sm:text-base">{detailedSpecs.shape}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Measurements</p>
-                    <p className="font-semibold text-foreground">{detailedSpecs.measurements}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-1">Measurements</p>
+                    <p className="font-semibold text-foreground text-sm sm:text-base truncate">{detailedSpecs.measurements}</p>
                   </div>
                 </div>
                 
@@ -379,10 +380,10 @@ export const DiamondDetails = ({ diamond, onBack, onBookAppointment }: DiamondDe
               <LuxuryButton
                 variant="luxury"
                 size="xl"
-                className="w-full text-xl py-6 gap-3"
+                className="w-full text-base sm:text-lg lg:text-xl py-5 sm:py-6 gap-2 sm:gap-3 min-h-[56px]"
                 onClick={() => onBookAppointment(diamond)}
               >
-                <Calendar className="w-6 h-6" />
+                <Calendar className="w-5 h-5 sm:w-6 sm:h-6" />
                 Book Appointment to View
               </LuxuryButton>
             </motion.div>
