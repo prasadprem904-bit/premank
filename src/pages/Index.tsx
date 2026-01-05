@@ -161,7 +161,7 @@ const Index = () => {
   }
 
   return (
-    <main className="min-h-screen overflow-hidden pb-20 md:pb-0">
+    <main className="min-h-screen overflow-hidden pb-24 md:pb-0 safe-area-bottom">
       <AnimatePresence mode="wait">
         {shouldShowSplash && (
           <motion.div
