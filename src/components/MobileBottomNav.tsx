@@ -26,7 +26,7 @@ export const MobileBottomNav = ({ activeItem, onNavigate }: MobileBottomNavProps
     >
       {/* Glassmorphism background */}
       <div className="bg-card/95 backdrop-blur-xl border-t border-border/50 shadow-[0_-4px_30px_rgba(0,0,0,0.1)]">
-        <div className="flex items-center justify-around px-3 py-3 pb-1">
+        <div className="flex items-center justify-around px-2 py-2 sm:px-3 sm:py-3">
           {navItems.map((item) => {
             const isActive = activeItem === item.id;
             return (

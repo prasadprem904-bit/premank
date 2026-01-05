@@ -107,7 +107,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               }}
             >
               {/* Enhanced Glow Effect */}
-              <div className="absolute inset-0 w-48 h-48 mx-auto">
+              <div className="absolute inset-0 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto">
                 <motion.div 
                   className="w-full h-full bg-gradient-to-br from-yellow-200 via-yellow-400 to-yellow-600 rounded-full blur-2xl"
                   animate={{ 
@@ -123,8 +123,8 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               </div>
               
               {/* Logo with Shine Effect */}
-              <div className="relative w-48 h-48 mx-auto overflow-hidden rounded-full">
-                <img src={premankLogo} alt="Premank" className="w-48 h-48 relative z-10 filter drop-shadow-2xl object-contain" />
+              <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto overflow-hidden rounded-full">
+                <img src={premankLogo} alt="Premank" className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 relative z-10 filter drop-shadow-2xl object-contain" />
                 
                 {/* Diamond Shine Animation - Light Reflection */}
                 <motion.div
@@ -147,15 +147,15 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               </div>
             </motion.div>
             
-            {/* Premium Rotating Sparkles */}
+            {/* Premium Rotating Sparkles - Hidden on very small screens */}
             {[...Array(12)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-3 h-3"
+                className="absolute w-2 h-2 sm:w-3 sm:h-3 hidden sm:block"
                 style={{
                   left: '50%',
                   top: '50%',
-                  transformOrigin: '0 80px',
+                  transformOrigin: '0 60px',
                   transform: `rotate(${i * 30}deg)`
                 }}
                 animate={{ 
@@ -169,7 +169,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
                   delay: i * 0.2,
                 }}
               >
-                <div className="w-3 h-3 bg-yellow-300 rounded-full"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-300 rounded-full"></div>
               </motion.div>
             ))}
           </motion.div>
@@ -184,7 +184,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
             className="space-y-6"
           >
             <motion.h1 
-              className="text-6xl md:text-7xl font-playfair font-bold mb-4"
+              className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-4 px-4"
               style={{
                 background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)',
                 WebkitBackgroundClip: 'text',
@@ -204,7 +204,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               Welcome to Premank
             </motion.h1>
             <motion.p 
-              className="text-2xl md:text-3xl text-white font-light opacity-90"
+              className="text-base sm:text-xl md:text-3xl text-white font-light opacity-90 px-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.9 }}
               transition={{ delay: 1 }}
@@ -216,7 +216,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
 
         {/* Premium Loading Bar */}
         <motion.div 
-          className="mt-16 w-80 h-2 bg-black/30 rounded-full mx-auto overflow-hidden border border-yellow-400/30"
+          className="mt-8 sm:mt-16 w-48 sm:w-64 md:w-80 h-1.5 sm:h-2 bg-black/30 rounded-full mx-auto overflow-hidden border border-yellow-400/30"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.8 }}
