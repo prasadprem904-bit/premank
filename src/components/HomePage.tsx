@@ -165,7 +165,7 @@ export const HomePage = ({
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
       {/* Scroll Progress Indicator */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-primary/20 z-[60]"
@@ -246,7 +246,7 @@ export const HomePage = ({
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
         transition={{ delay: 0.2 }} 
-        className="relative min-h-screen flex items-center overflow-hidden pt-16 sm:pt-20"
+        className="relative min-h-[100svh] flex items-center overflow-hidden pt-16 sm:pt-20"
       >
         {/* Background Image with Parallax */}
         <motion.div 
