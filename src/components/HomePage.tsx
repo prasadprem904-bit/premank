@@ -23,6 +23,24 @@ import modelOpeningBox from "@/assets/model-opening-box.jpg";
 import modelMediumDiamond from "@/assets/model-medium-diamond.jpg";
 import premankPremiumLogo from "@/assets/premank-premium-logo.png";
 
+// Natural diamond images by carat
+import diamond05Carat from "@/assets/diamond-0.5-carat.jpg";
+import diamond1Carat from "@/assets/diamond-1-carat.jpg";
+import diamond2Carat from "@/assets/diamond-2-carat.jpg";
+import diamond3Carat from "@/assets/diamond-3-carat.jpg";
+import diamond4Carat from "@/assets/diamond-4-carat.jpg";
+import diamond5Carat from "@/assets/diamond-5-carat.jpg";
+
+// Diamond image mapping by path
+const diamondImageMap: Record<string, string> = {
+  '/src/assets/diamond-0.5-carat.jpg': diamond05Carat,
+  '/src/assets/diamond-1-carat.jpg': diamond1Carat,
+  '/src/assets/diamond-2-carat.jpg': diamond2Carat,
+  '/src/assets/diamond-3-carat.jpg': diamond3Carat,
+  '/src/assets/diamond-4-carat.jpg': diamond4Carat,
+  '/src/assets/diamond-5-carat.jpg': diamond5Carat,
+};
+
 interface HomePageProps {
   onViewDiamond: (diamond: Diamond) => void;
   onProfile: () => void;
@@ -35,12 +53,12 @@ interface HomePageProps {
 
 // Fallback sample data (used only if database is empty)
 const fallbackDiamonds: Diamond[] = [
-  { id: crypto.randomUUID(), name: "Royal Brilliance", price: 250000, carat: 2.5, cut: "Round Brilliant", color: "D", clarity: "VVS1", image: heroDiamond, rating: 4.9 },
-  { id: crypto.randomUUID(), name: "Elegant Emerald", price: 180000, carat: 1.8, cut: "Emerald", color: "E", clarity: "VS1", image: heroDiamond, rating: 4.8 },
-  { id: crypto.randomUUID(), name: "Princess Paradise", price: 320000, carat: 3.2, cut: "Princess", color: "F", clarity: "VVS2", image: heroDiamond, rating: 4.9 },
-  { id: crypto.randomUUID(), name: "Cushion Crown", price: 195000, carat: 2.1, cut: "Cushion", color: "G", clarity: "VS2", image: heroDiamond, rating: 4.7 },
-  { id: crypto.randomUUID(), name: "Oval Opulence", price: 275000, carat: 2.8, cut: "Oval", color: "D", clarity: "IF", image: heroDiamond, rating: 5.0 },
-  { id: crypto.randomUUID(), name: "Radiant Royalty", price: 210000, carat: 2.3, cut: "Radiant", color: "E", clarity: "VVS1", image: heroDiamond, rating: 4.8 },
+  { id: crypto.randomUUID(), name: "Natural Diamond 0.5 Cent", price: 5000, carat: 0.005, cut: "Round Brilliant", color: "D", clarity: "VVS1", image: diamond05Carat, rating: 4.9 },
+  { id: crypto.randomUUID(), name: "Natural Diamond 1 Carat", price: 150000, carat: 1.0, cut: "Round Brilliant", color: "E", clarity: "VVS2", image: diamond1Carat, rating: 4.9 },
+  { id: crypto.randomUUID(), name: "Natural Diamond 2 Carat", price: 450000, carat: 2.0, cut: "Round Brilliant", color: "D", clarity: "VS1", image: diamond2Carat, rating: 4.9 },
+  { id: crypto.randomUUID(), name: "Natural Diamond 3 Carat", price: 850000, carat: 3.0, cut: "Round Brilliant", color: "E", clarity: "VVS1", image: diamond3Carat, rating: 5.0 },
+  { id: crypto.randomUUID(), name: "Natural Diamond 4 Carat", price: 1500000, carat: 4.0, cut: "Round Brilliant", color: "D", clarity: "IF", image: diamond4Carat, rating: 5.0 },
+  { id: crypto.randomUUID(), name: "Natural Diamond 5 Carat", price: 2500000, carat: 5.0, cut: "Round Brilliant", color: "D", clarity: "VVS1", image: diamond5Carat, rating: 5.0 },
 ];
 
 export const HomePage = ({
@@ -92,12 +110,12 @@ export const HomePage = ({
             name: d.name,
             price: Number(d.price),
             carat: Number(d.carat),
-            cut: d.description || "Round Brilliant",
+            cut: "Round Brilliant",
             color: d.color,
             clarity: d.clarity,
-            image: d.image_url || heroDiamond,
-            rating: 4.8,
-            certification: (d.certification_status === "GIA" || d.certification_status === "IGI") ? d.certification_status : undefined,
+            image: d.image_url ? (diamondImageMap[d.image_url] || heroDiamond) : heroDiamond,
+            rating: 4.9,
+            certification: d.certification_status === "certified" ? "GIA" : undefined,
           }));
           setDiamonds(mappedDiamonds);
           setFilteredDiamonds(mappedDiamonds);
