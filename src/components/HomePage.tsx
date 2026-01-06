@@ -26,8 +26,11 @@ import premankPremiumLogo from "@/assets/premank-premium-logo.png";
 // Natural diamond images by carat
 import diamond05Carat from "@/assets/diamond-0.5-carat.jpg";
 import diamond1Carat from "@/assets/diamond-1-carat.jpg";
+import diamond15Carat from "@/assets/diamond-1.5-carat.jpg";
 import diamond2Carat from "@/assets/diamond-2-carat.jpg";
+import diamond25Carat from "@/assets/diamond-2.5-carat.jpg";
 import diamond3Carat from "@/assets/diamond-3-carat.jpg";
+import diamond35Carat from "@/assets/diamond-3.5-carat.jpg";
 import diamond4Carat from "@/assets/diamond-4-carat.jpg";
 import diamond5Carat from "@/assets/diamond-5-carat.jpg";
 
@@ -35,8 +38,11 @@ import diamond5Carat from "@/assets/diamond-5-carat.jpg";
 const diamondImageMap: Record<string, string> = {
   '/src/assets/diamond-0.5-carat.jpg': diamond05Carat,
   '/src/assets/diamond-1-carat.jpg': diamond1Carat,
+  '/src/assets/diamond-1.5-carat.jpg': diamond15Carat,
   '/src/assets/diamond-2-carat.jpg': diamond2Carat,
+  '/src/assets/diamond-2.5-carat.jpg': diamond25Carat,
   '/src/assets/diamond-3-carat.jpg': diamond3Carat,
+  '/src/assets/diamond-3.5-carat.jpg': diamond35Carat,
   '/src/assets/diamond-4-carat.jpg': diamond4Carat,
   '/src/assets/diamond-5-carat.jpg': diamond5Carat,
 };
