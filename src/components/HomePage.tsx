@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from "framer-motion";
-import { Search, Filter, Grid, List, Gem, Calendar, Eye, Award, ScanEye, Heart, Crown, Diamond as DiamondIcon, Sparkles } from "lucide-react";
+import { Search, Filter, Grid, List, Gem, Calendar, Eye, Award, ScanEye, Heart, Crown, Diamond as DiamondIcon, Sparkles, X } from "lucide-react";
 import { DiamondCard, type Diamond } from "./DiamondCard";
 import { LuxuryButton } from "./ui/luxury-button";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { Slider } from "./ui/slider";
 import { PremiumFeatures } from "./PremiumFeatures";
 import { ContactSupport } from "./ContactSupport";
 
@@ -84,6 +85,8 @@ export const HomePage = ({
   const [loading, setLoading] = useState(true);
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 3000000]);
+  const [showFilters, setShowFilters] = useState(false);
   const lastScrollY = useRef(0);
 
   // Handle wishlist from mobile nav
@@ -178,14 +181,34 @@ export const HomePage = ({
   const opacity = useTransform(heroScrollProgress, [0, 0.5, 1], [1, 0.8, 0]);
   const scale = useTransform(heroScrollProgress, [0, 1], [1, 1.1]);
 
+  // Apply all filters
+  const applyFilters = (term: string, range: [number, number]) => {
+    const filtered = diamonds.filter(diamond => {
+      const matchesSearch = diamond.name.toLowerCase().includes(term.toLowerCase()) || 
+        diamond.cut.toLowerCase().includes(term.toLowerCase()) || 
+        diamond.color.toLowerCase().includes(term.toLowerCase());
+      const matchesPrice = diamond.price >= range[0] && diamond.price <= range[1];
+      return matchesSearch && matchesPrice;
+    });
+    setFilteredDiamonds(filtered);
+  };
+
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    const filtered = diamonds.filter(diamond => 
-      diamond.name.toLowerCase().includes(term.toLowerCase()) || 
-      diamond.cut.toLowerCase().includes(term.toLowerCase()) || 
-      diamond.color.toLowerCase().includes(term.toLowerCase())
-    );
-    setFilteredDiamonds(filtered);
+    applyFilters(term, priceRange);
+  };
+
+  const handlePriceChange = (values: number[]) => {
+    const newRange: [number, number] = [values[0], values[1]];
+    setPriceRange(newRange);
+    applyFilters(searchTerm, newRange);
+  };
+
+  const formatPrice = (price: number) => {
+    if (price >= 100000) {
+      return `₹${(price / 100000).toFixed(1)}L`;
+    }
+    return `₹${price.toLocaleString('en-IN')}`;
   };
 
   return (
@@ -413,7 +436,12 @@ export const HomePage = ({
             </div>
             
             <div className="flex items-center gap-2 sm:gap-3">
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-secondary min-w-[44px] min-h-[44px]">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => setShowFilters(!showFilters)}
+                className={`min-w-[44px] min-h-[44px] ${showFilters ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-secondary"}`}
+              >
                 <Filter className="w-5 h-5" />
               </Button>
               <div className="flex bg-secondary rounded-xl p-1">
@@ -436,6 +464,79 @@ export const HomePage = ({
               </div>
             </div>
           </div>
+
+          {/* Price Filter Panel */}
+          <AnimatePresence>
+            {showFilters && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="pt-6 mt-6 border-t border-border">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
+                      <DiamondIcon className="w-5 h-5 text-primary" />
+                      Price Range
+                    </h3>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setPriceRange([0, 3000000]);
+                        applyFilters(searchTerm, [0, 3000000]);
+                      }}
+                      className="text-muted-foreground hover:text-foreground text-sm"
+                    >
+                      Reset
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Min: <span className="text-foreground font-medium">{formatPrice(priceRange[0])}</span></span>
+                      <span className="text-muted-foreground">Max: <span className="text-foreground font-medium">{formatPrice(priceRange[1])}</span></span>
+                    </div>
+                    
+                    <Slider
+                      defaultValue={[0, 3000000]}
+                      value={priceRange}
+                      onValueChange={handlePriceChange}
+                      min={0}
+                      max={3000000}
+                      step={10000}
+                      className="w-full"
+                    />
+                    
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      {[
+                        { label: "Under ₹1L", range: [0, 100000] },
+                        { label: "₹1L - ₹5L", range: [100000, 500000] },
+                        { label: "₹5L - ₹15L", range: [500000, 1500000] },
+                        { label: "₹15L+", range: [1500000, 3000000] },
+                      ].map((preset) => (
+                        <Button
+                          key={preset.label}
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handlePriceChange(preset.range)}
+                          className={`text-xs sm:text-sm ${
+                            priceRange[0] === preset.range[0] && priceRange[1] === preset.range[1]
+                              ? "bg-primary text-primary-foreground border-primary"
+                              : "border-border hover:border-primary hover:text-primary"
+                          }`}
+                        >
+                          {preset.label}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </motion.section>
 
