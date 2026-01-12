@@ -15,6 +15,10 @@ import { DiamondWishlist } from "./DiamondWishlist";
 import { FAQSection } from "./FAQSection";
 import { FloatingParticles } from "./ui/FloatingParticles";
 import { LuxuryBadge } from "./ui/LuxuryBadge";
+import { TestimonialsSection } from "./TestimonialsSection";
+import { LoyaltyProgram } from "./LoyaltyProgram";
+import { LuxuryFooter } from "./LuxuryFooter";
+import { TrustBadgesStrip } from "./TrustBadgesStrip";
 import { supabase } from "@/integrations/supabase/client";
 import heroDiamond from "@/assets/hero-diamond.jpg";
 import heroLadyRing from "@/assets/hero-lady-ring.jpg";
@@ -675,20 +679,32 @@ export const HomePage = ({
         </div>
       </motion.section>
 
+      {/* Trust Badges Strip */}
+      <TrustBadgesStrip />
+
       {/* Certification Badges Section */}
       <CertificationBadges />
 
       {/* Diamond Size Comparison Tool */}
       <DiamondSizeComparison />
 
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+
       {/* Premium Features Section */}
       <PremiumFeatures onViewDiamond={onViewDiamond} />
+
+      {/* Loyalty Program Section */}
+      <LoyaltyProgram />
 
       {/* FAQ Section */}
       <FAQSection />
 
       {/* Contact & Support Section */}
       <ContactSupport />
+
+      {/* Luxury Footer */}
+      <LuxuryFooter />
 
 
       {/* Wishlist Modal */}
