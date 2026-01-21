@@ -1,11 +1,16 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Camera, RotateCcw, Download, X, ZoomIn, ZoomOut, Move, Sparkles, Hand, FlipHorizontal, Scan, Loader2 } from "lucide-react";
-import { Card } from "./ui/card";
-import { LuxuryButton } from "./ui/luxury-button";
+import { Camera, RotateCcw, X, ZoomIn, ZoomOut, Sparkles, Hand, FlipHorizontal, Scan, Loader2, Maximize2, RotateCw, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import diamondRingImage from "@/assets/diamond-ring.jpg";
 import { useHandDetection } from "@/hooks/useHandDetection";
+import { useGestureControls } from "@/hooks/useGestureControls";
+
+// Import diamond images for swipe gallery
+import diamond05 from "@/assets/diamond-0.5-carat.jpg";
+import diamond1 from "@/assets/diamond-1-carat.jpg";
+import diamond15 from "@/assets/diamond-1.5-carat.jpg";
+import diamond2 from "@/assets/diamond-2-carat.jpg";
 
 interface VirtualTryOnProps {
   diamondName: string;
@@ -13,24 +18,73 @@ interface VirtualTryOnProps {
   onClose: () => void;
 }
 
+const ringDesigns = [
+  { id: 'ring', name: 'Classic Ring', image: diamondRingImage },
+  { id: 'diamond-05', name: '0.5 Carat', image: diamond05 },
+  { id: 'diamond-1', name: '1 Carat', image: diamond1 },
+  { id: 'diamond-15', name: '1.5 Carat', image: diamond15 },
+  { id: 'diamond-2', name: '2 Carat', image: diamond2 },
+];
+
 export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryOnProps) => {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [ringPosition, setRingPosition] = useState({ x: 50, y: 70 });
-  const [ringScale, setRingScale] = useState(1);
-  const [ringRotation, setRingRotation] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
   const [showRing, setShowRing] = useState(true);
   const [isMirrored, setIsMirrored] = useState(true);
-  const [activeImage, setActiveImage] = useState<'diamond' | 'ring'>('ring');
+  const [currentDesignIndex, setCurrentDesignIndex] = useState(0);
   const [showGuide, setShowGuide] = useState(true);
   const [aiTrackingEnabled, setAiTrackingEnabled] = useState(false);
   const [manualOverride, setManualOverride] = useState(false);
+  const [showGestureHint, setShowGestureHint] = useState(true);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const dragStartRef = useRef({ x: 0, y: 0 });
+
+  // Get current design
+  const currentDesign = ringDesigns[currentDesignIndex];
+
+  // Handle design change via swipe
+  const handleNextDesign = useCallback(() => {
+    setCurrentDesignIndex(prev => (prev + 1) % ringDesigns.length);
+    toast.success(`💍 ${ringDesigns[(currentDesignIndex + 1) % ringDesigns.length].name}`);
+  }, [currentDesignIndex]);
+
+  const handlePrevDesign = useCallback(() => {
+    setCurrentDesignIndex(prev => (prev - 1 + ringDesigns.length) % ringDesigns.length);
+    toast.success(`💍 ${ringDesigns[(currentDesignIndex - 1 + ringDesigns.length) % ringDesigns.length].name}`);
+  }, [currentDesignIndex]);
+
+  // Gesture controls
+  const {
+    gestureState,
+    isPinching,
+    isRotating,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+    resetGesture,
+    updatePosition,
+    updateScale,
+    updateRotation
+  } = useGestureControls({
+    containerRef,
+    initialScale: 1,
+    initialRotation: 0,
+    initialPosition: { x: 50, y: 70 },
+    onScaleChange: (scale) => {
+      if (aiTrackingEnabled) setManualOverride(true);
+    },
+    onRotationChange: (rotation) => {
+      if (aiTrackingEnabled) setManualOverride(true);
+    },
+    onPositionChange: (position) => {
+      if (aiTrackingEnabled) setManualOverride(true);
+    },
+    onSwipeLeft: handleNextDesign,
+    onSwipeRight: handlePrevDesign,
+    enabled: !isLoading
+  });
 
   // AI Hand Detection Hook
   const {
@@ -45,15 +99,15 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
     isMirrored
   });
 
-  // Update ring position when AI detects hand
+  // Update position when AI detects hand
   useEffect(() => {
     if (aiTrackingEnabled && handDetected && ringFingerPosition && !manualOverride) {
-      setRingPosition({
+      updatePosition({
         x: ringFingerPosition.x,
         y: ringFingerPosition.y
       });
     }
-  }, [aiTrackingEnabled, handDetected, ringFingerPosition, manualOverride]);
+  }, [aiTrackingEnabled, handDetected, ringFingerPosition, manualOverride, updatePosition]);
 
   useEffect(() => {
     startCamera();
@@ -64,6 +118,11 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
 
   useEffect(() => {
     const timer = setTimeout(() => setShowGuide(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowGestureHint(false), 8000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -104,10 +163,10 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
     if (!aiTrackingEnabled) {
       setAiTrackingEnabled(true);
       setManualOverride(false);
-      toast.success("🤖 AI Hand Detection enabled! Show your hand to the camera.");
+      toast.success("🤖 AI Hand Detection enabled!");
     } else {
       setAiTrackingEnabled(false);
-      toast.info("AI tracking disabled. Drag to position manually.");
+      toast.info("AI tracking disabled.");
     }
   };
 
@@ -131,21 +190,20 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
           context.setTransform(1, 0, 0, 1, 0, 0);
         }
         
-        // Draw the ring overlay
         if (showRing) {
           const img = new Image();
           img.crossOrigin = "anonymous";
-          img.src = activeImage === 'ring' ? diamondRingImage : diamondImage;
+          img.src = currentDesign.image;
           
           img.onload = () => {
-            const ringWidth = 200 * ringScale;
-            const ringHeight = 200 * ringScale;
-            const xPos = (ringPosition.x / 100) * canvas.width - ringWidth / 2;
-            const yPos = (ringPosition.y / 100) * canvas.height - ringHeight / 2;
+            const ringWidth = 200 * gestureState.scale;
+            const ringHeight = 200 * gestureState.scale;
+            const xPos = (gestureState.position.x / 100) * canvas.width - ringWidth / 2;
+            const yPos = (gestureState.position.y / 100) * canvas.height - ringHeight / 2;
             
             context.save();
             context.translate(xPos + ringWidth / 2, yPos + ringHeight / 2);
-            context.rotate((ringRotation * Math.PI) / 180);
+            context.rotate((gestureState.rotation * Math.PI) / 180);
             context.drawImage(img, -ringWidth / 2, -ringHeight / 2, ringWidth, ringHeight);
             context.restore();
             
@@ -155,7 +213,7 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
             link.href = imageData;
             link.click();
             
-            toast.success("✨ AR photo captured successfully!");
+            toast.success("✨ AR photo captured!");
           };
         } else {
           const imageData = canvas.toDataURL("image/png");
@@ -169,50 +227,17 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
     }
   };
 
-  const handleTouchStart = useCallback((e: React.TouchEvent | React.MouseEvent) => {
-    // If AI tracking is enabled and user starts dragging, enable manual override
-    if (aiTrackingEnabled) {
-      setManualOverride(true);
-    }
-    setIsDragging(true);
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    dragStartRef.current = { x: clientX, y: clientY };
-  }, [aiTrackingEnabled]);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent | React.MouseEvent) => {
-    if (!isDragging || !containerRef.current) return;
-    
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = ((clientX - rect.left) / rect.width) * 100;
-    const y = ((clientY - rect.top) / rect.height) * 100;
-    
-    setRingPosition({
-      x: Math.max(10, Math.min(90, x)),
-      y: Math.max(10, Math.min(90, y))
-    });
-  }, [isDragging]);
-
-  const handleTouchEnd = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  const handleZoomIn = () => setRingScale(prev => Math.min(prev + 0.2, 3));
-  const handleZoomOut = () => setRingScale(prev => Math.max(prev - 0.2, 0.3));
-  const handleRotateLeft = () => setRingRotation(prev => prev - 15);
-  const handleRotateRight = () => setRingRotation(prev => prev + 15);
-
   const handleReset = () => {
-    setRingPosition({ x: 50, y: 70 });
-    setRingScale(1);
-    setRingRotation(0);
+    resetGesture();
     setShowRing(true);
     setManualOverride(false);
     toast.info("AR view reset");
   };
+
+  const handleZoomIn = () => updateScale(Math.min(gestureState.scale + 0.2, 3));
+  const handleZoomOut = () => updateScale(Math.max(gestureState.scale - 0.2, 0.3));
+  const handleRotateLeft = () => updateRotation(gestureState.rotation - 15);
+  const handleRotateRight = () => updateRotation(gestureState.rotation + 15);
 
   return (
     <motion.div
@@ -230,7 +255,14 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
             {aiTrackingEnabled && (
               <span className="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded-full flex items-center gap-1">
                 <Scan className="w-3 h-3" />
-                AI Active
+                AI
+              </span>
+            )}
+            {(isPinching || isRotating) && (
+              <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full flex items-center gap-1">
+                {isPinching && <Maximize2 className="w-3 h-3" />}
+                {isRotating && <RotateCw className="w-3 h-3" />}
+                Gesture
               </span>
             )}
           </div>
@@ -241,7 +273,7 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
             <X className="w-5 h-5 text-white" />
           </button>
         </div>
-        <p className="text-white/70 text-sm mt-1">{diamondName}</p>
+        <p className="text-white/70 text-sm mt-1">{currentDesign.name}</p>
       </div>
 
       {/* AI Status Bar */}
@@ -268,17 +300,17 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
                   <>
                     <Hand className="w-4 h-4 text-green-400" />
                     <span className="text-green-400 text-sm font-medium">
-                      ✓ Hand detected - Ring finger tracked
+                      ✓ Hand detected
                     </span>
                     {manualOverride && (
-                      <span className="text-white/60 text-xs ml-auto">(Manual override)</span>
+                      <span className="text-white/60 text-xs ml-auto">(Manual)</span>
                     )}
                   </>
                 ) : (
                   <>
                     <Scan className="w-4 h-4 text-amber-400 animate-pulse" />
                     <span className="text-amber-400 text-sm">
-                      Show your hand to the camera...
+                      Show your hand...
                     </span>
                   </>
                 )}
@@ -288,17 +320,48 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
         )}
       </AnimatePresence>
 
-      {/* Camera View */}
+      {/* Gesture Hint Overlay */}
+      <AnimatePresence>
+        {showGestureHint && !isLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute top-32 left-4 right-4 z-20"
+          >
+            <div className="bg-black/60 backdrop-blur-sm rounded-xl p-3 text-center">
+              <div className="flex justify-center gap-6 text-white/80 text-xs">
+                <div className="flex flex-col items-center gap-1">
+                  <div className="flex gap-1">
+                    <span className="text-lg">👆👆</span>
+                  </div>
+                  <span>Pinch to Zoom</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <div className="flex gap-1">
+                    <span className="text-lg">🔄</span>
+                  </div>
+                  <span>Two-finger Rotate</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <div className="flex gap-1">
+                    <span className="text-lg">👈👉</span>
+                  </div>
+                  <span>Swipe Designs</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Camera View with Gesture Handlers */}
       <div 
         ref={containerRef}
         className="flex-1 relative overflow-hidden touch-none"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onMouseDown={handleTouchStart}
-        onMouseMove={handleTouchMove}
-        onMouseUp={handleTouchEnd}
-        onMouseLeave={handleTouchEnd}
       >
         {/* Loading State */}
         <AnimatePresence>
@@ -327,39 +390,35 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
         />
         
         {/* AR Diamond/Ring Overlay */}
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {showRing && !isLoading && (
             <motion.div
-              initial={{ opacity: 0, scale: 0 }}
+              key={currentDesign.id}
+              initial={{ opacity: 0, scale: 0.8 }}
               animate={{ 
                 opacity: 1, 
-                scale: 1,
-                x: `calc(${ringPosition.x}vw - 50%)`,
-                y: `calc(${ringPosition.y}vh - 50%)`
+                scale: 1
               }}
-              exit={{ opacity: 0, scale: 0 }}
+              exit={{ opacity: 0, scale: 0.8 }}
               transition={{ 
                 type: "spring", 
                 stiffness: aiTrackingEnabled && handDetected ? 400 : 300, 
                 damping: aiTrackingEnabled && handDetected ? 30 : 25 
               }}
-              className="absolute top-0 left-0 pointer-events-none"
+              className="absolute pointer-events-none"
               style={{
-                transform: `translate(${ringPosition.x}%, ${ringPosition.y}%) rotate(${ringRotation}deg) scale(${ringScale})`,
-                left: `${ringPosition.x}%`,
-                top: `${ringPosition.y}%`,
-                marginLeft: '-4rem',
-                marginTop: '-4rem'
+                left: `${gestureState.position.x}%`,
+                top: `${gestureState.position.y}%`,
+                transform: `translate(-50%, -50%) rotate(${gestureState.rotation}deg) scale(${gestureState.scale})`
               }}
             >
               <div className="relative">
                 <img
-                  src={activeImage === 'ring' ? diamondRingImage : diamondImage}
-                  alt={diamondName}
+                  src={currentDesign.image}
+                  alt={currentDesign.name}
                   className="w-32 h-32 object-contain"
                   style={{
-                    filter: `drop-shadow(0 0 30px rgba(255,215,0,0.6)) drop-shadow(0 0 60px rgba(255,215,0,0.3)) ${handDetected && aiTrackingEnabled ? 'drop-shadow(0 0 15px rgba(34,197,94,0.4))' : ''}`,
-                    transform: `rotate(${ringRotation}deg) scale(${ringScale})`,
+                    filter: `drop-shadow(0 0 30px rgba(255,215,0,0.6)) drop-shadow(0 0 60px rgba(255,215,0,0.3)) ${handDetected && aiTrackingEnabled ? 'drop-shadow(0 0 15px rgba(34,197,94,0.4))' : ''}`
                   }}
                 />
                 {/* Sparkle Effects */}
@@ -380,7 +439,40 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
           )}
         </AnimatePresence>
 
-        {/* Drag Indicator */}
+        {/* Swipe Indicators */}
+        <div className="absolute left-2 top-1/2 -translate-y-1/2 z-10">
+          <button
+            onClick={handlePrevDesign}
+            className="p-2 bg-black/40 hover:bg-black/60 rounded-full backdrop-blur-sm transition-all"
+          >
+            <ChevronLeft className="w-6 h-6 text-white" />
+          </button>
+        </div>
+        <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10">
+          <button
+            onClick={handleNextDesign}
+            className="p-2 bg-black/40 hover:bg-black/60 rounded-full backdrop-blur-sm transition-all"
+          >
+            <ChevronRight className="w-6 h-6 text-white" />
+          </button>
+        </div>
+
+        {/* Design Indicator Dots */}
+        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+          {ringDesigns.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentDesignIndex(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                index === currentDesignIndex 
+                  ? 'bg-accent w-6' 
+                  : 'bg-white/50 hover:bg-white/80'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Drag Guide */}
         <AnimatePresence>
           {showGuide && !isLoading && !aiTrackingEnabled && (
             <motion.div
@@ -391,8 +483,8 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
             >
               <div className="bg-black/70 backdrop-blur-sm px-6 py-4 rounded-2xl text-center">
                 <Hand className="w-8 h-8 text-accent mx-auto mb-2 animate-bounce" />
-                <p className="text-white text-sm">Drag to position or enable AI tracking</p>
-                <p className="text-white/60 text-xs mt-1">Use controls to resize & rotate</p>
+                <p className="text-white text-sm">Drag to position</p>
+                <p className="text-white/60 text-xs mt-1">Pinch to zoom • Swipe for designs</p>
               </div>
             </motion.div>
           )}
@@ -423,7 +515,7 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
             ) : (
               <>
                 <Scan className="w-4 h-4" />
-                {aiTrackingEnabled ? '🤖 AI Hand Detection ON' : 'Enable AI Hand Detection'}
+                {aiTrackingEnabled ? '🤖 AI ON' : 'Enable AI'}
               </>
             )}
           </button>
@@ -450,6 +542,12 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
             <RotateCcw className="w-5 h-5 text-white" />
           </button>
           <button
+            onClick={handleRotateRight}
+            className="p-3 bg-white/20 hover:bg-white/30 rounded-full transition-all active:scale-95"
+          >
+            <RotateCw className="w-5 h-5 text-white" />
+          </button>
+          <button
             onClick={() => setIsMirrored(!isMirrored)}
             className={`p-3 rounded-full transition-all active:scale-95 ${isMirrored ? 'bg-accent/50' : 'bg-white/20 hover:bg-white/30'}`}
           >
@@ -460,30 +558,6 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
             className={`p-3 rounded-full transition-all active:scale-95 ${showRing ? 'bg-accent/50' : 'bg-white/20 hover:bg-white/30'}`}
           >
             <Sparkles className="w-5 h-5 text-white" />
-          </button>
-        </div>
-
-        {/* Image Toggle */}
-        <div className="flex justify-center gap-2 mb-4">
-          <button
-            onClick={() => setActiveImage('ring')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              activeImage === 'ring' 
-                ? 'bg-accent text-black' 
-                : 'bg-white/20 text-white hover:bg-white/30'
-            }`}
-          >
-            💍 Ring View
-          </button>
-          <button
-            onClick={() => setActiveImage('diamond')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              activeImage === 'diamond' 
-                ? 'bg-accent text-black' 
-                : 'bg-white/20 text-white hover:bg-white/30'
-            }`}
-          >
-            💎 Diamond View
           </button>
         </div>
 
@@ -513,10 +587,7 @@ export const VirtualTryOn = ({ diamondName, diamondImage, onClose }: VirtualTryO
 
         {/* Tips */}
         <p className="text-white/50 text-xs text-center mt-4">
-          {aiTrackingEnabled 
-            ? '🤖 AI tracks your ring finger • Drag to override • Good lighting = best detection'
-            : '💡 Enable AI for auto-tracking • Drag manually • Good lighting = best results'
-          }
+          👆 Pinch to zoom • 🔄 Two-finger rotate • 👈👉 Swipe to change designs
         </p>
       </div>
     </motion.div>
