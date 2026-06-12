@@ -22,7 +22,7 @@ export const DiamondWishlist = ({ onViewDetails, onBack }: DiamondWishlistProps)
   const [compareMode, setCompareMode] = useState(false);
   const [selectedForCompare, setSelectedForCompare] = useState<Diamond[]>([]);
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
-  const undoTimeouts = useRef<Map<string, NodeJS.Timeout>>(new Map());
+  const undoTimeouts = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const pendingRemovals = useRef<Map<string, Diamond>>(new Map());
 
   // Pull to refresh
